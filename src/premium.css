@@ -7,6 +7,16 @@
   --glass-shadow: 0 16px 40px rgba(0, 0, 0, .18), inset 0 1px 0 rgba(255, 255, 255, .07);
 }
 body { background: radial-gradient(ellipse at 90% 10%, rgba(109, 142, 49, .1), transparent 48%), var(--ink); }
+/* Keep the public sections in the original dark palette. */
+@media screen {
+  .experience, .lineup { background: var(--ink); color: var(--paper); }
+  .experience .eyebrow, .lineup .eyebrow, .section-heading h2 span,
+  .lineup-heading .text-link { color: var(--green); }
+  .section-heading > p, .schedule-row div small, .schedule-note,
+  .photo-archive-note { color: #b9c2b4; }
+  .schedule-list, .schedule-row { border-color: var(--line); }
+  .schedule-icon { color: var(--green); border-color: rgba(181, 227, 72, .3); background: rgba(181, 227, 72, .06); }
+}
 .site-header { background: rgba(15, 21, 17, .7); border-bottom-color: var(--glass-edge); }
 .site-header.is-solid { background: rgba(15, 21, 17, .92); box-shadow: 0 8px 24px rgba(0, 0, 0, .12); }
 .button, .header-ticket, .icon-button { border-radius: 10px; }
