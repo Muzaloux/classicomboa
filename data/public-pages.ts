@@ -75,7 +75,7 @@ export const publicPages: PublicPageCopy[] = [
   },
   {
     path: '/programme',
-    eyebrow: 'LE 12 DÉCEMBRE',
+    eyebrow: 'LE 19 DÉCEMBRE',
     title: 'Le programme.',
     description:
       'Les activités et horaires détaillés seront publiés dès leur confirmation par l’organisation.',

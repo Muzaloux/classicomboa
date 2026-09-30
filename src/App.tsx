@@ -114,7 +114,7 @@ function App() {
         </section></Reveal>
 
         <Reveal><section className="lineup section-pad" id="lineup">
-          <div className="lineup-heading"><div><span className="eyebrow">LE 12 DÉCEMBRE À DOUALA</span><h2>UN PROGRAMME<br />À DÉCOUVRIR.</h2></div><a className="text-link" href="/programme">Tout le programme <ArrowRight size={15} /></a></div>
+          <div className="lineup-heading"><div><span className="eyebrow">{formatEventDate(currentEdition.eventDate).toUpperCase()} · {currentEdition.city.toUpperCase()}</span><h2><span>UN PROGRAMME</span><span>À DÉCOUVRIR.</span></h2></div><a className="text-link" href="/programme">Tout le programme <ArrowRight size={15} /></a></div>
           <div className="schedule-list">
             {programmePreview.map((item) => {
               const Icon = programmeIcons[item.icon]
