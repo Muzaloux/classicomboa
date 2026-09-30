@@ -95,12 +95,6 @@ h1, h2, h3, p { margin-top: 0; }
 .button-ghost:hover { border-color: var(--green); }
 .hero-matchup { display: flex; align-items: center; gap: 23px; margin-top: 48px; }
 .team { display: flex; align-items: center; gap: 10px; font: 600 12px/1.05 var(--font-display), sans-serif; letter-spacing: .045em; }
-.team-crest, .poll-crest { width: 32px; height: 34px; display: inline-grid; place-items: center; position: relative; clip-path: polygon(8% 0, 92% 0, 86% 76%, 50% 100%, 14% 76%); }
-.crest-madrid { color: #ffe6a8; background: linear-gradient(130deg, #214878 0 38%, #d3ae57 39% 58%, #f2f0dc 59%); font: 700 10px Georgia, serif; }
-.crest-madrid span { position: absolute; font: 700 9px Georgia, serif; color: #174371; }
-.crest-barca { background: linear-gradient(90deg, #9b202c 0 50%, #123e70 50%); border: 1px solid #d6af62; }
-.crest-barca i { position: absolute; top: 0; left: 0; height: 9px; width: 100%; background: linear-gradient(90deg, #e9d5a2 0 50%, #d4473e 50%); }
-.crest-barca b { position: absolute; bottom: 4px; width: 7px; height: 7px; border: 1px solid #f0d99a; border-radius: 50%; }
 .versus { font: 500 12px var(--font-display), sans-serif; color: var(--green); }
 .hero-side-note { position: absolute; z-index: 1; right: 5.2vw; top: 46%; font: 600 10px/1.55 var(--font-display), sans-serif; letter-spacing: .1em; color: rgba(246,243,236,.75); text-align: right; }
 .hero-side-note span { display: block; margin-top: 8px; color: var(--green); font: 500 17px var(--font-display), sans-serif; }
@@ -161,7 +155,6 @@ h1, h2, h3, p { margin-top: 0; }
 .poll-head .live-dot { width: 6px; height: 6px; }
 .poll-options { display: grid; gap: 1px; margin-top: 14px; }
 .poll-option { display: flex; align-items: center; gap: 11px; min-height: 46px; padding: 5px 8px; text-align: left; border: 1px solid transparent; background: rgba(255,255,255,.045); }
-.poll-crest { width: 23px; height: 25px; font-size: 8px; flex: 0 0 23px; }
 .poll-team-name { font-size: 11px; font-weight: 600; }
 .poll-percent { margin-left: auto; font: 500 14px var(--font-display), sans-serif; }
 .poll-meter { height: 3px; margin: 13px 0 9px; background: #27364a; }
@@ -310,11 +303,6 @@ h1, h2, h3, p { margin-top: 0; }
   .hero-matchup { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); width: min(100%, 320px); gap: 8px; padding: 10px 12px; border: 1px solid rgba(246,243,236,.18); background: rgba(17,19,17,.28); }
   .team { min-width: 0; width: 100%; gap: 9px; font-size: 12px; text-shadow: 0 1px 8px rgba(0,0,0,.7); }
   .team-barca { justify-content: flex-end; }
-  .team-crest { width: 44px; height: 48px; flex: 0 0 44px; filter: drop-shadow(0 4px 7px rgba(0,0,0,.35)); }
-  .crest-madrid { font-size: 13px; }
-  .crest-madrid span { font-size: 11px; }
-  .crest-barca i { height: 12px; }
-  .crest-barca b { bottom: 6px; width: 9px; height: 9px; }
   .versus { flex: 0 0 auto; font-size: 14px; }
   .hero-side-note { display: none; }
   .scroll-cue { left: 22px; bottom: 27px; font-size: 9px; }
@@ -621,3 +609,8 @@ h1, h2, h3 { text-wrap: balance; }
   .page-hero h1 { font-size: clamp(36px, 10vw, 64px); margin-block: 16px; }
   .rivalry h2, .legacy h2, .ticket-cta h2 { line-height: 1.08; }
 }
+
+/* Official team artwork retains its alpha channel and natural proportions. */
+.team-emblem { display: block; width: 52px; height: 60px; object-fit: contain; background: transparent; flex-shrink: 0; }
+.poll-option .team-emblem { width: 32px; height: 36px; }
+.public-team .team-emblem { width: 96px; height: 110px; margin-top: 20px; }

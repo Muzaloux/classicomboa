@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { TeamEmblem } from '../components/shared/team-emblem'
 import heroImage from '../public/images/events/hero.webp'
 import { EventCountdown } from '../components/shared/event-countdown'
 import { currentEdition } from '../data/current-edition'
@@ -55,9 +56,9 @@ function App() {
               <Link className="button button-ghost" href="/classico"><Play size={15} /> Découvrir le Classico</Link>
             </div>
             <div className="hero-matchup" aria-label="Real Mboa contre Barça Mboa">
-              <div className="team team-madrid"><span className="team-crest crest-madrid">R<span>M</span></span><span>REAL<br />MBOA</span></div>
+              <div className="team team-madrid"><TeamEmblem team="real-mboa" /><span>REAL<br />MBOA</span></div>
               <span className="versus">VS</span>
-              <div className="team team-barca"><span className="team-crest crest-barca"><i /><b /></span><span>BARÇA<br />MBOA</span></div>
+              <div className="team team-barca"><TeamEmblem team="barca-mboa" /><span>BARÇA<br />MBOA</span></div>
             </div>
           </div>
           <div className="hero-side-note">FOOTBALL, CULTURE<br />ET BIEN PLUS <span>237</span></div>
@@ -104,8 +105,8 @@ function App() {
             <div className="poll">
               <div className="poll-head"><span>VOTES & DISTINCTIONS</span><span>À VENIR</span></div>
               <div className="poll-options">
-                <div className="poll-option"><span className="poll-crest crest-madrid">R<span>M</span></span><span className="poll-team-name">Real Mboa</span></div>
-                <div className="poll-option"><span className="poll-crest crest-barca"><i /><b /></span><span className="poll-team-name">Barça Mboa</span></div>
+                <div className="poll-option"><TeamEmblem team="real-mboa" /><span className="poll-team-name">Real Mboa</span></div>
+                <div className="poll-option"><TeamEmblem team="barca-mboa" /><span className="poll-team-name">Barça Mboa</span></div>
               </div>
               <small>Les campagnes officielles seront annoncées ici.</small>
             </div>
