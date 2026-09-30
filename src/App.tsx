@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import heroImage from '../public/images/events/hero.webp'
 import { EventCountdown } from '../components/shared/event-countdown'
 import { currentEdition } from '../data/current-edition'
@@ -8,6 +7,7 @@ import { CTASection, EmptyState, Section } from '../components/shared/page'
 import { EventPhoto } from '../components/shared/event-photo'
 import { Reveal } from '../components/shared/reveal'
 import { SponsorStrip } from '../components/shared/sponsor-strip'
+import { ScrollPanImage } from '../components/shared/scroll-pan-image'
 import { getEventPhoto } from '../data/event-photos'
 import { getAdditionalEventPhoto } from '../data/additional-event-photos'
 import {
@@ -44,7 +44,7 @@ function App() {
     <>
 <main id="main-content">
         <section className="hero" id="home" aria-labelledby="hero-title">
-          <div className="hero-image"><Image src={heroImage} alt="Deux joueurs du Classico Mboa poursuivent le ballon sur le terrain." fill sizes="100vw" preload placeholder="blur" style={{ objectFit: 'cover', objectPosition: '60% 50%' }} /><div className="hero-photo-shade" /></div>
+          <div className="hero-image"><ScrollPanImage src={heroImage} alt="Deux joueurs du Classico Mboa poursuivent le ballon sur le terrain." /><div className="hero-photo-shade" /></div>
           <div className="hero-grain" />
           <div className="hero-content">
             <div className="edition-kicker"><span className="live-dot" /> {currentEdition.city.toUpperCase()} · {formatEventDate(currentEdition.eventDate).toUpperCase()}</div>
