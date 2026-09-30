@@ -3,6 +3,7 @@ import { DM_Sans, Oswald } from 'next/font/google'
 import { Navbar } from '../components/layout/navbar'
 import { Footer } from '../components/layout/footer'
 import { OfflineStatus } from '../components/shared/offline-status'
+import { SiteMotion } from '../components/shared/site-motion'
 import '../src/styles.css'
 
 const bodyFont = DM_Sans({ subsets: ['latin'], variable: '--font-body', display: 'swap' })
@@ -16,5 +17,5 @@ export const metadata: Metadata = {
   twitter: { card: 'summary', title: 'Classico Mboa', description },
 }
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="fr-CM" className={bodyFont.variable + ' ' + displayFont.variable}><body><a className="skip-link" href="#main-content">Aller au contenu</a><Navbar /><OfflineStatus />{children}<Footer /></body></html>
+  return <html lang="fr-CM" className={bodyFont.variable + ' ' + displayFont.variable}><body><a className="skip-link" href="#main-content">Aller au contenu</a><Navbar /><OfflineStatus />{children}<Footer /><SiteMotion /></body></html>
 }

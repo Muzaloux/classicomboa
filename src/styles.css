@@ -259,8 +259,7 @@ h1, h2, h3, p { margin-top: 0; }
 @keyframes modal-arrive { from { opacity: 0; transform: translateY(10px) scale(.99); } to { opacity: 1; transform: translateY(0) scale(1); } }
 @keyframes section-reveal { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
 
-.reveal { opacity: 0; transform: translateY(18px); }
-.reveal.is-visible { animation: section-reveal .7s var(--reveal-delay, 0ms) cubic-bezier(.2,.7,.2,1) both; }
+.reveal { opacity: 1; }
 
 @media (min-width: 1500px) {
   .hero-content { padding-left: max(11.3vw, calc((100vw - 1320px) / 2)); }
@@ -568,3 +567,40 @@ h1, h2, h3, p { margin-top: 0; }
   .main-nav a { gap: 5px; font-size: 11px; }
   .header-ticket { padding-inline: 10px; font-size: 11px; }
 }
+
+/* Motion enhances browsing without delaying navigation or forms. */
+.scroll-progress { display: none; }
+@keyframes reading-progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes cue-nudge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+@media (prefers-reduced-motion: no-preference) {
+  .hero-content { animation: none; }
+  .hero-content > * { animation: content-arrive .7s cubic-bezier(.2,.7,.2,1) backwards; }
+  .hero-content > :nth-child(2) { animation-delay: .08s; }
+  .hero-content > :nth-child(3) { animation-delay: .15s; }
+  .hero-content > :nth-child(4) { animation-delay: .23s; }
+  .hero-content > :nth-child(5) { animation-delay: .3s; }
+  .hero-content > :nth-child(6) { animation-delay: .38s; }
+  .scroll-cue svg { animation: cue-nudge 1.4s ease-in-out 3; }
+  .main-nav a, .mobile-bottom-nav a, .contact-link, .info-card, .schedule-row, .header-ticket {
+    transition: transform .25s ease, color .25s ease, border-color .25s ease, background .25s ease, box-shadow .25s ease;
+  }
+  .main-nav a svg, .mobile-bottom-nav a svg, .button svg { transition: transform .25s ease; }
+  .mobile-bottom-nav a[aria-current=page] svg { animation: content-arrive .35s ease-out; }
+  .button:active, .header-ticket:active, .mobile-bottom-nav a:active { transform: scale(.97); }
+  .main-nav.is-open a { animation: content-arrive .35s backwards; }
+  .main-nav.is-open a:nth-child(2) { animation-delay: .04s; }
+  .main-nav.is-open a:nth-child(3) { animation-delay: .08s; }
+  .main-nav.is-open a:nth-child(4) { animation-delay: .12s; }
+  .main-nav.is-open a:nth-child(5) { animation-delay: .16s; }
+  .main-nav.is-open a:nth-child(6) { animation-delay: .2s; }
+  @supports (animation-timeline: scroll()) {
+    .scroll-progress { display: block; position: fixed; inset: 0 0 auto; height: 3px; z-index: 100; background: var(--green); transform-origin: left; pointer-events: none; animation: reading-progress linear both; animation-timeline: scroll(root block); }
+  }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .contact-link:hover, .info-card:hover { transform: translateY(-4px); border-color: var(--green); box-shadow: 0 12px 28px rgba(0,0,0,.15); }
+  .schedule-row:hover { transform: translateX(5px); background: rgba(178,216,71,.04); }
+  .main-nav a:hover svg, .mobile-bottom-nav a:hover svg { transform: translateY(-3px); }
+  .button:hover svg { transform: translateX(3px); }
+}
+@media print { .scroll-progress { display: none !important; } }
