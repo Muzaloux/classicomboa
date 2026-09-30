@@ -18,7 +18,7 @@ export const publicPages: PublicPageCopy[] = [
     eyebrow: 'CLASSICO MBOA',
     title: 'Plus qu’un match.',
     description:
-      'Classico Mboa rassemble football, culture, gaming et communauté autour du Classico version Mboa.',
+      'Classico Mboa rassemble football, culture et communauté autour du Classico version Mboa.',
     status: 'Découvrir le projet',
     sections: [
       {
@@ -28,7 +28,7 @@ export const publicPages: PublicPageCopy[] = [
       {
         title: 'Une expérience collective',
         description:
-          'Culture, gaming, divertissement et participation du public font partie de l’univers Classico Mboa.',
+          'Culture, divertissement et participation du public font partie de l’univers Classico Mboa.',
       },
     ],
     links: [
@@ -47,7 +47,6 @@ export const publicPages: PublicPageCopy[] = [
     links: [
       { label: 'Programme', href: '/programme' },
       { label: 'Billetterie', href: '/tickets' },
-      { label: 'Classico FIFA Cup', href: '/fifa-cup' },
     ],
   },
   {
@@ -114,18 +113,6 @@ export const publicPages: PublicPageCopy[] = [
     description:
       'Les modalités de participation, les lots confirmés et la date du tirage seront publiés par l’organisation.',
     status: 'Participation non ouverte',
-  },
-  {
-    path: '/fifa-cup',
-    eyebrow: 'CLASSICO FIFA CUP',
-    title: 'Le tournoi gaming.',
-    description:
-      'Le jeu, le format, les inscriptions et les règles seront communiqués dès leur confirmation.',
-    status: 'Informations à venir',
-    links: [
-      { label: 'Consulter les règles', href: '/fifa-cup/rules' },
-      { label: 'Voir le tableau', href: '/fifa-cup/bracket' },
-    ],
   },
   {
     path: '/village',
@@ -195,41 +182,6 @@ export const publicPages: PublicPageCopy[] = [
           'Les catégories, packages et conditions seront publiés avant l’ouverture du formulaire.',
       },
     ],
-  },
-  {
-    path: '/fifa-cup/bracket',
-    eyebrow: 'CLASSICO FIFA CUP',
-    title: 'Tableau du tournoi.',
-    description: 'Le tableau sera publié après validation des participants et du format.',
-    status: 'Tableau non généré',
-  },
-  {
-    path: '/fifa-cup/rules',
-    eyebrow: 'CLASSICO FIFA CUP',
-    title: 'Règlement.',
-    description: 'Les règles officielles seront publiées avant l’ouverture des inscriptions.',
-    status: 'Règlement à venir',
-  },
-  {
-    path: '/fifa-cup/live',
-    eyebrow: 'CLASSICO FIFA CUP',
-    title: 'Suivi du tournoi.',
-    description: 'Aucun match n’est actuellement programmé ou en cours.',
-    status: 'Tournoi non démarré',
-  },
-  {
-    path: '/fifa-cup/players',
-    eyebrow: 'CLASSICO FIFA CUP',
-    title: 'Participants.',
-    description: 'La liste des participants sera publiée après confirmation des inscriptions.',
-    status: 'Participants à venir',
-  },
-  {
-    path: '/fifa-cup/display',
-    eyebrow: 'CLASSICO FIFA CUP',
-    title: 'Affichage du tournoi.',
-    description: 'Les informations du tournoi apparaîtront ici lorsqu’il sera configuré.',
-    status: 'Affichage non actif',
   },
   {
     path: '/vote/results',

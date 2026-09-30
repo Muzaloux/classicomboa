@@ -33,7 +33,7 @@ Supabase clients, account flows, protected inquiry storage and versioned Postgre
 | 3 — Ticketing | Test flow implemented | Real payment provider, email ticket delivery, operational recovery/support, physical scanner testing and launch acceptance remain. |
 | 4 — Voting | Not started | Campaigns, authoritative pricing, confirmed-vote ledger and results. Public information page exists. |
 | 5 — Tombola | Not started | Entries, auditable server-side drawing and winner verification. Public information page exists. |
-| 6 — FIFA Cup | Not started | Registration, capacity, brackets, scores and staff permissions. Public information page exists. |
+| 6 — FIFA Cup | Removed from scope | Removed at the organizer’s request: public pages, navigation, homepage card, programme, category and proposed price. |
 | 7 — Village | Not started | Applications, review, reservation, payment, allocation and vendor directory. Public information page exists. |
 | 8 — Sponsorship | Not started | Proposals, agreements, deliverables and commercial tracking. Public information page exists. |
 | 9 — Organizer admin | Started | Edition-scoped inquiry inbox, filters, pagination and audited status changes verified on hosted Supabase. Permanent organizer assignment and other operational modules remain. |

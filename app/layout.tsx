@@ -9,7 +9,7 @@ import '../src/styles.css'
 
 const bodyFont = DM_Sans({ subsets: ['latin'], variable: '--font-body', display: 'swap' })
 const displayFont = Oswald({ subsets: ['latin'], variable: '--font-display', display: 'swap' })
-const description = 'Classico Mboa rassemble football, culture, gaming, musique et divertissement autour du Classico version Mboa au Cameroun.'
+const description = 'Classico Mboa rassemble football, culture, musique et divertissement autour du Classico version Mboa au Cameroun.'
 export const metadata: Metadata = {
   title: { default: 'Classico Mboa | Le Classico Version Mboa', template: '%s | Classico Mboa' },
   description,

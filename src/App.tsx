@@ -26,7 +26,6 @@ const experienceIcons = {
   football: Trophy,
   culture: Music2,
   community: Users,
-  gaming: Play,
   chance: Ticket,
   vote: Users,
   village: MapPin,
@@ -78,7 +77,7 @@ function App() {
         <Reveal><section className="experience section-pad" id="experience">
           <div className="section-heading">
             <div><span className="eyebrow">BIEN PLUS QUE 90 MINUTES</span><h2>TOUT UN<br /><span>RENDEZ-VOUS.</span></h2></div>
-            <p>Le Classico Mboa rassemble football, culture, gaming et communauté à Douala. Les activités et informations officielles seront publiées au fur et à mesure.</p>
+            <p>Le Classico Mboa rassemble football, culture et communauté à Douala. Les activités et informations officielles seront publiées au fur et à mesure.</p>
           </div>
           <p className="photo-archive-note">Images des archives Classico Mboa. Les activités de la prochaine édition restent à confirmer.</p><div className="experience-grid">
             {experienceCards.map((card, index) => {

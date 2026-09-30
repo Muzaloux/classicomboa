@@ -11,7 +11,7 @@ export interface ExperienceCardData {
   title: string
   action: string
   href: string
-  icon: 'football' | 'culture' | 'community' | 'gaming' | 'chance' | 'vote' | 'village' | 'partners'
+  icon: 'football' | 'culture' | 'community' | 'chance' | 'vote' | 'village' | 'partners'
 }
 
 export const experienceCards: ExperienceCardData[] = [
@@ -36,17 +36,6 @@ export const experienceCards: ExperienceCardData[] = [
     action: 'Découvrir le programme',
     href: '/programme',
     icon: 'culture',
-  },
-  {
-    id: 'gaming',
-    className: 'experience-gaming',
-
-    category: 'GAMING',
-    eyebrow: 'CLASSICO FIFA CUP',
-    title: 'LE JEU\nCONTINUE.',
-    action: 'Voir le tournoi',
-    href: '/fifa-cup',
-    icon: 'gaming',
   },
   {
     id: 'tombola',
