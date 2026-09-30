@@ -150,3 +150,20 @@ test('real categories share an edition capacity and expired receipts cannot over
   assert.ok(catalog.rows.every(row => row.available === 0))
   await db.exec("update event_editions set ticket_capacity=500 where id='edition-8'")
 })
+
+test('email-free checkout stores null, keeps retries safe and limits reservations by phone', async () => {
+  await db.exec("update event_editions set ticket_capacity=5000 where id='edition-8'; update ticket_types set capacity=5000 where not is_test")
+  const phone = '+237677654321', request = randomUUID()
+  const reserveWithoutEmail = async (id = randomUUID(), number = phone, email: string | null = '') => (await db.query<{ reference: string }>("select reserve_manual_ticket_order('edition-8',$1,1,'Phone Buyer',$2,$3,$4,$5,'manuel') reference", [classic, email, number, id, hash])).rows[0].reference
+  const reference = await reserveWithoutEmail(request)
+  assert.equal(await reserveWithoutEmail(request, phone, null), reference)
+  const order = (await db.query<{ customer_email: string | null; customer_phone: string; status: string }>('select customer_email,customer_phone,status from ticket_orders where reference=$1', [reference])).rows[0]
+  assert.deepEqual(order, { customer_email: null, customer_phone: phone, status: 'pending' })
+  await assert.rejects(reserveWithoutEmail(request, '+237677654322'), /REQUEST_CONFLICT/)
+  await assert.rejects(reserveWithoutEmail(request, phone, 'changed@example.com'), /REQUEST_CONFLICT/)
+  for (let i = 0; i < 4; i++) await reserveWithoutEmail()
+  await assert.rejects(reserveWithoutEmail(randomUUID(), phone, 'different@example.com'), /RATE_LIMITED/)
+  assert.ok(await reserveWithoutEmail(randomUUID(), '+237677654322'))
+  const testReference = (await db.query<{ reference: string }>("select reserve_ticket_order($1,1,'Test Phone Buyer',null,'+237677654323',$2,$3,true) reference", [type, randomUUID(), hash])).rows[0].reference
+  assert.equal((await db.query<{ customer_email: string | null }>('select customer_email from ticket_orders where reference=$1', [testReference])).rows[0].customer_email, null)
+})

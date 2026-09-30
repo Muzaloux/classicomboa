@@ -6,6 +6,7 @@ import { OfflineStatus } from '../components/shared/offline-status'
 import { SiteMotion } from '../components/shared/site-motion'
 import { socialOpenGraph, socialTwitter } from '../lib/social-metadata'
 import '../src/styles.css'
+import '../src/premium.css'
 
 const bodyFont = DM_Sans({ subsets: ['latin'], variable: '--font-body', display: 'swap' })
 const displayFont = Oswald({ subsets: ['latin'], variable: '--font-display', display: 'swap' })

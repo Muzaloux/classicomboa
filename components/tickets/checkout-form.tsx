@@ -11,17 +11,16 @@ export function CheckoutForm({ type, request, access, test = true }: { type: { i
   return <form action={action} onReset={event => event.preventDefault()} className="platform-form">
     <h2>{type.name} · {formatXaf(type.price_xaf)} / billet</h2>
     <p>Réservation pendant {test ? '15 minutes' : '2 heures'}. Aucun compte nécessaire.</p>
-    {!test && <p>Après réservation, WhatsApp s’ouvre avec votre référence et votre montant. Envoyez le message au contact choisi pour recevoir les instructions. Vos billets seront disponibles après vérification du paiement par l’organisation. Revenez dans « Retrouver ma commande » sur ce navigateur pour les récupérer ; aucun e-mail automatique n’est envoyé.</p>}
+    {!test && <p>Après réservation, vous serez redirigé vers une carte de paiement avec le montant, la référence et les coordonnées du moyen choisi. Vos billets seront disponibles après vérification du paiement par l’organisation.</p>}
     <input type="hidden" name="type" value={type.id} /><input type="hidden" name="request" value={request} /><input type="hidden" name="access" value={access} />
     <fieldset disabled={pending}>
       <label>Quantité<select name="quantity" defaultValue="1">{Array.from({ length: Math.min(10, type.available) }, (_, i) => <option key={i} value={i + 1}>{i + 1} · {formatXaf((i + 1) * type.price_xaf)}</option>)}</select></label>
       <label>Nom complet<input name="name" autoComplete="name" required minLength={2} maxLength={100} /></label>
-      <label>E-mail<input name="email" type="email" autoComplete="email" required maxLength={254} /></label>
       <label>Téléphone camerounais<input name="phone" type="tel" autoComplete="tel" placeholder="+237 6XX XXX XXX" required maxLength={30} /></label>
-      {!test && <label>Votre contact pour payer<select name="contact" defaultValue="manuel">{Object.entries(paymentContacts).map(([key, contact]) => <option value={key} key={key}>{contact.label} · +{contact.number}</option>)}</select></label>}
+      {!test && <fieldset className="payment-options"><legend>Choisissez votre moyen de paiement</legend>{Object.entries(paymentContacts).map(([key, contact], index) => <label className="payment-option" key={key}><input type="radio" name="contact" value={key} defaultChecked={index === 0} /><span className="payment-option-card"><span className={`payment-provider-badge provider-${key}`} aria-hidden="true">{key === 'manuel' ? 'MTN' : 'OM'}</span><span><strong>{contact.provider}</strong><small>{contact.paymentNumber ? `Paiement : +${contact.paymentNumber} · Contact : +${contact.contactNumber}` : `Contact : +${contact.contactNumber}`}</small></span></span></label>)}</fieldset>}
       <div className="form-honeypot" aria-hidden="true"><label>Site web<input name="website" tabIndex={-1} autoComplete="off" /></label></div>
-      <label className="checkbox-label"><input name="consent" type="checkbox" required />J’accepte l’utilisation de mes coordonnées pour cette commande{test ? ' de test' : ' et la transmission de mon nom, de la référence et du montant au contact WhatsApp choisi'}.</label>
-      <button className="button button-primary" disabled={type.available < 1}>{pending ? 'Réservation…' : test ? 'Réserver mes billets de test' : 'Réserver et payer sur WhatsApp'}</button>
+      <label className="checkbox-label"><input name="consent" type="checkbox" required />J’accepte l’utilisation de mes coordonnées pour cette commande{test ? ' de test' : ' et la transmission de ma référence et de mon montant au moyen de paiement choisi'}.</label>
+      <button className="button button-primary" disabled={type.available < 1}>{pending ? 'Réservation…' : test ? 'Réserver mes billets de test' : 'Réserver et afficher le paiement'}</button>
     </fieldset><FormFeedback state={state} />
   </form>
 }

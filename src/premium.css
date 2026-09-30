@@ -1,0 +1,77 @@
+/* Frosted navigation and layered surfaces; solid fallbacks retain contrast. */
+:root {
+  --surface: #1b231e;
+  --radius: 16px;
+  --line: rgba(237, 244, 223, .17);
+  --glass-edge: rgba(255, 255, 255, .18);
+  --glass-shadow: 0 16px 40px rgba(0, 0, 0, .18), inset 0 1px 0 rgba(255, 255, 255, .07);
+}
+body { background: radial-gradient(ellipse at 90% 10%, rgba(109, 142, 49, .1), transparent 48%), var(--ink); }
+.site-header { background: rgba(15, 21, 17, .7); border-bottom-color: var(--glass-edge); }
+.site-header.is-solid { background: rgba(15, 21, 17, .92); box-shadow: 0 8px 24px rgba(0, 0, 0, .12); }
+.button, .header-ticket, .icon-button { border-radius: 10px; }
+.button-primary { background: linear-gradient(135deg, #c2ed66, #acd83e); box-shadow: inset 0 1px 0 rgba(255,255,255,.28), 0 6px 18px rgba(0,0,0,.1); }
+.button-primary:hover { background: linear-gradient(135deg, #d0f583, #b9e650); }
+.button-ghost, .button-outline, .header-ticket { background: rgba(255,255,255,.055); border-color: rgba(255,255,255,.27); }
+.platform-form, .info-card, .content-cta, .public-team, .contact-link, .empty-state, .poll, .sponsor-logo {
+  border: 1px solid var(--glass-edge);
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(255,255,255,.065), rgba(255,255,255,.015)), #18211b;
+  box-shadow: var(--glass-shadow);
+}
+.platform-form > p { color: #c7cfc3; font-size: 14px; line-height: 1.75; }
+.platform-form label { line-height: 1.5; }
+.platform-form input:not([type=checkbox]):not([type=radio]), .platform-form select, .platform-form textarea {
+  border-radius: 10px; border: 1px solid rgba(229,241,214,.25); background: #111a14; color: var(--paper); padding: 12px 14px; min-height: 48px; font: inherit;
+}
+.platform-form select { width: 100%; }
+.platform-form input::placeholder, .platform-form textarea::placeholder { color: #97a490; }
+.platform-form input:focus-visible, .platform-form select:focus-visible, .platform-form textarea:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
+.platform-form .form-feedback { border-radius: 10px; }
+.payment-option-card { border-radius: 12px; background: rgba(255,255,255,.025); }
+.payment-option > input:checked + .payment-option-card { background: rgba(181,227,72,.12); }
+.hero-matchup { width: fit-content; padding: 16px 20px; border: 1px solid var(--glass-edge); border-radius: 16px; background: rgba(14,22,17,.7); box-shadow: var(--glass-shadow); }
+.experience-card, .gallery-photo, .rivalry-image, .page-event-photo > div { border-radius: 18px; }
+.experience-card { box-shadow: 0 14px 28px rgba(0,0,0,.13); }
+.card-label { border-radius: 8px; }
+.category-grid > div, .filter-bar button, .schedule-icon { border-radius: 10px; }
+.filter-bar button[aria-pressed=true] { background: var(--green); color: var(--ink); border-color: var(--green); }
+.contact-link:hover, .info-card:hover { border-color: rgba(181,227,72,.55); }
+.ticket-cta .button-primary { background: #152017; color: var(--paper); }
+.ticket-cta .button-primary:hover { background: #243a28; }
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .site-header, .hero-matchup, .mobile-bottom-nav { -webkit-backdrop-filter: blur(16px) saturate(125%); backdrop-filter: blur(16px) saturate(125%); }
+  .site-header.is-solid { background: rgba(15,21,17,.83); }
+}
+@media (max-width: 720px) {
+  .main-nav { background: #131d16; border-radius: 0 0 18px 18px; box-shadow: 0 18px 32px rgba(0,0,0,.22); }
+  .mobile-bottom-nav { background: rgba(14,21,16,.94); border-top: 1px solid var(--glass-edge); box-shadow: 0 -8px 24px rgba(0,0,0,.12); }
+  .mobile-bottom-nav a { border-radius: 12px; }
+  .hero-matchup { width: 100%; padding: 14px 16px; }
+  .platform-form, .info-card, .content-cta, .public-team { border-radius: 14px; }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .site-header, .site-header.is-solid, .hero-matchup, .mobile-bottom-nav { background: #111a14; -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
+@media print {
+  body { background: white; }
+  .platform-form, .info-card, .content-cta, .public-team, .contact-link, .empty-state, .poll { background: white; color: black; box-shadow: none; }
+}
+/* Payment selection and consent remain comfortable to use on narrow screens. */
+.payment-options { display: grid; gap: 10px; padding: 0; margin: 4px 0 22px; border: 0; }
+.payment-options legend { margin-bottom: 8px; font-size: 14px; font-weight: 600; }
+.platform-form .payment-option { display: block; margin: 0; cursor: pointer; }
+.payment-option > input { position: absolute; opacity: 0; pointer-events: none; }
+.payment-option-card { display: flex; align-items: center; gap: 12px; min-height: 76px; padding: 14px; border: 1px solid var(--line); }
+.payment-option-card strong, .payment-option-card small { display: block; }
+.payment-option-card strong { font-size: 14px; }
+.payment-option-card small { margin-top: 5px; font-size: 11px; line-height: 1.5; color: #b7c3b1; }
+.payment-option > input:focus-visible + .payment-option-card { outline: 2px solid var(--green); outline-offset: 3px; }
+.payment-option > input:checked + .payment-option-card { border-color: var(--green); box-shadow: inset 3px 0 0 var(--green); }
+.payment-provider-badge { width: 42px; height: 42px; display: inline-flex; align-items: center; justify-content: center; border-radius: 10px; font-size: 12px; font-weight: 800; flex-shrink: 0; }
+.provider-manuel { background: #ffcc00; color: #111; }
+.provider-youana { background: #ff7900; color: #111; }
+.platform-form .checkbox-label { display: flex; align-items: flex-start; gap: 12px; margin-block: 24px; font-size: 13px; font-weight: 400; line-height: 1.7; }
+.platform-form .checkbox-label input { flex: 0 0 18px; width: 18px; height: 18px; margin: 3px 0 0; accent-color: var(--green); }
+.platform-form .payment-option { position: relative; }
+.platform-form .payment-option > input { width: 1px; height: 1px; min-height: 0; padding: 0; margin: 0; border: 0; clip-path: inset(50%); }

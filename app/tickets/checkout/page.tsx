@@ -11,5 +11,5 @@ export default async function CheckoutPage({ searchParams }: { searchParams: Pro
   const type = types.find(t => t.id === id && t.available > 0)
   if (!type) redirect('/tickets')
   const test = testTicketingEnabled()
-  return <main id="main-content" className="page-container"><PageHero eyebrow={test ? 'COMMANDE DE TEST' : 'BILLETTERIE'} title="Réservez vos places." description={test ? 'Aucun montant ne sera débité. Les billets de test ne donnent pas accès à l’événement.' : 'Classique : 1 000 XAF · VIP : 2 000 XAF. Paiement accompagné sur WhatsApp, puis vérification par l’organisation.'} /><CheckoutForm type={type} request={randomUUID()} access={randomBytes(32).toString('hex')} test={test} /></main>
+  return <main id="main-content" className="page-container"><PageHero eyebrow={test ? 'COMMANDE DE TEST' : 'BILLETTERIE'} title="Réservez vos places." description={test ? 'Aucun montant ne sera débité. Les billets de test ne donnent pas accès à l’événement.' : 'Classique : 1 000 XAF · VIP : 2 000 XAF. Choisissez MTN Mobile Money ou Orange Money, puis faites vérifier votre paiement par l’organisation.'} /><CheckoutForm type={type} request={randomUUID()} access={randomBytes(32).toString('hex')} test={test} /></main>
 }

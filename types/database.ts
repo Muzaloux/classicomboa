@@ -398,7 +398,7 @@ export type Database = {
           access_hash: string
           created_at: string
           currency: string
-          customer_email: string
+          customer_email: string | null
           customer_name: string
           customer_phone: string
           edition_id: string
@@ -416,7 +416,7 @@ export type Database = {
           access_hash: string
           created_at?: string
           currency?: string
-          customer_email: string
+          customer_email?: string | null
           customer_name: string
           customer_phone: string
           edition_id: string
@@ -434,7 +434,7 @@ export type Database = {
           access_hash?: string
           created_at?: string
           currency?: string
-          customer_email?: string
+          customer_email?: string | null
           customer_name?: string
           customer_phone?: string
           edition_id?: string

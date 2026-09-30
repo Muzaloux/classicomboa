@@ -13,8 +13,9 @@ test('payment signature rejects altered bodies, old timestamps and malformed sig
   assert.equal(verifyPayment(body, null, signature, secret), false)
 })
 test('checkout rejects invalid quantities, missing consent and invalid guest details', () => {
-  const valid = { type: '10000000-0000-4000-8000-000000000001', request: '10000000-0000-4000-8000-000000000002', access: 'a'.repeat(64), name: 'Test Visitor', email: 'test@example.com', phone: '699123456', quantity: '2', consent: 'on', website: '' }
+  const valid = { type: '10000000-0000-4000-8000-000000000001', request: '10000000-0000-4000-8000-000000000002', access: 'a'.repeat(64), name: 'Test Visitor', phone: '699123456', quantity: '2', consent: 'on', website: '' }
   assert.equal(checkoutSchema.parse(valid).phone, '+237699123456')
+  assert.equal('email' in checkoutSchema.parse({ ...valid, email: 'not-collected@example.com' }), false)
   for (const patch of [{ quantity: '11' }, { quantity: '-1' }, { quantity: '1.5' }, { consent: '' }, { phone: '+33123456789' }, { website: 'spam' }, { access: 'short' }]) assert.equal(checkoutSchema.safeParse({ ...valid, ...patch }).success, false)
 })
 test('WhatsApp payment links use only approved contacts and carry the order amount', () => {
