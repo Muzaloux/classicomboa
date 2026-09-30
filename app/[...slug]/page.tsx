@@ -6,6 +6,7 @@ import { publicPages } from '../../data/public-pages'
 import { PublicPageContent } from '../../components/public/page-content'
 import { InfoCards, PageHero } from '../../components/shared/page'
 import { ShareButton } from '../../components/shared/share-button'
+import { socialOpenGraph, socialTwitter } from '../../lib/social-metadata'
 
 // Data-backed prototype routes are published at build time.
 export const dynamicParams = false
@@ -18,7 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const page = publicPages.find((item) => item.path === '/' + slug.join('/'))
   if (!page) return {}
-  return { title: page.title, description: page.description, alternates: process.env.NEXT_PUBLIC_SITE_URL ? { canonical: page.path } : undefined, openGraph: { title: page.title, description: page.description }, twitter: { title: page.title, description: page.description } }
+  return { title: page.title, description: page.description, alternates: process.env.NEXT_PUBLIC_SITE_URL ? { canonical: page.path } : undefined, openGraph: { ...socialOpenGraph, title: page.title, description: page.description }, twitter: { ...socialTwitter, title: page.title, description: page.description } }
 }
 export default async function PublicPage({ params }: Props) {
   const { slug } = await params
