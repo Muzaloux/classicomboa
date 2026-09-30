@@ -8,6 +8,8 @@ import { verifyPayment } from './payment-signature'
 import { currentEdition } from '../data/current-edition'
 
 export const testTicketingEnabled = () => process.env.TICKETING_MODE === 'test' && (process.env.TEST_PAYMENT_WEBHOOK_SECRET?.length ?? 0) >= 32
+export const manualTicketingEnabled = () => process.env.TICKETING_MODE === 'manual'
+export const ticketingEnabled = () => manualTicketingEnabled() || testTicketingEnabled()
 export const accessHash = (token: string) => createHash('sha256').update(token).digest('hex')
 export const orderCookie = (reference: string) => 'cm_order_' + reference.slice(3)
 export async function rememberOrder(reference: string, token: string) {
@@ -23,8 +25,8 @@ export async function ownedOrder(reference: string) {
   return { order: data, token: token! }
 }
 export async function ticketCatalog() {
-  if (!testTicketingEnabled()) return []
-  const { data, error } = await createAdminSupabase().rpc('ticket_catalog', { p_edition: currentEdition.id, p_test: true })
+  if (!ticketingEnabled()) return []
+  const { data, error } = await createAdminSupabase().rpc('ticket_catalog', { p_edition: currentEdition.id, p_test: testTicketingEnabled() })
   if (error) throw new Error('La billetterie est momentanément indisponible.')
   return data ?? []
 }

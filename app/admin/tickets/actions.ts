@@ -6,6 +6,16 @@ import { currentEdition } from '../../../data/current-edition'
 import type { FormState } from '../../../lib/forms'
 
 const typeSchema = z.object({ id: z.string().uuid(), name: z.string().trim().min(2).max(100), price: z.coerce.number().int().min(0).max(10000000), capacity: z.coerce.number().int().min(0).max(1000000), status: z.enum(['draft', 'active', 'paused', 'closed']) })
+export async function confirmManualPayment(_state: FormState, form: FormData): Promise<FormState> {
+  const identity = await getRoleAccess(currentEdition.id, ['admin', 'manager'])
+  if (!identity) return { status: 'error', message: 'Accès refusé.' }
+  const parsed = z.object({ reference: z.string().regex(/^CM-[a-f0-9]{32}$/), amount: z.coerce.number().int().nonnegative(), receipt: z.string().trim().min(6).max(100), confirmed: z.literal('on') }).safeParse(Object.fromEntries(form))
+  if (!parsed.success) return { status: 'error', message: 'Indiquez le montant reçu, la référence de transaction et confirmez la vérification du compte destinataire.' }
+  const { data, error } = await identity.supabase.rpc('confirm_manual_payment', { p_edition: currentEdition.id, p_reference: parsed.data.reference, p_amount: parsed.data.amount, p_receipt: parsed.data.receipt })
+  if (error || data !== 'paid') return { status: 'error', message: error?.message.includes('AMOUNT_MISMATCH') ? 'Le montant reçu ne correspond pas à la commande.' : error?.message.includes('SOLD_OUT') ? 'Plus assez de places : ne délivrez pas de billet. Contactez le client pour résoudre ce paiement.' : error?.code === '23505' ? 'Ce reçu a déjà été utilisé pour une autre commande.' : 'Confirmation impossible. Vérifiez la commande et le reçu.' }
+  revalidatePath('/admin/tickets', 'layout'); revalidatePath('/tickets', 'layout')
+  return { status: 'success', message: 'Paiement confirmé et billets délivrés. Le client peut actualiser sa commande.' }
+}
 export async function saveTicketType(_state: FormState, form: FormData): Promise<FormState> {
   const identity = await getRoleAccess(currentEdition.id, ['admin', 'manager'])
   if (!identity) return { status: 'error', message: 'Accès refusé.' }

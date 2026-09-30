@@ -1,6 +1,20 @@
 # Prototype implementation tracker
 
-Latest increment: hosted account and inquiry foundations, 30 September 2026. Connected project: `omzfphciqhiqavpsxlxg` (Classico Mboa). No phase is newly declared complete.
+Latest increment: manual Mobile Money checkout, 30 September 2026. Connected project: `omzfphciqhiqavpsxlxg` (Classico Mboa). The owner authorized live WhatsApp checkout with organizer receipt verification, confirmed 19 December 2026 and a shared 500-place capacity at 1,000/2,000 XAF. See the manual-payment release section below for current operations; the earlier test-flow notes describe the preceding increment. Phases 3 and 11 still lack automated provider integration, email delivery and full launch hardening.
+
+## Current ticketing delivery
+
+- Migration 003 is applied: stock, orders, immutable price snapshots, test payments/events, tickets and check-ins, with RLS and permission-checked RPCs.
+- Guest checkout reserves stock for 15 minutes. Prices are calculated in PostgreSQL; duplicate requests reuse the same order. Expired reservations stop consuming stock.
+- Signed, timestamp-checked test webhooks validate amount/currency. Payment confirmation and ticket issuance share one transaction; retries cannot issue extra tickets.
+- Guest orders require a private HttpOnly cookie. A reference plus a 256-bit recovery key restores access on another device. No automatic email delivery exists yet.
+- Order pages render printable QR tickets. Admins/managers can manage categories, review paginated orders and void unused tickets. Voiding does not refund or return capacity.
+- Check-in staff can sign in and validate codes. Live mode rejects test tickets. The QR camera scanner is lazy-loaded; manual code entry works. Physical phone-camera testing remains outstanding.
+- Local test mode requires `TICKETING_MODE=test` and a random `TEST_PAYMENT_WEBHOOK_SECRET` of at least 32 characters. Production remains closed; no live provider adapter exists.
+- Validation: 16 local tests, production build, hosted simultaneous stock requests, signed webhook rejection/retries, guest browser purchase, cross-browser recovery, unauthorized-access denial, check-in and voiding. QR output decodes to the expected secure payload.
+- The website currently configures 19 December 2026, while the roadmap/initial migration use 12 December. Confirm the official date and align database/public configuration before real sales.
+
+Production website and organizer authentication are deployed on Shirley's Vercel Pro team. Contact links, official supplied logo and mobile bottom navigation are implemented. Custom-domain DNS verification and GitHub auto-deployment access remain separate launch checks. Historical entries below describe earlier increments and are not current deployment status.
 
 Source: `Classico_Mboa_Phases 1-15.txt`. The source repeats phases 10–15; use the later expanded requirements in addition to the earlier outline. This tracker records implementation, not production approval.
 
@@ -16,7 +30,7 @@ Supabase clients, account flows, protected inquiry storage and versioned Postgre
 | --- | --- | --- |
 | 1 — Foundation | In progress | Complete component inventory and broader accessibility/performance checks. Local optimized photos and image fallbacks are implemented. |
 | 2 — Public website | In progress | Inquiry forms implemented and hosted submission verified. News detail/media publishing, confirmed links and full accessibility/performance review remain. |
-| 3 — Ticketing | Not started | Database, inventory, orders, test payment adapter, secure ticket issuance and check-in. |
+| 3 — Ticketing | Test flow implemented | Real payment provider, email ticket delivery, operational recovery/support, physical scanner testing and launch acceptance remain. |
 | 4 — Voting | Not started | Campaigns, authoritative pricing, confirmed-vote ledger and results. Public information page exists. |
 | 5 — Tombola | Not started | Entries, auditable server-side drawing and winner verification. Public information page exists. |
 | 6 — FIFA Cup | Not started | Registration, capacity, brackets, scores and staff permissions. Public information page exists. |
@@ -24,7 +38,7 @@ Supabase clients, account flows, protected inquiry storage and versioned Postgre
 | 8 — Sponsorship | Not started | Proposals, agreements, deliverables and commercial tracking. Public information page exists. |
 | 9 — Organizer admin | Started | Edition-scoped inquiry inbox, filters, pagination and audited status changes verified on hosted Supabase. Permanent organizer assignment and other operational modules remain. |
 | 10 — Authentication | Started | Password signup/sign-in, email code access, profiles, session refresh and edition staff authorization implemented. Hosted password/code login verified. Real email delivery, account security controls and the complete role matrix remain. |
-| 11 — Shared payments | Not started | Establish shared provider/state/idempotency primitives in phase 3, extend here. |
+| 11 — Shared payments | Started | Test payment ledger, signature verification and idempotency exist. Real provider, refunds, reconciliation, alerts and finance reporting remain. |
 | 12 — CMS | Not started | Publishing, media rights, storage, scheduling and permissions. |
 | 13 — Live operations | Not started | Authorized score/programme updates, reconnect behavior and displays. |
 | 14 — Hardening | Not started | Security/RLS/payment abuse tests, E2E, load/performance, monitoring and backups. |
@@ -101,3 +115,14 @@ No phase is claimed complete by this increment. Phases 9 and 10 have started as 
 The owner confirmed organizer-only login and provided the permanent admin email. That account now has Edition 8 admin membership; its email is not force-confirmed and no password or invitation was issued. Public signup is disabled in Supabase, the signup UI and `/account` remain removed, and login/callback handlers reject users without an active authorized staff role. Non-staff denial and staff login to `/admin` were verified with disposable accounts, then cleaned up. Guest checkout remains the direction for ticketing. First-owner code login and inbox delivery are still pending.
 
 Password setup is now available at `/admin/security` after organizer authentication. Both the page and mutation check active edition staff access, and only the current user's Supabase session can change that user's password. Hosted browser verification rejected mismatched confirmation, accepted a new password, confirmed that the new password signs in and the old one fails, and removed the temporary test account afterward. The owner's password remains unset until they choose one themselves.
+
+
+## Manual Mobile Money release - current configuration
+
+The owner confirmed 19 December 2026, Classique 1,000 XAF, VIP 2,000 XAF and approximately 500 places. Migrations 004 and 005 are applied. Migration 004 was renumbered from the conflicting 003 date-change filename; the already-applied ticketing migration retains version 003.
+
+Production mode is manual. Both real categories share one edition-wide capacity of 500; they are not 500 places each. A guest chooses Manuel (+237658846124) or Youana (+237699051046), reserves for two hours, and is redirected to a prefilled WhatsApp conversation. A redirect never marks an order paid. No message is sent automatically. Recent orders can be recovered on the same browser using private cookies; cross-device access requires the recovery key.
+
+An admin/manager verifies receipt in the destination Mobile Money account and enters the actual amount plus a unique receipt in the order detail. Confirmation, ticket issuance and audit logging are atomic. Wrong amounts, reused receipts, unauthorized confirmations and overselling are rejected. Expired orders can be reconciled only when capacity is still available; otherwise staff must resolve the payment directly with the customer. No automatic refund or email delivery exists.
+
+Validation: 19 automated tests; hosted guest checkout for both recipient choices; actual browser redirect to Manuel's WhatsApp draft; saved Youana order link/amount verified; no tickets issued to unpaid orders; tagged unpaid test records cleaned. Manual confirmation and shared-capacity/late-receipt protections tested in PostgreSQL. The mobile hero now uses a right-aligned crop to keep the Barca player visible.

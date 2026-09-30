@@ -89,3 +89,25 @@ The inquiry quota allows three accepted submissions per email address per hour. 
 Edition 8 currently exists in both the migration and the public site's TypeScript data. Keep them aligned until the edition-management phase moves the public site to database-backed publishing. No payment, ticket, or reservation is created by these forms.
 
 References: [Supabase server-side client setup](https://supabase.com/docs/guides/auth/server-side/creating-a-client), [email code authentication](https://supabase.com/docs/guides/auth/auth-email-passwordless).
+
+
+## Ticketing test flow (migration 003)
+
+Local environment: set TICKETING_MODE=test and TEST_PAYMENT_WEBHOOK_SECRET to a random value with at least 32 characters. Production must remain TICKETING_MODE=closed until a real provider is implemented. Do not put the webhook secret in a NEXT_PUBLIC variable.
+
+Guest routes: /tickets, /tickets/checkout, /tickets/order/[reference], /tickets/retrieve. The reference alone does not grant access; a private cookie or matching recovery key is required. Recovery keys and QR payloads are credentials and must not be logged.
+
+Organizer routes: /admin/tickets (admin/manager), /admin/check-in (admin/manager/checkin). Check-in defaults to real mode and refuses test tickets. Select test mode deliberately for rehearsals. Camera requires HTTPS or localhost and permission; manual code entry is available. Printing uses the browser print/PDF action. Voiding does not refund or return capacity.
+
+Test webhook: POST /api/payments/test/webhook. Sign the exact JSON body with HMAC-SHA256 over timestamp + '.' + body, using headers x-payment-timestamp (Unix seconds) and x-payment-signature (hex). Events must contain reference, UUID event, integer amount, currency XAF and outcome successful/failed. Signatures expire after five minutes. Database validation remains authoritative.
+
+Run npm test and npm run verify:routes. The explicitly targeted scripts/live-ticketing-smoke.mjs supports setup, capture, webhooks, verify and cleanup with project reference omzfphciqhiqavpsxlxg. It creates tagged disposable records, never sends mail, and removes only its own verified test fixtures. For the browser verification, buy two Classique test tickets using the fixture email, simulate success, capture, recover in a second browser, log in as the fixture organizer, reject a ticket in live mode, accept it once in test mode, reject its reuse and void the other ticket. Run verify and cleanup. The webhooks mode separately tests true hosted stock contention and signed callback retries.
+
+
+## Live manual Mobile Money operations
+
+Use TICKETING_MODE=manual. The test webhook stays disabled. No payment API credentials are needed for this mode. Migrations 004/005 set the date to 2026-12-19, add two real ticket categories and a shared 500-place capacity. Keep TEST_PAYMENT_WEBHOOK_SECRET server-only and unset in production unless explicitly running a test environment.
+
+Checkout opens WhatsApp with Manuel for MoMo or Youana for Mobile Money. Confirm actual receipt in the destination account before opening the matching order at /admin/tickets, entering the received amount and unique transaction receipt, checking the verification box and issuing tickets. Never treat a WhatsApp draft, client statement or screenshot as receipt verification. A duplicate receipt is rejected. Late receipts with insufficient capacity require staff resolution; do not request a second payment.
+
+Tell the customer to return to /tickets/retrieve in the original browser and refresh the order once confirmed. Ask them to save their private recovery key for another browser/device. Do not request or share that key in WhatsApp. E-mail delivery is not configured. Tickets can be printed or saved as PDF. Manual checkout smoke checks use scripts/manual-checkout-smoke.mjs setup/verify/cleanup plus the explicit project reference; cleanup refuses paid orders.

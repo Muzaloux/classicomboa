@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict'
+import { readFile } from 'node:fs/promises'
 const origin = process.env.VERIFY_ORIGIN || 'http://localhost:3100'
 const paths = ['/', '/classico', '/edition/8', '/teams', '/players', '/programme', '/tickets', '/vote', '/tombola', '/fifa-cup', '/village', '/sponsors', '/news', '/gallery', '/contact', '/partner', '/stands', '/legal', '/privacy', '/auth/sign-in']
 for (const path of paths) {
@@ -16,11 +17,12 @@ for (const path of ['/edition/999', '/unknown-page', '/account']) {
 }
 const edition = await (await fetch(origin + '/edition/8')).text()
 assert.match(edition, /application\/ld\+json/)
-assert.match(edition, /2026-12-12/)
+const configuredDate = (await readFile(new URL('../data/current-edition.ts', import.meta.url), 'utf8')).match(/eventDate:\s*'([^']+)'/)?.[1]
+assert.ok(configuredDate && edition.includes(configuredDate), 'structured data matches configured edition date')
 console.log('Passed: ' + paths.length + ' public routes, 3 unavailable-route checks, metadata and event schema.')
 const login = await (await fetch(origin + '/auth/sign-in')).text()
 assert.doesNotMatch(login, /Créer un compte|Créer mon compte/, 'No public signup UI')
-for (const path of ['/admin', '/admin/security']) {
+for (const path of ['/admin', '/admin/security', '/admin/tickets', '/admin/check-in']) {
   const response = await fetch(origin + path, { redirect: 'manual' })
   if (response.status === 307) {
     assert.match(response.headers.get('location'), /\/auth\/sign-in$/, path + ': safe redirect')

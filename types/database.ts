@@ -102,6 +102,7 @@ export type Database = {
           name: string
           slug: string
           status: string
+          ticket_capacity: number | null
           timezone: string
           venue: string
         }
@@ -115,6 +116,7 @@ export type Database = {
           name: string
           slug: string
           status?: string
+          ticket_capacity?: number | null
           timezone?: string
           venue: string
         }
@@ -128,6 +130,7 @@ export type Database = {
           name?: string
           slug?: string
           status?: string
+          ticket_capacity?: number | null
           timezone?: string
           venue?: string
         }
@@ -218,38 +221,54 @@ export type Database = {
       payment_transactions: {
         Row: {
           amount_xaf: number
+          confirmed_by: string | null
+          contact: string | null
           created_at: string
           currency: string
           id: string
           order_id: string
           provider: string
           provider_reference: string
+          receipt_reference: string | null
           settled_at: string | null
           status: string
         }
         Insert: {
           amount_xaf: number
+          confirmed_by?: string | null
+          contact?: string | null
           created_at?: string
           currency?: string
           id?: string
           order_id: string
           provider: string
           provider_reference: string
+          receipt_reference?: string | null
           settled_at?: string | null
           status?: string
         }
         Update: {
           amount_xaf?: number
+          confirmed_by?: string | null
+          contact?: string | null
           created_at?: string
           currency?: string
           id?: string
           order_id?: string
           provider?: string
           provider_reference?: string
+          receipt_reference?: string | null
           settled_at?: string | null
           status?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "payment_transactions_confirmed_by_fkey"
+            columns: ["confirmed_by"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "payment_transactions_order_id_fkey"
             columns: ["order_id"]
@@ -615,9 +634,32 @@ export type Database = {
         }
         Returns: undefined
       }
+      confirm_manual_payment: {
+        Args: {
+          p_amount: number
+          p_edition: string
+          p_receipt: string
+          p_reference: string
+        }
+        Returns: string
+      }
       has_edition_role: {
         Args: { p_edition: string; p_roles: string[] }
         Returns: boolean
+      }
+      reserve_manual_ticket_order: {
+        Args: {
+          p_access_hash: string
+          p_contact: string
+          p_edition: string
+          p_email: string
+          p_name: string
+          p_phone: string
+          p_quantity: number
+          p_request: string
+          p_type: string
+        }
+        Returns: string
       }
       reserve_ticket_order: {
         Args: {

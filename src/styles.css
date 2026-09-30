@@ -513,7 +513,7 @@ h1, h2, h3, p { margin-top: 0; }
 @media (max-width: 720px) {
  .hero { height: auto; min-height: max(725px, 100svh); max-height: none; }
  .hero-content { padding: 130px 23px 85px; }
- .hero-image img { object-position: 42% center !important; }
+ .hero-image img { object-position: 100% center !important; }
  .hero-photo-shade { background: linear-gradient(90deg, rgba(12,15,13,.78), rgba(12,15,13,.32)), linear-gradient(180deg, rgba(12,15,13,.5), rgba(12,15,13,.12) 40%, rgba(12,15,13,.65) 75%, var(--ink)); }
  .hero-matchup { margin-top: 26px; }
  .hero-date, .scroll-cue { display: none; }

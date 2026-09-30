@@ -51,7 +51,7 @@ function App() {
             <h1 id="hero-title">LE CLASSICO.<br /><span>VERSION MBOA.</span></h1>
             <p className="hero-copy">Real Mboa face à Barça Mboa.<br />Plus qu’un match, un rendez-vous autour du football et de la culture.</p>
             <div className="hero-actions">
-              <Link className="button button-primary" href="/tickets"><Ticket size={17} /> Infos billetterie</Link>
+              <Link className="button button-primary" href="/tickets"><Ticket size={17} /> Réserver mon billet</Link>
               <Link className="button button-ghost" href="/classico"><Play size={15} /> Découvrir le Classico</Link>
             </div>
             <div className="hero-matchup" aria-label="Real Mboa contre Barça Mboa">
@@ -69,8 +69,8 @@ function App() {
           <EventCountdown date={currentEdition.eventDate} />
           <div className="event-details">
             <div><MapPin size={16} /><span><b>{currentEdition.venue}</b><small>{currentEdition.city}, {currentEdition.country}</small></span></div>
-            <div><Ticket size={16} /><span><b>{currentEdition.editionNumber}e édition · {formatEventDate(currentEdition.eventDate)}</b><small>Informations billetterie à venir</small></span></div>
-            <Link className="text-link" href="/tickets">Suivre la billetterie <ArrowRight size={15} /></Link>
+            <div><Ticket size={16} /><span><b>{currentEdition.editionNumber}e édition · {formatEventDate(currentEdition.eventDate)}</b><small>Classique 1 000 XAF · VIP 2 000 XAF</small></span></div>
+            <Link className="text-link" href="/tickets">Réserver mon billet <ArrowRight size={15} /></Link>
           </div>
         </section></Reveal>
 
@@ -133,7 +133,7 @@ function App() {
 
         <Reveal><section className="ticket-cta" id="tickets">
           <span className="eyebrow">DOUALA, LE RENDEZ-VOUS APPROCHE</span><h2>VIVEZ LE<br /><span>CLASSICO.</span></h2>
-          <div className="ticket-cta-bottom"><p>{formatEventDate(currentEdition.eventDate)} · {currentEdition.venue}, {currentEdition.city}</p><Link className="button button-primary" href="/tickets"><Ticket size={17} /> Infos billetterie <ArrowRight size={15} /></Link></div>
+          <div className="ticket-cta-bottom"><p>{formatEventDate(currentEdition.eventDate)} · {currentEdition.venue}, {currentEdition.city}</p><Link className="button button-primary" href="/tickets"><Ticket size={17} /> Réserver mon billet <ArrowRight size={15} /></Link></div>
           <div className="cta-lines" aria-hidden="true" />
         </section></Reveal>
         <SponsorStrip />

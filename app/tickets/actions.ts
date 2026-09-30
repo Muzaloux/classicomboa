@@ -4,28 +4,42 @@ import { redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 import { createAdminSupabase } from '../../lib/supabase/admin'
-import { accessHash, ownedOrder, processTestPayment, rememberOrder, testTicketingEnabled } from '../../lib/ticketing'
+import { accessHash, ownedOrder, processTestPayment, rememberOrder, testTicketingEnabled, manualTicketingEnabled, ticketingEnabled } from '../../lib/ticketing'
+import { paymentWhatsAppUrl } from '../../lib/manual-payment'
 import { checkoutSchema, referenceSchema, accessTokenSchema } from '../../lib/ticketing-validation'
 import { signPayment } from '../../lib/payment-signature'
 import type { FormState } from '../../lib/forms'
 import { currentEdition } from '../../data/current-edition'
 
 export async function reserveOrder(_state: FormState, form: FormData): Promise<FormState> {
-  if (!testTicketingEnabled()) return { status: 'error', message: 'Les ventes ne sont pas ouvertes.' }
+  if (!ticketingEnabled()) return { status: 'error', message: 'Les ventes ne sont pas ouvertes.' }
   const parsed = checkoutSchema.safeParse(Object.fromEntries(form))
   if (!parsed.success) return { status: 'error', message: 'Vérifiez vos coordonnées, la quantité et votre accord.', errors: z.flattenError(parsed.error).fieldErrors }
   const v = parsed.data
   let reference: string
+  let destination: string
   try {
-    const { data, error } = await createAdminSupabase().rpc('reserve_ticket_order', { p_type: v.type, p_quantity: v.quantity, p_name: v.name, p_email: v.email, p_phone: v.phone, p_request: v.request, p_access_hash: accessHash(v.access), p_test: true })
+    const db = createAdminSupabase()
+    const type = await db.from('ticket_types').select('id').eq('id', v.type).eq('edition_id', currentEdition.id).eq('is_test', testTicketingEnabled()).maybeSingle()
+    if (type.error || !type.data) return { status: 'error', message: 'Cette catégorie n’est pas disponible pour cette édition.' }
+    const common = { p_type: v.type, p_quantity: v.quantity, p_name: v.name, p_email: v.email, p_phone: v.phone, p_request: v.request, p_access_hash: accessHash(v.access) }
+    const { data, error } = manualTicketingEnabled()
+      ? await db.rpc('reserve_manual_ticket_order', { ...common, p_edition: currentEdition.id, p_contact: v.contact })
+      : await db.rpc('reserve_ticket_order', { ...common, p_test: true })
     if (error || !data) {
       const message = error?.message.includes('SOLD_OUT') ? 'Cette quantité n’est plus disponible. Choisissez moins de billets.' : error?.message.includes('RATE_LIMITED') ? 'Trop de réservations. Réessayez plus tard.' : 'Réservation impossible. Actualisez la page et vérifiez les places disponibles.'
       return { status: 'error', message }
     }
     reference = data
     await rememberOrder(reference, v.access)
+    destination = '/tickets/order/' + reference
+    if (manualTicketingEnabled()) {
+      const { data: order, error: orderError } = await db.from('ticket_orders').select('reference,quantity,total_xaf,customer_name,status,expires_at').eq('reference', reference).eq('access_hash', accessHash(v.access)).single()
+      if (orderError || !order) return { status: 'error', message: 'Commande enregistrée. Retrouvez-la dans « Mes commandes » avant de payer.' }
+      if (order.status === 'pending' && Date.parse(order.expires_at) > Date.now()) destination = paymentWhatsAppUrl(v.contact, order)
+    }
   } catch { return { status: 'error', message: 'Connexion interrompue. Réessayez avec ce formulaire : une même demande ne crée pas deux commandes.' } }
-  redirect('/tickets/order/' + reference)
+  redirect(destination)
 }
 export async function simulatePayment(_state: FormState, form: FormData): Promise<FormState> {
   if (!testTicketingEnabled()) return { status: 'error', message: 'La simulation est désactivée.' }

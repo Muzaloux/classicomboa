@@ -18,7 +18,7 @@ npm run build
 npm run start
 ```
 
-For a fresh checkout, copy `.env.example` to `.env.local` and follow [the setup guide](docs/supabase-setup.md). This workspace is already linked to the Classico Mboa Supabase project (`omzfphciqhiqavpsxlxg`), with ignored local credentials and two applied migrations. Its development URL is `http://localhost:3002`; update `NEXT_PUBLIC_SITE_URL` when the production domain is confirmed.
+For a fresh checkout, copy `.env.example` to `.env.local` and follow [the setup guide](docs/supabase-setup.md). This workspace is already linked to the Classico Mboa Supabase project (`omzfphciqhiqavpsxlxg`), with ignored local credentials and five applied migrations. Its development URL is `http://localhost:3002`; update `NEXT_PUBLIC_SITE_URL` when the production domain is confirmed.
 
 ## Project Structure
 
@@ -37,17 +37,15 @@ For a fresh checkout, copy `.env.example` to `.env.local` and follow [the setup 
 - Locale: fr-CM
 - Currency: XAF
 
-Programme times, ticket tiers/prices, voting campaigns, tombola prizes, tournament rules, artists, and sponsors remain unconfirmed and are not presented as live offers.
+Confirmed ticket prices: Classique 1,000 XAF and VIP 2,000 XAF, sharing an edition-wide capacity of 500. Programme times, voting campaigns, tombola prizes, tournament rules, artists and sponsors still require confirmation.
 
 ## Roadmap Status
 
-Phase 1 is in progress: the project now uses Next.js App Router, strict TypeScript, Tailwind CSS, edition-scoped types/data, public route placeholders, metadata, SEO endpoints, and loading/error/not-found states. Shared layout/page components, countdown, filters, font optimization and offline messaging are now implemented. The full component inventory, image fallback pass and broader acceptance checks remain in progress.
+The public website is deployed on Shirley's Vercel Pro team. Supabase project `omzfphciqhiqavpsxlxg` has five applied migrations. Organizer-only login, password management, inquiry workflows and role-protected ticketing tools are implemented.
 
-Phase 2 is in progress: the homepage and branded public route shells are available. Dedicated public information modules, programme/player filters, sharing and reusable edition routing are implemented. Persisted inquiry forms are verified against hosted Supabase. Actual community links, official content/media and the full accessibility/performance review remain outstanding.
+Phase 3 now has a verified guest test flow: stock reservation, private order recovery, signed test payment confirmation, QR issuance, printable tickets, category management, ticket cancellation and single-use check-in. Phase 11 has initial payment ledger/signature/idempotency foundations. Manual Mobile Money checkout now reserves a place for two hours and opens WhatsApp with Manuel or Youana. Only an authorized organizer can confirm the actual received amount and a unique receipt before tickets are issued. No payment API or automatic payment confirmation is configured.
 
-Phases 9–10 have started: organizer-only login, edition-scoped staff permissions and an inquiry inbox are implemented and hosted flows verified, with PostgreSQL RLS and audit records. Public signup is disabled, `/account` is removed, and the owner's Edition 8 admin account is provisioned. The owner's first email-code login and real email delivery still need verification. Phases 3–8 and 11–15 remain unimplemented; ticketing, payments, voting, tombola and tournament registration are not operational.
-
-Live Supabase credentials are configured locally and are excluded from Git. No public website domain or payment provider is configured. Ticket/payment services and launch hardening remain future work.
+No full transactional phase is declared production-ready. Physical camera verification, email ticket delivery, refunds, reconciliation, broader security/load tests and the other operational modules remain outstanding. Public signup stays disabled.
 
 ## Implementation tracking
 

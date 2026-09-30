@@ -5,6 +5,3 @@ node_modules/
 *.tsbuildinfo
 artifacts/
 .vercel/
-
-.vercel
-.env*
