@@ -1,0 +1,6 @@
+Event Images/
+artifacts/
+supabase/.temp/
+.env*
+!.env.example
+*.tsbuildinfo

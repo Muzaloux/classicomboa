@@ -1,0 +1,20 @@
+import type { Metadata } from 'next'
+import { DM_Sans, Oswald } from 'next/font/google'
+import { Navbar } from '../components/layout/navbar'
+import { Footer } from '../components/layout/footer'
+import { OfflineStatus } from '../components/shared/offline-status'
+import '../src/styles.css'
+
+const bodyFont = DM_Sans({ subsets: ['latin'], variable: '--font-body', display: 'swap' })
+const displayFont = Oswald({ subsets: ['latin'], variable: '--font-display', display: 'swap' })
+const description = 'Classico Mboa rassemble football, culture, gaming, musique et divertissement autour du Classico version Mboa au Cameroun.'
+export const metadata: Metadata = {
+  title: { default: 'Classico Mboa | Le Classico Version Mboa', template: '%s | Classico Mboa' },
+  description,
+  metadataBase: process.env.NEXT_PUBLIC_SITE_URL ? new URL(process.env.NEXT_PUBLIC_SITE_URL) : undefined,
+  openGraph: { title: 'Classico Mboa | Le Classico Version Mboa', description, locale: 'fr_CM', type: 'website' },
+  twitter: { card: 'summary', title: 'Classico Mboa', description },
+}
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  return <html lang="fr-CM" className={bodyFont.variable + ' ' + displayFont.variable}><body><a className="skip-link" href="#main-content">Aller au contenu</a><Navbar /><OfflineStatus />{children}<Footer /></body></html>
+}

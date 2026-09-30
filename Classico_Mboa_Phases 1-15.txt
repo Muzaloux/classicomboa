@@ -1,0 +1,10115 @@
+CLASSICO MBOA — DEVELOPMENT ROADMAP
+DETAILED IMPLEMENTATION PROMPTS — PHASES 1 TO 6
+Cameroon-first production build
+============================================================
+
+PROJECT CONTEXT
+---------------
+
+Product:
+CLASSICO MBOA
+
+Current active edition:
+Classico Mboa — 8th Edition
+
+Date:
+12 December 2026
+
+Venue:
+Omnisports Bépanda
+
+City:
+Douala, Cameroon
+
+Concept:
+Real Madrid vs FC Barcelona — Version Mboa
+
+Core direction:
+Classico Mboa must be developed as a permanent sports, culture, entertainment, gaming, commerce and community platform rather than a temporary website for one match.
+
+Default locale: fr-CM
+Secondary locale architecture: en-CM
+Timezone: Africa/Douala
+Currency: XAF / FCFA
+Phone format: +237
+
+Primary payment direction:
+- MTN Mobile Money Cameroon
+- Orange Money Cameroon
+- Compatible Cameroon payment aggregators
+- Cards where supported
+
+Primary sharing/discovery channel:
+- WhatsApp
+
+Primary device assumptions:
+- Android smartphones
+- Mobile browsers
+- Mobile data connections
+- Unstable/slow connectivity
+
+Architectural principle:
+Classico Mboa is the permanent platform; each edition is data.
+
+Classico Mboa
+→ Edition 8
+→ Edition 9
+→ Edition 10
+
+Each edition must support its own:
+- date
+- venue
+- teams
+- players
+- tickets
+- programme
+- vote campaigns
+- tombola
+- FIFA Cup
+- sponsors
+- vendors
+- galleries
+- results
+- financial data
+
+Do not hardcode the app exclusively around Edition 8.
+
+
+============================================================
+PHASE 1 — FOUNDATION, ARCHITECTURE & DESIGN SYSTEM
+============================================================
+
+OBJECTIVE
+---------
+
+Create the technical and visual foundation of Classico Mboa.
+
+This phase establishes:
+- project architecture
+- tech stack
+- design system
+- reusable components
+- route structure
+- TypeScript models
+- mock-data structure
+- SEO foundation
+- accessibility
+- mobile-first performance
+
+Do not implement transactional features yet.
+
+
+1. TECH STACK
+-------------
+
+Framework:
+- Next.js latest stable version
+- App Router
+- TypeScript
+- React Server Components by default
+- Client Components only when interactivity requires them
+- Server Actions where appropriate
+
+Styling:
+- Tailwind CSS
+- CSS variables/design tokens
+- shadcn/ui as primitive foundation
+
+Icons:
+- Lucide React
+
+Animation:
+- Framer Motion
+
+Backend preparation:
+- Supabase
+- PostgreSQL
+- Supabase Auth
+- Supabase Storage
+- Row Level Security
+- Realtime where useful
+
+Deployment direction:
+- Vercel
+- Supabase backend
+
+Do not fully implement backend business logic in Phase 1.
+
+
+2. DESIGN DIRECTION
+-------------------
+
+The public site must feel:
+- premium
+- bold
+- competitive
+- youthful
+- modern
+- urban
+- Cameroonian
+- football-driven
+- entertainment-focused
+
+Avoid:
+- generic SaaS appearance
+- betting-site styling
+- generic European football-club clone
+- stereotypical African visual motifs
+- default shadcn styling
+- excessive animation
+
+Use 237 Mboa only as local/prototype inspiration, not as a direct clone.
+
+
+3. COLOR SYSTEM
+---------------
+
+Base:
+- near-black
+- charcoal
+- deep navy
+- white
+- off-white
+- muted gray
+
+Accent references may use:
+- Cameroon green
+- Cameroon red
+- Cameroon yellow/gold
+
+Use these strategically rather than everywhere.
+
+Real Mboa and Barça Mboa can have team-specific accent colors without replacing the main Classico Mboa identity.
+
+
+4. TYPOGRAPHY
+-------------
+
+Display font options:
+- Bebas Neue
+- Oswald
+- Anton
+- Archivo Black
+
+Body/UI font options:
+- Inter
+- Manrope
+- Geist
+
+Recommended:
+- Bebas Neue + Inter
+or
+- Oswald + Manrope
+
+Use Next.js font optimization.
+
+
+5. DESIGN TOKENS
+----------------
+
+Create centralized tokens for:
+- background
+- surface
+- secondary surface
+- foreground
+- muted foreground
+- border
+- accent
+- success
+- warning
+- destructive
+- Real Mboa accent
+- Barça Mboa accent
+
+Also define:
+- border radius
+- max content width
+- section spacing
+- card padding
+- navigation height
+- mobile horizontal padding
+- desktop horizontal padding
+
+
+6. PROJECT STRUCTURE
+--------------------
+
+Recommended structure:
+
+app/
+  (public)/
+  admin/
+  api/
+
+components/
+  layout/
+  ui/
+  shared/
+  home/
+  classico/
+  teams/
+  players/
+  programme/
+  tickets/
+  voting/
+  tombola/
+  fifa/
+  sponsors/
+  village/
+  media/
+
+data/
+
+lib/
+  supabase/
+  validations/
+  formatting/
+  utils/
+
+hooks/
+types/
+constants/
+
+public/
+  branding/
+  images/
+  icons/
+  teams/
+  players/
+  sponsors/
+  gallery/
+
+
+7. TYPES
+--------
+
+Create strong TypeScript interfaces for:
+
+EventEdition
+Team
+Player
+ProgrammeItem
+NewsArticle
+Sponsor
+Activity
+TicketType
+VoteCategory
+VoteCandidatex
+Vendor
+Artist
+MediaItem
+
+
+8. MOCK DATA
+------------
+
+Do not hardcode page data in JSX.
+
+Create temporary data modules such as:
+
+data/current-edition.ts
+data/teams.ts
+data/players.ts
+data/programme.ts
+data/news.ts
+data/sponsors.ts
+data/activities.ts
+
+
+9. PUBLIC ROUTES
+----------------
+
+Create:
+
+/
+ /classico
+ /edition/8
+ /teams
+ /players
+ /programme
+ /tickets
+ /vote
+ /tombola
+ /fifa-cup
+ /village
+ /sponsors
+ /news
+ /gallery
+ /contact
+ /partner
+ /stands
+
+Incomplete routes should still use polished branded placeholder pages.
+
+
+10. NAVIGATION
+--------------
+
+Desktop navigation:
+- Le Classico
+- Équipes
+- Programme
+- Vote
+- FIFA Cup
+- Billets
+- Sponsors
+
+Primary CTA:
+Prendre mon ticket
+
+Mobile:
+- accessible drawer/fullscreen menu
+- ticket CTA
+- social/community links
+
+Navbar supports:
+- transparent hero state
+- solid state after scroll
+
+
+11. FOOTER
+----------
+
+Include:
+- logo
+- short description
+- site navigation
+- event links
+- community links
+- sponsorship
+- contact
+- WhatsApp
+- Instagram
+- TikTok
+- legal placeholders
+- copyright
+
+
+12. REUSABLE COMPONENTS
+-----------------------
+
+Create:
+
+Navbar
+MobileMenu
+Footer
+Container
+Section
+SectionHeading
+PageHero
+Badge
+EventCountdown
+MatchCard
+TeamBadge
+TeamCard
+PlayerCard
+ProgrammeItem
+NewsCard
+ActivityCard
+SponsorLogo
+MediaCard
+CTASection
+StatCard
+ShareButton
+WhatsAppCTA
+EmptyState
+
+
+13. BUTTON SYSTEM
+-----------------
+
+Variants:
+- primary
+- secondary
+- outline
+- ghost
+- team-real
+- team-barca
+- destructive
+
+Sizes:
+- sm
+- md
+- lg
+- xl
+
+Use mobile-friendly touch targets.
+
+
+14. IMAGE SYSTEM
+----------------
+
+Use Next/Image.
+
+Implement:
+- responsive sizing
+- aspect ratios
+- placeholders
+- fallbacks
+- object positioning
+- lazy loading where appropriate
+
+Avoid layout shift.
+
+
+15. SEO FOUNDATION
+------------------
+
+Default title:
+Classico Mboa | Le Classico Version Mboa
+
+Default description:
+Classico Mboa rassemble football, culture, gaming, musique et divertissement autour du Classico version Mboa au Cameroun.
+
+Configure:
+- OpenGraph
+- Twitter/X cards
+- favicon
+- metadata templates
+- canonical support preparation
+- robots
+- sitemap preparation
+
+
+16. ACCESSIBILITY
+-----------------
+
+Implement:
+- semantic HTML
+- proper heading order
+- keyboard navigation
+- visible focus
+- ARIA where needed
+- accessible contrast
+- alt text support
+- reduced-motion support
+
+
+17. PERFORMANCE
+---------------
+
+Prioritize:
+- small JS bundles
+- server rendering
+- optimized fonts
+- responsive images
+- lazy-loaded galleries
+- minimal third-party scripts
+- no large autoplay background videos by default
+
+Assume many users arrive through WhatsApp on mobile data.
+
+
+18. ERROR STATES
+----------------
+
+Build:
+- not-found page
+- error boundary
+- loading states
+- offline-aware messaging
+
+
+19. HOMEPAGE STRUCTURAL SHELL
+----------------------------
+
+Create responsive sections for:
+- hero
+- match feature
+- event introduction
+- experience grid
+- programme preview
+- voting teaser
+- FIFA Cup teaser
+- Classico Village
+- news
+- sponsors
+- community CTA
+
+
+20. ENVIRONMENT
+---------------
+
+Create .env.example with:
+
+NEXT_PUBLIC_SUPABASE_URL
+NEXT_PUBLIC_SUPABASE_ANON_KEY
+SUPABASE_SERVICE_ROLE_KEY
+NEXT_PUBLIC_SITE_URL
+
+Never commit live secrets.
+
+
+21. PHASE 1 ACCEPTANCE CRITERIA
+-------------------------------
+
+Phase 1 is complete when:
+
+1. Next.js application is fully initialized.
+2. Tailwind and the design system work.
+3. Responsive navigation/footer are implemented.
+4. Domain types exist.
+5. Mock data is separated from UI.
+6. Public routes exist.
+7. Reusable shared components exist.
+8. SEO foundation works.
+9. Error/loading states exist.
+10. Mobile layouts are polished.
+11. TypeScript is strict.
+12. Production build passes.
+13. Ticket/payment/vote logic has not been prematurely implemented.
+
+
+============================================================
+PHASE 2 — COMPLETE PUBLIC EVENT WEBSITE
+============================================================
+
+OBJECTIVE
+---------
+
+Transform the Phase 1 foundation into a complete professional public-facing Classico Mboa website.
+
+A visitor must immediately understand:
+- what Classico Mboa is
+- when it is happening
+- where it is happening
+- the Real Mboa vs Barça Mboa concept
+- event experiences
+- ticket pathway
+- community pathway
+- sponsors
+- FIFA Cup
+- voting
+- tombola
+- Village
+- entertainment
+- news
+
+
+1. HOMEPAGE HERO
+----------------
+
+Required content:
+
+CLASSICO MBOA
+
+8E ÉDITION
+
+REAL MBOA VS BARÇA MBOA
+
+12 DÉCEMBRE 2026
+
+OMNISPORTS BÉPANDA
+
+DOUALA, CAMEROUN
+
+Primary CTA:
+Prendre mon ticket
+
+Secondary CTA:
+Découvrir le Classico
+
+Additional CTA:
+Rejoindre la communauté
+
+
+2. HERO VISUAL
+--------------
+
+Use:
+- stadium imagery
+- football/player imagery
+- dark overlays
+- cinematic gradients
+- rivalry composition
+- subtle motion
+
+Avoid heavy autoplay video by default.
+
+
+3. COUNTDOWN
+------------
+
+Create live countdown to:
+12 December 2026
+
+Display:
+- Jours
+- Heures
+- Minutes
+- Secondes
+
+Respect Africa/Douala timezone assumptions.
+
+After the event date, show a valid completed/live state rather than negative values.
+
+
+4. MATCH PRESENTATION
+---------------------
+
+Create a dramatic Real Mboa vs Barça Mboa section.
+
+Include:
+- team names
+- team emblems/placeholders
+- team colors
+- match date
+- venue
+- team links
+
+
+5. STORY SECTION
+----------------
+
+Headline:
+PLUS QU'UN MATCH.
+
+Explain briefly that Classico Mboa combines:
+- football
+- culture
+- music
+- gaming
+- youth
+- entertainment
+- public participation
+- community
+
+
+6. EXPERIENCE GRID
+------------------
+
+Create cards for:
+- Football
+- Animations
+- FIFA Cup
+- Tombola
+- Votes
+- Concert / Artistes
+- Classico Village
+- Community
+
+
+7. PROGRAMME PREVIEW
+--------------------
+
+Use realistic placeholder items such as:
+- opening
+- public activities
+- FIFA Cup
+- DJ / MC
+- match preparation
+- Classico match
+- halftime entertainment
+- awards
+- artist performance
+- closing
+
+Do not invent official exact times.
+
+CTA:
+Voir le programme complet
+
+
+8. TEAMS PAGE
+-------------
+
+/teams
+
+Show:
+- Real Mboa
+- Barça Mboa
+
+Support:
+- logo
+- colors
+- introduction
+- players
+- coach/manager later
+- statistics later
+- previous-edition data later
+
+Do not invent actual player identities.
+
+
+9. PLAYERS PAGE
+---------------
+
+/players
+
+Support:
+- photo
+- name
+- team
+- number
+- position
+- short profile
+- voting eligibility
+- stats placeholder
+
+Filters:
+- All
+- Real Mboa
+- Barça Mboa
+
+
+10. CLASSICO PAGE
+-----------------
+
+/classico
+
+Sections:
+- What is Classico Mboa?
+- Vision
+- Classico experience
+- Previous editions
+- Community
+- Long-term vision
+
+
+11. CURRENT EDITION PAGE
+------------------------
+
+/edition/8
+
+Include:
+- date
+- venue
+- match
+- countdown
+- programme
+- teams
+- ticket CTA
+- experiences
+- sponsors
+- related news
+
+Architecture must be reusable for future editions.
+
+
+12. PROGRAMME PAGE
+------------------
+
+/programme
+
+Timeline-style design.
+
+Programme item fields:
+- time
+- title
+- category
+- location/zone
+- description
+
+Categories:
+- Football
+- Gaming
+- Entertainment
+- Music
+- Awards
+- Public Activity
+
+
+13. VOTING LANDING PAGE
+-----------------------
+
+/vote
+
+UI foundation only in this phase.
+
+Possible categories:
+- Meilleur joueur
+- MVP du Classico
+- Meilleur gardien
+- Meilleur défenseur
+- Meilleur buteur
+- Meilleur but
+- Révélation
+- Fair-Play
+- Meilleur supporter
+- Meilleur look
+- Coup de cœur du public
+
+
+14. FIFA CUP PAGE
+-----------------
+
+/fifa-cup
+
+Include:
+- hero
+- tournament description
+- registration teaser
+- format
+- available slots
+- bracket placeholder
+- prizes
+- sponsor area
+- rules teaser
+
+
+15. TOMBOLA PAGE
+----------------
+
+/tombola
+
+Include:
+- how it works
+- proposed entry price
+- prize cards
+- draw information
+- sponsor attribution
+- winners placeholder
+- FAQ
+- CTA
+
+Proposed entry price:
+500 FCFA
+
+Keep database/config ready.
+
+
+16. CLASSICO VILLAGE
+--------------------
+
+/village
+
+Categories:
+- Restauration
+- Boissons
+- Gourmandises
+- Maillots
+- Mode
+- Beauté
+- Téléphones & accessoires
+- Gaming
+- Photographie
+- Other businesses
+
+
+17. STANDS
+----------
+
+/stands
+
+Create exhibitor acquisition page.
+
+Form:
+- business name
+- contact name
+- phone
+- email
+- category
+- city
+- description
+- preferred stand type
+- message
+
+
+18. SPONSORS PAGE
+-----------------
+
+/sponsors
+
+Possible visual tiers:
+- Main Partner
+- Official Partners
+- Supporting Partners
+- Media Partners
+- Product Partners
+
+Do not present unconfirmed companies as sponsors.
+
+
+19. PARTNERSHIP PAGE
+--------------------
+
+/partner
+
+Include:
+- Classico overview
+- audience opportunity
+- event ecosystem
+- digital exposure
+- physical exposure
+- Village
+- voting
+- FIFA Cup
+- tombola
+- content
+- contact/inquiry CTA
+
+
+20. NEWS
+--------
+
+/news
+/news/[slug]
+
+Article card:
+- image
+- category
+- date
+- title
+- excerpt
+
+Categories:
+- Classico
+- Équipes
+- Joueurs
+- FIFA Cup
+- Sponsors
+- Artistes
+- Community
+- Announcements
+
+
+21. GALLERY
+-----------
+
+/gallery
+
+Sections:
+- Photos
+- Videos
+- Previous editions
+- Behind the scenes
+
+Use:
+- optimized grid
+- lightbox
+- lazy loading
+
+
+22. ENTERTAINMENT
+-----------------
+
+Support content modules for:
+- DJ
+- MC
+- artists
+- dancers
+- freestyle performers
+
+Only show names when confirmed.
+
+
+23. COMMUNITY
+-------------
+
+Prominent CTA:
+Rejoindre la communauté WhatsApp
+
+Prepare social links for:
+- WhatsApp
+- Instagram
+- TikTok
+- Facebook if needed
+
+
+24. CONTACT
+-----------
+
+/contact
+
+Fields:
+- name
+- email
+- Cameroon phone
+- subject
+- message
+
+Possible subjects:
+- Billetterie
+- Sponsoring
+- Stand
+- FIFA Cup
+- Media
+- Partnership
+- General
+
+
+25. SHARING
+-----------
+
+Support:
+- WhatsApp
+- Facebook
+- X
+- Copy link
+- Web Share API
+
+
+26. MOBILE UX
+-------------
+
+Test all public pages on small screens.
+
+Prioritize:
+- readable typography
+- large touch targets
+- compact flows
+- responsive cards
+- no broken horizontal scrolling
+- tasteful sticky CTAs where useful
+
+
+27. STRUCTURED DATA
+-------------------
+
+Add Event structured data for:
+- event name
+- date
+- venue
+- city
+- country
+- public URL
+
+Do not invent performer or ticket availability information.
+
+
+28. PHASE 2 ACCEPTANCE CRITERIA
+-------------------------------
+
+Phase 2 is complete when:
+
+1. Homepage is production-quality.
+2. Main public pages are visually complete.
+3. Navigation works on all breakpoints.
+4. No lorem ipsum remains.
+5. Missing facts are placeholders rather than inventions.
+6. Mobile layouts are polished.
+7. No broken images.
+8. No console errors.
+9. SEO metadata exists.
+10. Production build succeeds.
+11. Fake transactional behavior has not been introduced.
+
+
+============================================================
+PHASE 3 — PRODUCTION TICKETING SYSTEM
+============================================================
+
+OBJECTIVE
+---------
+
+Create a production-oriented digital ticketing system optimized for Cameroon.
+
+Initial proposed ticket types:
+
+CLASSIQUE
+1 000 FCFA
+
+VIP
+2 000 FCFA
+
+VIP benefits must remain configurable and must not be permanently invented.
+
+
+1. CORE ARCHITECTURE
+--------------------
+
+Edition
+→ Ticket Types
+→ Orders
+→ Order Items
+→ Payments
+→ Tickets
+→ Check-ins
+
+
+2. SUPABASE INTEGRATION
+-----------------------
+
+Now connect Supabase properly.
+
+Use:
+- server client
+- browser client
+- privileged server-only client where required
+
+Never expose service-role credentials in browser code.
+
+
+3. TABLES
+---------
+
+Create or extend:
+
+event_editions
+ticket_types
+ticket_orders
+ticket_order_items
+tickets
+ticket_checkins
+payment_transactions
+user_profiles if needed
+
+
+4. EVENT EDITIONS
+-----------------
+
+Suggested fields:
+- id
+- slug
+- edition_number
+- name
+- event_date
+- venue
+- city
+- country
+- timezone
+- status
+- created_at
+- updated_at
+
+Statuses:
+- draft
+- upcoming
+- live
+- completed
+- cancelled
+
+
+5. TICKET TYPES
+---------------
+
+Suggested fields:
+- id
+- edition_id
+- name
+- slug
+- description
+- price_xaf
+- quantity_available
+- quantity_sold
+- sale_start
+- sale_end
+- status
+- benefits
+- created_at
+- updated_at
+
+Statuses:
+- draft
+- active
+- sold_out
+- paused
+- closed
+
+
+6. ORDERS
+---------
+
+Suggested fields:
+- id
+- reference
+- edition_id
+- customer_name
+- customer_phone
+- customer_email
+- subtotal_xaf
+- fees_xaf
+- total_xaf
+- currency
+- status
+- payment_status
+- payment_provider
+- created_at
+- updated_at
+
+
+7. ORDER ITEMS
+--------------
+
+Suggested fields:
+- id
+- order_id
+- ticket_type_id
+- quantity
+- unit_price_xaf
+- total_xaf
+
+
+8. TICKETS
+----------
+
+One record per actual admission ticket.
+
+Fields:
+- id
+- ticket_code
+- qr_token
+- order_id
+- edition_id
+- ticket_type_id
+- holder_name
+- status
+- issued_at
+- checked_in_at
+
+Statuses:
+- valid
+- used
+- cancelled
+- refunded
+- void
+
+
+9. CHECK-INS
+------------
+
+Fields:
+- id
+- ticket_id
+- edition_id
+- scanned_by
+- scanned_at
+- gate
+- device_info
+- result
+
+Results:
+- accepted
+- already_used
+- invalid
+- cancelled
+
+
+10. XAF MONEY RULES
+-------------------
+
+Store prices as integer FCFA values.
+
+Examples:
+1000
+2000
+500
+
+Display:
+1 000 FCFA
+2 000 FCFA
+
+Do not use floating-point currency math.
+
+
+11. TICKET SELECTION
+--------------------
+
+/tickets
+
+User chooses:
+- ticket type
+- quantity
+
+Continue to:
+/tickets/checkout
+
+
+12. CHECKOUT FORM
+-----------------
+
+Collect:
+- full name
+- Cameroon phone
+- email
+- ticket type
+- quantity
+
+Show clear order summary before payment.
+
+
+13. SERVER-SIDE PRICE VALIDATION
+--------------------------------
+
+The server must retrieve authoritative price from database.
+
+Validate:
+- ticket type exists
+- sale active
+- inventory available
+- quantity valid
+- price authoritative
+- total recalculated
+
+Never trust browser-supplied totals.
+
+
+14. INVENTORY PROTECTION
+------------------------
+
+Prevent overselling using server/database-safe logic.
+
+Do not rely only on client-side availability checks.
+
+
+15. PAYMENT PROVIDER ABSTRACTION
+--------------------------------
+
+Create a shared PaymentProvider interface.
+
+Conceptual methods:
+- initializePayment()
+- verifyPayment()
+- handleWebhook()
+- refundPayment() if supported
+
+Prepare for:
+- MTN Mobile Money
+- Orange Money
+- Cameroon-compatible aggregators
+- cards
+
+
+16. TEST PAYMENT PROVIDER
+-------------------------
+
+If live credentials are not yet available:
+- create development/test provider
+- support pending/successful/failed states
+- do not pretend a test payment is real
+
+
+17. PAYMENT WEBHOOKS
+--------------------
+
+Secure webhook endpoints.
+
+Requirements:
+- verify provider authenticity/signature when available
+- validate reference
+- validate amount
+- ensure idempotency
+- never issue duplicate tickets
+
+
+18. TICKET ISSUANCE
+-------------------
+
+After server-confirmed payment:
+- create one ticket per purchased unit
+- generate unique ticket code
+- generate secure high-entropy QR token
+- attach edition and ticket type
+- store issuance time
+
+
+19. QR SECURITY
+---------------
+
+Do not expose in QR:
+- email
+- phone
+- full payment details
+- raw database IDs
+
+Use a secure verification token.
+
+
+20. DIGITAL TICKET PAGE
+-----------------------
+
+/tickets/[ticketCode]
+
+Display:
+- Classico Mboa
+- edition
+- match
+- date
+- venue
+- ticket type
+- holder
+- ticket code
+- QR
+- ticket status
+- event instructions
+
+
+21. ORDER CONFIRMATION
+----------------------
+
+/tickets/order/[reference]
+
+Show:
+- payment status
+- order reference
+- tickets
+- total
+- ticket links
+- sharing options
+
+
+22. WHATSAPP
+------------
+
+Support secure sharing to WhatsApp.
+
+Do not expose secret QR tokens directly in public text unnecessarily.
+
+
+23. CHECK-IN APPLICATION
+------------------------
+
+/admin/check-in
+
+Mobile-first.
+
+Features:
+- camera QR scanner
+- manual ticket-code input
+- immediate validation result
+
+States:
+- VALID
+- ALREADY USED
+- INVALID
+- CANCELLED
+
+
+24. CHECK-IN SECURITY
+---------------------
+
+Validation is server-side.
+
+When scanned:
+- verify token
+- verify edition
+- verify status
+- atomically mark used
+- create check-in log
+- return result
+
+Prevent simultaneous double scans.
+
+
+25. ADMIN TICKET DASHBOARD
+--------------------------
+
+/admin/tickets
+
+Show:
+- tickets sold
+- revenue
+- orders
+- payment statuses
+- ticket-type split
+- check-ins
+- remaining inventory
+- recent purchases
+- recent scans
+
+
+26. SEARCH
+----------
+
+Search by:
+- order reference
+- ticket code
+- phone
+- name
+- email
+
+
+27. ADMIN TICKET ACTIONS
+------------------------
+
+Authorized admins may:
+- view order
+- view payment
+- view ticket
+- resend ticket link
+- cancel/void where appropriate
+- correct holder name where allowed
+
+Sensitive actions require confirmation.
+
+
+28. AUTHORIZATION
+-----------------
+
+Roles:
+- super_admin
+- event_admin
+- ticket_manager
+- checkin_staff
+
+
+29. ROW LEVEL SECURITY
+----------------------
+
+Enable RLS.
+
+Users must not be able to query arbitrary orders/tickets.
+
+Public lookup uses safe server-side logic.
+
+
+30. RATE LIMITING
+-----------------
+
+Protect:
+- order creation
+- ticket lookup
+- check-in
+- payment verification
+
+
+31. ERROR STATES
+----------------
+
+Design:
+- payment pending
+- payment failed
+- sold out
+- sale ended
+- invalid ticket
+- order not found
+- connection lost
+
+
+32. TESTING
+-----------
+
+Test:
+- XAF formatting
+- phone normalization
+- order calculation
+- inventory validation
+- ticket issuance
+- duplicate webhook
+- valid scan
+- already-used scan
+- invalid ticket
+- cancelled ticket
+
+
+33. PHASE 3 ACCEPTANCE CRITERIA
+-------------------------------
+
+Phase 3 is complete when:
+
+1. Ticket types load from database/config.
+2. Prices are validated server-side.
+3. Checkout works.
+4. Orders persist.
+5. Payment abstraction exists.
+6. Test provider flow works safely.
+7. Confirmed payments generate tickets.
+8. Tickets have unique secure QR codes.
+9. Digital ticket pages work.
+10. Orders can be securely looked up.
+11. Admin sales dashboard works.
+12. Check-in scanner works.
+13. Used tickets cannot be reused.
+14. RLS/security rules exist.
+15. Mobile checkout is polished.
+16. Critical logic has tests.
+17. Production build succeeds.
+18. Architecture remains compatible with future MTN MoMo/Orange Money integration.
+
+
+============================================================
+PHASE 4 — VOTING & AWARDS PLATFORM
+============================================================
+
+OBJECTIVE
+---------
+
+Build a secure paid voting platform for Classico Mboa.
+
+Proposed price:
+1 vote = 100 FCFA
+
+The price must remain configurable.
+
+
+1. CORE ARCHITECTURE
+--------------------
+
+Edition
+→ Vote Campaign
+→ Categories
+→ Candidates
+→ Vote Orders
+→ Payments
+→ Confirmed Votes
+→ Results
+
+
+2. VOTING CATEGORIES
+--------------------
+
+Support database-driven categories:
+
+Football:
+- Meilleur joueur
+- MVP du Classico
+- Meilleur gardien
+- Meilleur défenseur
+- Meilleur buteur
+- Meilleur but
+- Révélation du Classico
+- Prix du Fair-Play
+
+Popular/public:
+- Meilleur supporter
+- Meilleur look
+- Coup de cœur du public
+
+
+3. TABLES
+---------
+
+Create or extend:
+- vote_campaigns
+- vote_categories
+- vote_candidates
+- vote_orders
+- vote_order_items
+- votes
+- vote_transactions
+- vote_activity_logs
+
+
+4. VOTE CAMPAIGNS
+-----------------
+
+Suggested fields:
+- id
+- edition_id
+- name
+- slug
+- description
+- starts_at
+- ends_at
+- status
+- results_visibility
+- allow_multiple_votes
+- created_at
+- updated_at
+
+Statuses:
+- draft
+- scheduled
+- open
+- paused
+- closed
+- archived
+
+Results visibility:
+- hidden
+- live
+- percentage_only
+- after_close
+- admin_only
+
+
+5. CATEGORIES
+-------------
+
+Admin can:
+- create
+- edit
+- reorder
+- enable
+- disable
+- archive
+
+Do not delete categories with confirmed voting history.
+
+
+6. CANDIDATES
+-------------
+
+Candidate fields may include:
+- id
+- category_id
+- edition_id
+- player_id nullable
+- team_id nullable
+- name
+- slug
+- image_url
+- short_description
+- metadata
+- vote_count_cached
+- status
+- created_at
+- updated_at
+
+Candidate must support non-players too.
+
+
+7. VOTE FLOW
+------------
+
+Select category
+→ select candidate
+→ choose vote quantity
+→ enter customer details if needed
+→ review
+→ pay
+→ server verifies payment
+→ votes credited
+
+
+8. VOTE QUANTITY
+----------------
+
+Support:
+- 1
+- 5
+- 10
+- 20
+- custom quantity if enabled
+
+Do not introduce discounts unless approved.
+
+
+9. SERVER-SIDE PRICING
+----------------------
+
+Before order creation verify:
+- campaign open
+- category active
+- candidate active
+- current time valid
+- quantity valid
+- authoritative vote price from database
+
+
+10. PAYMENT
+-----------
+
+Reuse shared payment provider infrastructure.
+
+Never duplicate provider integration code.
+
+
+11. IDEMPOTENCY
+---------------
+
+Duplicate payment callbacks must not duplicate credited votes.
+
+
+12. CONFIRMED VOTES
+-------------------
+
+A confirmed vote record can store quantity > 1.
+
+Example:
+quantity = 20
+
+Source of truth is confirmed vote records, not client counters.
+
+
+13. PUBLIC VOTING PAGE
+----------------------
+
+/vote
+
+Include:
+- active campaign
+- countdown
+- categories
+- featured candidates
+- instructions
+- result policy
+- sponsors
+- FAQ
+
+
+14. CATEGORY PAGE
+-----------------
+
+/vote/[categorySlug]
+
+Display:
+- title
+- description
+- closing time
+- candidates
+- current result state if enabled
+- vote CTA
+
+
+15. RESULTS
+-----------
+
+/vote/results
+
+Only confirmed votes count.
+
+Never count:
+- pending
+- failed
+- cancelled
+- refunded
+
+
+16. LIVE RESULTS
+----------------
+
+If enabled, use:
+- controlled polling
+or
+- Supabase Realtime on aggregate data
+
+Do not expose sensitive transaction records.
+
+
+17. FRAUD PROTECTION
+--------------------
+
+Protect against:
+- fake payment confirmation
+- manipulated vote quantity
+- manipulated price
+- duplicate webhook
+- request spam
+- rapid repeated submissions
+- malformed requests
+
+
+18. ADMIN DASHBOARD
+-------------------
+
+/admin/voting
+
+Show:
+- active campaign
+- total votes
+- voting revenue
+- categories
+- leading candidates
+- pending payments
+- failed transactions
+- votes today
+
+
+19. CAMPAIGN MANAGEMENT
+-----------------------
+
+Admin can:
+- create
+- schedule
+- open
+- pause
+- close
+- publish results
+
+Critical state changes require confirmation.
+
+
+20. CANDIDATE MANAGEMENT
+------------------------
+
+Admin can:
+- add
+- edit
+- activate
+- deactivate
+- withdraw
+- disqualify
+- archive
+
+Never delete transactional vote history.
+
+
+21. MANUAL ADJUSTMENTS
+----------------------
+
+Avoid direct manual vote-count editing.
+
+If adjustments are required, log:
+- admin ID
+- reason
+- quantity
+- previous total
+- resulting total
+- date
+
+
+22. SHARING
+-----------
+
+Support:
+- WhatsApp
+- Facebook
+- X
+- native share
+- copy link
+
+
+23. MOBILE UX
+-------------
+
+Optimize for:
+- 2-column candidate grid where practical
+- large vote buttons
+- short purchase flow
+- clear payment instructions
+
+
+24. TESTING
+-----------
+
+Test:
+- closed campaign rejection
+- inactive candidate
+- wrong price
+- invalid quantity
+- duplicate webhook
+- successful vote credit
+- failed payment
+- refunded payment
+- result aggregation
+- hidden result mode
+- live result mode
+
+
+25. PHASE 4 ACCEPTANCE CRITERIA
+-------------------------------
+
+Complete when:
+
+1. Campaigns are database-driven.
+2. Categories are database-driven.
+3. Candidates are database-driven.
+4. Voting dates are enforced server-side.
+5. Vote pricing is server-controlled.
+6. Vote checkout works.
+7. Payment confirmation credits votes safely.
+8. Duplicate callbacks cannot duplicate votes.
+9. Results derive only from confirmed votes.
+10. Public result visibility is configurable.
+11. Admin campaign/category/candidate management works.
+12. Mobile UX is polished.
+13. Fraud protections exist.
+14. Critical tests pass.
+15. Production build succeeds.
+16. Ticketing functionality remains intact.
+
+
+============================================================
+PHASE 5 — DIGITAL TOMBOLA SYSTEM
+============================================================
+
+OBJECTIVE
+---------
+
+Build a transparent, secure, auditable digital tombola.
+
+Proposed participation:
+500 FCFA per entry
+
+Each confirmed paid entry receives a unique tombola number.
+
+
+1. CORE ARCHITECTURE
+--------------------
+
+Edition
+→ Tombola Campaign
+→ Prizes
+→ Orders
+→ Payments
+→ Entries
+→ Draws
+→ Winners
+
+
+2. TABLES
+---------
+
+Create:
+- tombola_campaigns
+- tombola_prizes
+- tombola_orders
+- tombola_order_items if needed
+- tombola_entries
+- tombola_draws
+- tombola_winners
+- tombola_activity_logs
+
+Reuse shared payment tables where possible.
+
+
+3. CAMPAIGN
+-----------
+
+Suggested fields:
+- id
+- edition_id
+- name
+- slug
+- description
+- entry_price_xaf
+- starts_at
+- ends_at
+- draw_at
+- status
+- max_entries nullable
+- max_entries_per_order
+- rules
+- created_at
+- updated_at
+
+Statuses:
+- draft
+- scheduled
+- open
+- paused
+- closed
+- drawn
+- archived
+
+
+4. PRIZES
+---------
+
+Support:
+- smartphone
+- console
+- game
+- controller
+- headset/earphones
+- jersey
+- shoes
+- shopping voucher
+- restaurant voucher
+- delivery voucher
+- accessories
+- sponsor-provided products
+
+Do not present unconfirmed prizes as official.
+
+
+5. PUBLIC PAGE
+--------------
+
+/tombola
+
+Include:
+- hero
+- campaign status
+- entry price
+- countdown
+- prize showcase
+- how it works
+- participation CTA
+- sponsor section
+- FAQ
+- rules
+- results
+
+
+6. PURCHASE FLOW
+----------------
+
+Choose quantity.
+
+Examples:
+1 entry = 500 FCFA
+2 entries = 1 000 FCFA
+5 entries = 2 500 FCFA
+10 entries = 5 000 FCFA
+
+No discounts unless approved.
+
+Flow:
+quantity
+→ customer details
+→ review
+→ pay
+→ payment verified
+→ generate entry numbers
+
+
+7. CUSTOMER DATA
+----------------
+
+Collect:
+- full name
+- Cameroon phone
+- email optional
+
+
+8. SERVER-SIDE PRICING
+----------------------
+
+Server retrieves entry_price_xaf.
+
+Validate:
+- campaign open
+- requested quantity
+- per-order limits
+- remaining capacity
+
+
+9. ENTRY GENERATION
+-------------------
+
+Generate entries only after confirmed payment.
+
+One paid unit = one unique entry.
+
+
+10. ENTRY IDENTIFIERS
+---------------------
+
+Use public-friendly unique entry numbers.
+
+Example concept:
+CM8-7F21A
+
+Keep secure internal identifier/token separately.
+
+
+11. ENTRY STATUS
+----------------
+
+Possible statuses:
+- valid
+- winner
+- cancelled
+- refunded
+- void
+
+
+12. REFUNDS
+-----------
+
+Refunded entries become ineligible for drawing.
+
+Do not delete them.
+
+
+13. DRAW
+--------
+
+Draw only from:
+- valid
+- paid
+- non-refunded
+entries.
+
+Winner selection must be server-side.
+
+
+14. RANDOMNESS
+--------------
+
+Do not use Math.random() for production draws.
+
+Use cryptographically secure randomness.
+
+
+15. DRAW RECORD
+---------------
+
+Store:
+- campaign
+- prize
+- draw number
+- eligible entry count
+- algorithm version
+- executed by
+- executed at
+- status
+- notes
+
+
+16. WINNER RECORD
+-----------------
+
+Store:
+- draw
+- campaign
+- prize
+- entry
+- participant
+- status
+- claimed_at
+- verified_at
+
+Winner statuses:
+- selected
+- contacted
+- verified
+- claimed
+- disqualified
+- replacement_selected
+
+
+17. MULTIPLE PRIZES
+-------------------
+
+Support multiple prize draws.
+
+Allow configurable rule:
+allow_multiple_wins = true/false
+
+
+18. PUBLIC DRAW/RESULTS
+-----------------------
+
+Display:
+- draw status
+- winner reveal
+- entry number
+- masked winner identity
+- prize
+- sponsor attribution
+
+Frontend animation must never determine winner.
+
+
+19. WINNER VERIFICATION
+-----------------------
+
+Admin verifies:
+- entry code
+- participant phone
+- order details
+
+Do not expose unnecessary PII to staff.
+
+
+20. ADMIN DASHBOARD
+-------------------
+
+/admin/tombola
+
+Show:
+- total entries
+- revenue
+- unique participants
+- confirmed orders
+- pending payments
+- prizes
+- draw status
+- winners
+
+
+21. CAMPAIGN MANAGEMENT
+-----------------------
+
+Admin can:
+- create
+- edit price before sales
+- set dates
+- set capacity
+- open
+- pause
+- close
+- archive
+
+
+22. PRIZE MANAGEMENT
+--------------------
+
+Admin can:
+- add prize
+- upload image
+- assign sponsor
+- set quantity
+- set order
+- mark confirmed/unconfirmed
+- mark delivered
+
+
+23. DRAW PERMISSIONS
+--------------------
+
+Only authorized roles can execute draws.
+
+Possible roles:
+- super_admin
+- tombola_manager
+
+
+24. AUDIT
+---------
+
+Log:
+- campaign changes
+- prize changes
+- draw execution
+- winner verification
+- entry cancellation
+- refund effects
+
+
+25. SPONSOR ATTRIBUTION
+-----------------------
+
+Prize cards support:
+Offert par [Sponsor]
+
+with logo/link.
+
+
+26. SECURITY
+------------
+
+Protect against:
+- duplicate callbacks
+- duplicate entry generation
+- forged entry numbers
+- unauthorized draw execution
+- refunded entries remaining eligible
+- manipulated prices
+- repeated draw calls
+
+
+27. TESTING
+-----------
+
+Test:
+- campaign closed
+- campaign paused
+- quantity validation
+- server pricing
+- successful payment
+- duplicate webhook
+- entry uniqueness
+- refund exclusion
+- draw eligibility
+- secure winner selection
+- duplicate draw prevention
+- winner creation
+- multiple-prize behavior
+
+
+28. PHASE 5 ACCEPTANCE CRITERIA
+-------------------------------
+
+Complete when:
+
+1. Campaign is database-driven.
+2. Entry price is configurable.
+3. Multiple-entry purchase works.
+4. Payments are server-verified.
+5. Entries generate only after confirmed payment.
+6. Every entry is unique.
+7. Refunds invalidate eligibility.
+8. Prize management works.
+9. Draw is server-side and secure.
+10. Duplicate draw execution is prevented.
+11. Winners are auditable.
+12. Winner verification works.
+13. Public results work.
+14. Sponsor attribution works.
+15. Admin dashboard works.
+16. Mobile experience is polished.
+17. Security tests pass.
+18. Production build succeeds.
+19. Existing tickets/voting remain unaffected.
+
+
+============================================================
+PHASE 6 — CLASSICO FIFA CUP TOURNAMENT PLATFORM
+============================================================
+
+OBJECTIVE
+---------
+
+Build a complete digital tournament system for the Classico FIFA Cup.
+
+Proposed registration:
+1 000 FCFA
+
+The game title/version must remain configurable.
+
+
+1. ARCHITECTURE
+---------------
+
+Edition
+→ Gaming Tournament
+→ Registrations
+→ Participants
+→ Bracket
+→ Rounds
+→ Matches
+→ Results
+→ Winner
+
+
+2. TABLES
+---------
+
+Create:
+- gaming_tournaments
+- gaming_registrations
+- gaming_participants
+- gaming_rounds
+- gaming_matches
+- gaming_match_results
+- gaming_prizes
+- gaming_activity_logs
+
+Reuse shared payment infrastructure.
+
+
+3. TOURNAMENT CONFIG
+--------------------
+
+Suggested fields:
+- id
+- edition_id
+- name
+- slug
+- game_title
+- platform
+- registration_price_xaf
+- max_participants
+- registration_opens_at
+- registration_closes_at
+- tournament_starts_at
+- tournament_ends_at
+- format
+- status
+- rules
+- location
+- created_at
+- updated_at
+
+Statuses:
+- draft
+- registration_open
+- registration_closed
+- bracket_ready
+- live
+- completed
+- cancelled
+- archived
+
+
+4. TOURNAMENT CAPACITY
+----------------------
+
+Support:
+- 8
+- 16
+- 32
+- 64
+
+Also handle:
+- byes
+- waitlist
+- manual seeding
+- random seeding
+
+Do not silently drop participants.
+
+
+5. PUBLIC FIFA CUP PAGE
+-----------------------
+
+/fifa-cup
+
+Include:
+- hero
+- tournament status
+- registration CTA
+- entry fee
+- available slots
+- rules
+- format
+- bracket
+- schedule
+- prizes
+- sponsors
+- results
+- FAQ
+
+
+6. REGISTRATION
+---------------
+
+Collect:
+- full name
+- gamer tag
+- Cameroon phone
+- email optional
+- city
+- preferred team if relevant
+- agreement to rules
+
+Flow:
+registration
+→ review
+→ payment
+→ server verification
+→ confirmed registration
+
+
+7. REGISTRATION RECORD
+----------------------
+
+Suggested fields:
+- id
+- tournament_id
+- order_reference
+- full_name
+- gamer_tag
+- phone
+- email
+- city
+- payment_status
+- registration_status
+- created_at
+- updated_at
+
+Statuses:
+- pending
+- confirmed
+- waitlisted
+- cancelled
+- disqualified
+- checked_in
+
+
+8. PAYMENT
+----------
+
+Reuse shared payment architecture.
+
+Do not create separate provider code.
+
+Registration is confirmed only after verified payment.
+
+
+9. DUPLICATE REGISTRATION
+-------------------------
+
+Use configurable duplicate checks:
+- phone
+- email
+- user ID
+
+Flag suspicious duplicates rather than blindly blocking legitimate shared contacts.
+
+
+10. CAPACITY SAFETY
+-------------------
+
+Allocate slots server-side.
+
+When full:
+- waitlist
+or
+- close registration
+
+
+11. WAITLIST
+------------
+
+Support:
+- position
+- status
+- promotion to participant
+
+Keep history.
+
+
+12. PARTICIPANT
+---------------
+
+Fields:
+- id
+- tournament_id
+- registration_id
+- seed
+- display_name
+- gamer_tag
+- status
+- checked_in_at
+- eliminated_at
+- final_position
+
+Statuses:
+- confirmed
+- checked_in
+- active
+- eliminated
+- winner
+- disqualified
+- withdrawn
+
+
+13. PLAYER CHECK-IN
+-------------------
+
+/admin/fifa-cup/check-in
+
+Search by:
+- name
+- gamer tag
+- phone
+- registration reference
+
+Mark participant checked in.
+
+
+14. BRACKET GENERATION
+----------------------
+
+Initial format:
+single elimination
+
+Support:
+- Round of 32
+- Round of 16
+- Quarter-finals
+- Semi-finals
+- Final
+
+according to tournament size.
+
+
+15. BRACKET GENERATION RULES
+----------------------------
+
+Server-side only.
+
+Before generation:
+- freeze confirmed participant set
+- exclude waitlist
+- exclude cancelled participants
+
+Support:
+- random seeding
+- manual seeding
+
+Store the generated bracket.
+
+Do not regenerate on page refresh.
+
+
+16. RANDOMIZATION
+-----------------
+
+Use server-side deterministic/secure shuffle.
+
+Store final positions.
+
+
+17. BYES
+--------
+
+If participant count is below bracket size:
+- assign byes
+- preserve transparency
+- do not remove participants
+
+
+18. ROUNDS
+----------
+
+Suggested fields:
+- id
+- tournament_id
+- name
+- round_number
+- sort_order
+- starts_at
+- status
+
+Statuses:
+- pending
+- active
+- completed
+
+
+19. MATCHES
+-----------
+
+Suggested fields:
+- id
+- tournament_id
+- round_id
+- match_number
+- player_one_id
+- player_two_id
+- player_one_score
+- player_two_score
+- winner_id
+- scheduled_at
+- station
+- status
+- created_at
+- updated_at
+
+Statuses:
+- pending
+- scheduled
+- live
+- completed
+- disputed
+- cancelled
+- walkover
+
+
+20. MATCH SCHEDULING
+--------------------
+
+Admin can assign:
+- time
+- station
+- zone
+
+Public schedule should display this.
+
+
+21. SCORE ENTRY
+---------------
+
+Authorized staff enter:
+- player one score
+- player two score
+- winner
+
+Participants cannot directly finalize official results.
+
+
+22. RESULT VALIDATION
+---------------------
+
+When result confirmed:
+- mark match completed
+- determine winner
+- mark loser eliminated
+- advance winner to next round
+
+Use transactional logic to avoid inconsistent bracket state.
+
+
+23. TIES
+--------
+
+Tournament rules define tie resolution.
+
+Possible:
+- extra time
+- penalties
+- replay
+
+Do not hardcode competitive rules without approval.
+
+
+24. WALKOVERS
+-------------
+
+Support walkover for:
+- absence
+- disqualification
+- organizer ruling
+
+Store reason and audit.
+
+
+25. DISPUTES
+------------
+
+Use status:
+disputed
+
+Admin can:
+- review
+- edit score
+- confirm final result
+
+Corrections create audit records.
+
+
+26. PUBLIC BRACKET
+------------------
+
+/fifa-cup/bracket
+
+Desktop:
+traditional horizontal bracket
+
+Mobile:
+round tabs or vertical grouping
+
+Do not force huge horizontal scrolling on phones.
+
+
+27. LIVE VIEW
+-------------
+
+/fifa-cup/live
+
+Display:
+- current round
+- live matches
+- upcoming matches
+- recent results
+
+Use efficient realtime/polling.
+
+
+28. PARTICIPANTS PAGE
+---------------------
+
+/fifa-cup/players
+
+Public fields:
+- gamer tag
+- public name
+- city
+- seed
+- status
+
+Never expose phone/email.
+
+
+29. PRIZES
+----------
+
+Create configurable prize records.
+
+Support:
+- trophy
+- cash reward
+- sponsor product
+- gaming accessories
+- other prizes
+
+Do not invent confirmed values.
+
+
+30. WINNER
+----------
+
+After final:
+- mark champion
+- runner-up
+- optional semifinalists
+- final score
+- prize
+- sponsor
+
+
+31. ADMIN DASHBOARD
+-------------------
+
+/admin/fifa-cup
+
+Show:
+- registrations
+- revenue
+- capacity
+- waitlist
+- checked-in players
+- current round
+- matches complete
+- matches remaining
+- next matches
+- champion after completion
+
+
+32. REGISTRATION MANAGEMENT
+---------------------------
+
+Admin can:
+- view
+- search
+- confirm
+- cancel
+- refund if supported
+- promote waitlist
+- check in
+- disqualify
+
+Destructive changes require reasons.
+
+
+33. BRACKET MANAGEMENT
+----------------------
+
+Admin can:
+- generate bracket
+- inspect bracket
+- edit seeding before start
+- schedule matches
+- record results
+- resolve disputes
+- advance walkovers
+- complete tournament
+
+
+34. BRACKET LOCKING
+-------------------
+
+Once the first match starts:
+- lock bracket structure
+
+Any exceptional structural modification requires high-level authorization and audit logging.
+
+
+35. RULES PAGE
+--------------
+
+/fifa-cup/rules
+
+Sections:
+- eligibility
+- registration
+- check-in
+- game settings
+- match duration
+- team selection
+- conduct
+- late arrival
+- disputes
+- disqualification
+- prizes
+
+Use configurable placeholders until official rules are supplied.
+
+
+36. WHATSAPP SHARING
+--------------------
+
+Support sharing:
+- tournament page
+- registration
+- bracket
+- results
+- champion
+
+
+37. SPONSOR SUPPORT
+-------------------
+
+FIFA Cup supports:
+- main gaming sponsor
+- equipment sponsor
+- prize sponsor
+- tournament sponsor
+
+Display sponsor attribution where configured.
+
+
+38. LARGE-SCREEN MODE
+---------------------
+
+/fifa-cup/display
+
+Show:
+- current match
+- next match
+- round
+- score
+- bracket
+- sponsors
+
+No admin controls.
+
+
+39. SECURITY
+------------
+
+Protect against:
+- unauthorized score changes
+- duplicate registration payment
+- fake confirmed registration
+- frontend bracket manipulation
+- private participant data exposure
+- malicious result requests
+
+
+40. RLS
+------
+
+Public:
+- read approved public tournament data
+
+Participants:
+- access own registration where appropriate
+
+Staff:
+- role-limited tournament management
+
+
+41. ROLES
+---------
+
+Possible roles:
+- super_admin
+- event_admin
+- gaming_manager
+- gaming_staff
+- checkin_staff
+
+gaming_staff may:
+- check players in
+- record scores
+
+but should not:
+- change prices
+- alter payments
+- regenerate locked bracket
+- manage unrelated modules
+
+
+42. AUDIT
+---------
+
+Log:
+- bracket generation
+- seed changes
+- cancellations
+- disqualifications
+- score entry
+- score corrections
+- walkovers
+- dispute resolution
+- winner declaration
+
+
+43. TESTING
+-----------
+
+Test:
+- capacity limit
+- waitlist
+- successful registration
+- duplicate payment callback
+- bracket generation
+- odd participant count
+- bye allocation
+- score submission
+- winner advancement
+- semifinal advancement
+- final completion
+- walkover
+- disqualification
+- dispute correction
+- bracket lock
+- unauthorized score update
+
+
+44. PHASE 6 ACCEPTANCE CRITERIA
+-------------------------------
+
+Complete when:
+
+1. Tournament config is database-driven.
+2. Registration is functional.
+3. Payment is server-verified.
+4. Capacity is enforced.
+5. Waitlist works.
+6. Participant check-in works.
+7. Bracket generation works.
+8. Byes are handled.
+9. Scores can be recorded.
+10. Winners advance correctly.
+11. Walkovers work.
+12. Disputes can be resolved.
+13. Public bracket works.
+14. Mobile bracket is usable.
+15. Live view works.
+16. Tournament dashboard works.
+17. Final winner is recorded.
+18. Prize management works.
+19. Sponsor integration works.
+20. Audit logging exists.
+21. RLS/security exists.
+22. Critical tests pass.
+23. Production build succeeds.
+24. Ticketing, voting and tombola remain functional.
+
+
+============================================================
+FINAL ENGINEERING RULES FOR PHASES 1–6
+============================================================
+
+1. Classico Mboa is the permanent platform; an edition is data.
+
+2. Cameroon-first assumptions:
+- fr-CM
+- en-CM ready
+- Africa/Douala
+- XAF / FCFA
+- +237 phones
+- mobile-first
+- WhatsApp-friendly
+- MTN/Orange payment-ready
+
+3. The server is authoritative for:
+- prices
+- payment state
+- ticket validity
+- votes
+- tombola eligibility
+- FIFA results
+- admin permissions
+
+4. Never destroy transaction history. Use statuses and audit logs.
+
+5. Do not invent:
+- players
+- artists
+- confirmed sponsors
+- confirmed prizes
+- official programme times
+- final VIP benefits
+- stand prices
+- legal registration details
+
+6. Optimize critical flows for mobile data and Android browsers.
+
+7. Use test mode whenever real provider credentials are unavailable.
+
+8. Every phase should finish with:
+- production build
+- type checks
+- critical tests
+- mobile review
+- security review
+- documentation
+- migration notes
+- environment variables
+- known limitations
+- next-phase dependencies
+
+CLASSICO MBOA — DEVELOPMENT ROADMAP
+DETAILED IMPLEMENTATION PROMPTS — PHASES 7 TO 15
+Cameroon-first production build
+============================================================
+
+PROJECT CONTEXT
+---------------
+
+Continue from the existing Classico Mboa application built through Phases 1–6.
+
+Do not restart the project.
+Do not replace established architecture without a documented technical reason.
+Do not duplicate existing payment, authentication, event-edition, media, or admin primitives when they can be reused.
+
+The permanent product is:
+
+CLASSICO MBOA
+
+The current active event is:
+
+Classico Mboa — 8th Edition
+Date: 12 December 2026
+Venue: Omnisports Bépanda
+City: Douala, Cameroon
+Timezone: Africa/Douala
+Default locale: fr-CM
+Secondary locale architecture: en-CM
+Currency: XAF / FCFA
+
+The platform is designed primarily for users in Cameroon and must remain optimized for mobile use, Android devices, mobile data connections, WhatsApp discovery/sharing, MTN Mobile Money, Orange Money, and FCFA pricing.
+
+The architecture must remain edition-based:
+
+Classico Mboa
+→ Editions
+→ Teams
+→ Players
+→ Tickets
+→ Votes
+→ Tombola
+→ FIFA Cup
+→ Village
+→ Sponsors
+→ Programme
+→ Content
+→ Payments
+→ Analytics
+→ Results
+
+Every major business feature must be capable of belonging to a specific edition.
+
+Do not hardcode the entire platform around Edition 8.
+
+
+============================================================
+PHASE 7 — CLASSICO VILLAGE, EXHIBITORS & STAND RESERVATIONS
+============================================================
+
+OBJECTIVE
+---------
+
+Build the Classico Village commercial ecosystem.
+
+The Classico Village is the business/exhibitor area of the event. It allows companies, small businesses, vendors, creators and service providers to present or sell products to the Classico Mboa audience.
+
+The initial activity categories should support:
+
+- Restauration
+- Boissons
+- Gourmandises
+- Maillots
+- Mode
+- Beauté
+- Téléphones et accessoires
+- Gaming
+- Photographie
+- Other approved businesses
+
+The system must support:
+
+- public Village discovery
+- vendor applications
+- stand packages
+- document/media submissions
+- application review
+- reservation approval
+- stand payment
+- stand assignment
+- vendor directory
+- event-day check-in
+- organizer notes
+- sponsor/vendor distinction
+- future event editions
+
+
+1. DOMAIN ARCHITECTURE
+----------------------
+
+Conceptually:
+
+Edition
+→ Village
+→ Stand Packages
+→ Vendor Applications
+→ Vendors
+→ Reservations
+→ Payments
+→ Stand Assignments
+→ Check-ins
+
+Do not store all vendor information directly in one generic contacts table.
+
+Separate:
+
+business/vendor identity
+application
+reservation
+payment
+physical stand allocation
+
+
+2. DATABASE TABLES
+------------------
+
+Create or extend tables such as:
+
+village_configs
+vendor_categories
+vendors
+vendor_applications
+stand_packages
+stand_reservations
+stand_assignments
+vendor_documents
+vendor_contacts
+vendor_checkins
+vendor_activity_logs
+
+Reuse:
+
+event_editions
+payment_transactions
+user_profiles
+media/storage systems
+
+where appropriate.
+
+
+3. VILLAGE CONFIG
+-----------------
+
+Suggested fields:
+
+id
+edition_id
+name
+slug
+description
+applications_open_at
+applications_close_at
+event_open_at
+event_close_at
+status
+public_directory_enabled
+application_fee_xaf nullable
+currency
+created_at
+updated_at
+
+Statuses:
+
+draft
+applications_open
+applications_closed
+allocation
+ready
+live
+completed
+archived
+
+
+4. VENDOR CATEGORIES
+--------------------
+
+Create database-driven categories.
+
+Suggested fields:
+
+id
+edition_id
+name
+slug
+description
+icon
+sort_order
+status
+created_at
+
+Do not hardcode categories into JSX.
+
+Admins should be able to:
+
+- create category
+- rename
+- reorder
+- activate
+- archive
+
+
+5. VENDOR ENTITY
+----------------
+
+Vendor/business records should support:
+
+id
+business_name
+slug
+description
+logo_url
+cover_image_url
+category_id
+city
+country
+website nullable
+instagram nullable
+facebook nullable
+whatsapp nullable
+public_phone nullable
+public_email nullable
+status
+created_at
+updated_at
+
+Do not publicly expose internal contact information unless the vendor has explicitly marked it public.
+
+
+6. APPLICATION FLOW
+-------------------
+
+Build:
+
+/stands
+
+and a registration flow such as:
+
+/stands/apply
+
+Collect:
+
+Business name
+Contact person
+Cameroon phone number
+Email
+City
+Business category
+Short business description
+Products/services to be offered
+Instagram/social link optional
+Website optional
+Logo
+Photos optional
+Expected setup requirements
+Electricity requirement
+Special equipment request
+Preferred stand package
+Additional message
+Agreement to vendor rules
+
+Use Cameroon phone validation from shared utilities.
+
+
+7. APPLICATION STATES
+---------------------
+
+Support:
+
+draft
+submitted
+under_review
+more_information_required
+approved
+rejected
+waitlisted
+withdrawn
+expired
+
+Applications must preserve history.
+
+Do not delete rejected applications by default.
+
+
+8. APPLICATION REFERENCE
+------------------------
+
+Generate a human-friendly unique application reference.
+
+Example concept:
+
+CM8-VND-0048
+
+Do not use raw database IDs as the only external reference.
+
+
+9. APPLICATION CONFIRMATION
+---------------------------
+
+After submission show:
+
+Application reference
+Business name
+Submission date
+Current status
+What happens next
+Contact/support action
+
+Add WhatsApp-friendly follow-up CTA if the official organizer number is later configured.
+
+
+10. STAND PACKAGES
+------------------
+
+Create configurable stand packages.
+
+Do not invent final prices or inclusions.
+
+Suggested fields:
+
+id
+edition_id
+name
+slug
+description
+price_xaf
+capacity
+width_m nullable
+depth_m nullable
+electricity_included
+table_included
+chairs_included
+branding_allowed
+benefits JSONB
+status
+created_at
+updated_at
+
+Possible labels:
+
+Standard
+Premium
+Food Vendor
+Sponsor Booth
+Custom
+
+These are package architecture examples, not confirmed commercial offers.
+
+
+11. PACKAGE INVENTORY
+---------------------
+
+Support:
+
+total quantity
+reserved quantity
+available quantity
+
+Prevent overselling.
+
+Reservation availability must be validated server-side.
+
+
+12. APPROVAL FLOW
+-----------------
+
+Admin reviews applications.
+
+Admin can:
+
+approve
+reject
+request information
+waitlist
+
+Approval may specify:
+
+approved category
+approved products
+approved stand package
+special conditions
+payment deadline
+notes
+
+
+13. RESERVATION CREATION
+------------------------
+
+Once approved:
+
+create stand_reservation.
+
+Fields:
+
+id
+edition_id
+vendor_id
+application_id
+stand_package_id
+reference
+amount_xaf
+payment_status
+reservation_status
+payment_deadline
+created_at
+updated_at
+
+Statuses may include:
+
+awaiting_payment
+reserved
+confirmed
+cancelled
+expired
+refunded
+
+
+14. PAYMENT
+-----------
+
+Reuse the shared payment infrastructure.
+
+Do not create a separate vendor payment engine.
+
+Support future:
+
+MTN Mobile Money
+Orange Money
+Card/aggregator
+Manual bank/invoice payment if enabled by organizers
+
+Payment amount must be read from server-side package configuration.
+
+
+15. PAYMENT DEADLINES
+---------------------
+
+Support reservation expiration.
+
+Example logic:
+
+Approved vendor receives a payment deadline.
+If unpaid after deadline:
+reservation can expire
+inventory returns to available pool
+
+Do not automatically cancel unless configured.
+
+
+16. MANUAL PAYMENT OPTION
+-------------------------
+
+For business/sponsor contexts organizers may sometimes accept manual payments.
+
+If implemented:
+
+manual payment confirmation must require authorized admin
+payment evidence may be uploaded
+confirmation must be logged
+financial records must remain auditable
+
+
+17. STAND ASSIGNMENTS
+---------------------
+
+Create physical allocation system.
+
+Fields:
+
+id
+edition_id
+reservation_id
+zone
+stand_code
+position_label
+map_x nullable
+map_y nullable
+notes
+assigned_at
+
+Example stand codes:
+
+V-A01
+V-A02
+FOOD-B03
+
+Stand codes must be unique per edition.
+
+
+18. VILLAGE MAP
+---------------
+
+Prepare a configurable visual stand map.
+
+Initial version can use:
+
+zones
+rows
+stand numbers
+
+Future version can support an interactive SVG/floor plan.
+
+Do not block Phase 7 on advanced floor-plan tooling.
+
+
+19. PUBLIC VILLAGE PAGE
+-----------------------
+
+Enhance:
+
+/village
+
+Include:
+
+Hero
+Village explanation
+Categories
+Featured vendors
+Food & drink
+Gaming
+Fashion
+Services
+Village map placeholder
+Become a vendor CTA
+Sponsors
+FAQ
+
+
+20. VENDOR DIRECTORY
+--------------------
+
+Create:
+
+/village/vendors
+
+Support:
+
+category filter
+search
+featured vendors
+vendor cards
+
+Card:
+
+logo
+business name
+category
+short description
+stand code when assigned
+social/public contact links
+
+
+21. VENDOR DETAIL PAGE
+----------------------
+
+Build:
+
+/village/vendors/[slug]
+
+Display:
+
+business name
+logo
+cover
+description
+category
+products/services
+stand location
+public social links
+sponsor badge if applicable
+
+Do not expose application or financial data.
+
+
+22. EVENT-DAY VENDOR CHECK-IN
+-----------------------------
+
+Build protected:
+
+/admin/village/check-in
+
+Search by:
+
+reservation reference
+business name
+contact name
+phone
+stand code
+
+Mark:
+
+arrived
+setup_started
+ready
+
+Keep timestamp.
+
+
+23. VENDOR STATUS OPERATIONS
+----------------------------
+
+Event-day states can include:
+
+not_arrived
+checked_in
+setup
+ready
+closed
+removed
+
+Removal/suspension requires reason and audit record.
+
+
+24. DOCUMENTS
+-------------
+
+Support optional vendor document uploads.
+
+Examples:
+
+business document
+product list
+food-related permit if organizers require it
+brand logo
+payment receipt
+
+Do not assume specific legal documents are mandatory unless organizers define them.
+
+
+25. ADMIN VILLAGE DASHBOARD
+---------------------------
+
+Build:
+
+/admin/village
+
+Metrics:
+
+applications
+approved
+rejected
+waitlisted
+confirmed reservations
+stand revenue
+remaining capacity
+vendors by category
+unpaid reservations
+check-in status
+
+
+26. APPLICATION MANAGEMENT
+--------------------------
+
+Admin table should support:
+
+search
+filter
+sort
+status
+category
+city
+package
+submission date
+
+Provide detailed review screen.
+
+
+27. VENDOR COMMUNICATION
+------------------------
+
+Prepare notification templates for:
+
+application received
+information requested
+approved
+rejected
+payment required
+reservation confirmed
+stand assigned
+event reminder
+
+Use architecture compatible with:
+
+email
+SMS
+WhatsApp
+
+Do not claim WhatsApp automation until actually integrated.
+
+
+28. CSV EXPORT
+-------------
+
+Authorized admins should be able to export:
+
+vendor list
+contacts
+reservation status
+payments
+stand assignments
+check-in list
+
+Protect personal information.
+
+
+29. SECURITY & PRIVACY
+----------------------
+
+Public users must never be able to query:
+
+private phone numbers
+internal admin notes
+payment details
+uploaded private documents
+
+Use RLS and server-side queries.
+
+
+30. TESTING
+-----------
+
+Test:
+
+application validation
+duplicate application handling
+approval
+package availability
+reservation creation
+payment confirmation
+reservation expiration
+stand assignment
+duplicate stand code prevention
+vendor directory privacy
+event-day check-in
+unauthorized admin access
+
+
+31. PHASE 7 ACCEPTANCE
+----------------------
+
+Phase 7 is complete when:
+
+1. Vendor applications work.
+2. Categories are configurable.
+3. Stand packages are configurable.
+4. Approval workflow works.
+5. Reservations are edition-scoped.
+6. Stand payments reuse the shared payment layer.
+7. Inventory cannot oversell.
+8. Physical stand assignment works.
+9. Public vendor directory works.
+10. Admin Village dashboard works.
+11. Vendor check-in works.
+12. Private vendor data is protected.
+13. Audit history exists.
+14. Mobile UX is polished.
+15. Build and tests pass.
+
+Document:
+
+database schema
+application lifecycle
+approval flow
+reservation lifecycle
+payment handling
+stand allocation
+permissions
+remaining operational dependencies
+
+
+============================================================
+PHASE 8 — SPONSORS, PARTNERSHIPS & COMMERCIAL MANAGEMENT
+============================================================
+
+OBJECTIVE
+---------
+
+Build the sponsorship and partnership management system.
+
+Classico Mboa should support different contribution models such as:
+
+- financial sponsorship
+- prize sponsorship
+- beverage sponsorship
+- equipment sponsorship
+- media sponsorship
+- gaming sponsorship
+- food/restoration sponsorship
+- technology/services sponsorship
+- institutional partnerships
+
+The system must serve both:
+
+PUBLIC PURPOSE:
+Present Classico Mboa professionally to potential sponsors.
+
+INTERNAL PURPOSE:
+Track leads, proposals, negotiations, agreements, deliverables and sponsor visibility.
+
+
+1. ARCHITECTURE
+---------------
+
+Conceptually:
+
+Edition
+→ Sponsorship Packages
+→ Sponsor Leads
+→ Organizations
+→ Proposals
+→ Agreements
+→ Deliverables
+→ Placements
+→ Contributions
+→ Reporting
+
+
+2. TABLES
+---------
+
+Create:
+
+organizations
+organization_contacts
+sponsor_leads
+sponsorship_packages
+sponsorship_proposals
+sponsor_agreements
+sponsor_contributions
+sponsor_deliverables
+sponsor_placements
+sponsor_assets
+sponsor_activity_logs
+
+Reuse media/storage and edition tables.
+
+
+3. ORGANIZATIONS
+----------------
+
+Suggested fields:
+
+id
+name
+slug
+logo_url
+industry
+website
+city
+country
+description
+status
+created_at
+updated_at
+
+
+4. ORGANIZATION CONTACTS
+------------------------
+
+Fields:
+
+id
+organization_id
+name
+role
+phone
+email
+whatsapp
+preferred_channel
+is_primary
+created_at
+
+Protect these records from public access.
+
+
+5. SPONSOR LEAD PIPELINE
+------------------------
+
+Statuses:
+
+identified
+contacted
+responded
+meeting
+proposal_preparation
+proposal_sent
+negotiation
+verbal_commitment
+agreement_pending
+confirmed
+declined
+inactive
+
+Do not reduce sponsorship tracking to a single “sponsor yes/no” field.
+
+
+6. LEAD OWNERSHIP
+-----------------
+
+Assign sponsor leads to team members.
+
+Fields:
+
+owner_user_id
+next_action
+next_action_at
+priority
+notes
+
+Use permissions.
+
+
+7. SPONSORSHIP PACKAGES
+-----------------------
+
+Create configurable packages.
+
+Do not invent official pricing.
+
+Suggested:
+
+id
+edition_id
+name
+slug
+description
+price_xaf nullable
+availability
+benefits
+visibility_level
+status
+created_at
+
+Package names may later be:
+
+Title Partner
+Main Partner
+Official Partner
+Supporting Partner
+Category Partner
+
+But use organizers' final commercial naming once supplied.
+
+
+8. BENEFIT SYSTEM
+-----------------
+
+Benefits should be structured, not only plain text.
+
+Possible benefits:
+
+logo_on_posters
+logo_on_jerseys
+website_visibility
+social_posts
+stage_mentions
+stand_space
+banner_space
+video_presence
+aftermovie_presence
+tombola_branding
+fifa_cup_branding
+vote_category_branding
+ticket_branding
+
+Use flexible JSON or normalized tables where appropriate.
+
+
+9. SPONSOR PROPOSAL
+-------------------
+
+Proposal records:
+
+id
+edition_id
+organization_id
+package_id nullable
+reference
+title
+amount_requested_xaf nullable
+custom_benefits
+status
+sent_at
+expires_at
+document_url
+created_by
+created_at
+
+
+10. PROPOSAL STATES
+-------------------
+
+draft
+internal_review
+ready
+sent
+viewed
+negotiation
+accepted
+declined
+expired
+superseded
+
+
+11. AGREEMENTS
+--------------
+
+Once accepted:
+
+create sponsor agreement.
+
+Fields:
+
+id
+edition_id
+organization_id
+proposal_id
+reference
+start_date
+end_date
+agreed_value_xaf nullable
+contribution_type
+agreement_document_url
+status
+created_at
+
+
+12. CONTRIBUTION TYPES
+----------------------
+
+Support:
+
+cash
+goods
+services
+media
+equipment
+prizes
+food_beverage
+other
+
+Contributions may have an estimated value but must preserve actual contribution details.
+
+
+13. CONTRIBUTION ITEMS
+----------------------
+
+Example:
+
+Sponsor provides:
+50 cases of drinks
+10 jerseys
+1 smartphone
+media coverage
+cash contribution
+
+Store line items.
+
+Do not flatten everything into one text field.
+
+
+14. DELIVERABLES
+----------------
+
+For every agreement, create sponsor obligations/deliverables.
+
+Examples:
+
+logo on website
+logo on poster
+two Instagram posts
+MC mention
+banner placement
+Village stand
+aftermovie inclusion
+
+Fields:
+
+id
+agreement_id
+name
+description
+owner
+due_at
+status
+evidence_url
+completed_at
+
+
+15. DELIVERABLE STATUS
+----------------------
+
+pending
+scheduled
+in_progress
+completed
+waived
+blocked
+
+
+16. PUBLIC SPONSORS PAGE
+------------------------
+
+Enhance:
+
+/sponsors
+
+Sections:
+
+Main Partner
+Official Partners
+Supporting Partners
+Media Partners
+Gaming Partners
+Prize Partners
+
+Only show confirmed sponsors with public visibility enabled.
+
+
+17. SPONSOR DETAIL
+------------------
+
+Optional:
+
+/sponsors/[slug]
+
+Display:
+
+logo
+description
+website
+partnership role
+supported activities
+public campaign links
+
+
+18. PARTNERSHIP LANDING PAGE
+----------------------------
+
+Enhance:
+
+/partner
+
+Make it corporate and credible.
+
+Include:
+
+Classico Mboa overview
+8th Edition information
+audience proposition
+football + entertainment ecosystem
+digital exposure
+physical event exposure
+Classico Village
+FIFA Cup
+votes
+tombola
+content production
+sponsor benefits
+contact/application CTA
+
+
+19. SPONSOR INQUIRY
+-------------------
+
+Build structured inquiry form.
+
+Fields:
+
+organization
+contact person
+phone
+email
+industry
+city
+type of partnership
+approximate contribution/budget optional
+message
+
+Create sponsor lead automatically.
+
+
+20. SPONSOR PLACEMENTS
+----------------------
+
+Track where logos/assets appear.
+
+Examples:
+
+homepage
+footer
+ticket
+vote page
+FIFA Cup
+tombola
+programme
+Village
+event screen
+jersey
+poster
+
+Allow start/end visibility dates.
+
+
+21. SPONSOR ASSETS
+------------------
+
+Store:
+
+logo variants
+brand guide
+preferred background
+campaign artwork
+video
+links
+
+Admin should be able to select appropriate logo for dark/light backgrounds.
+
+
+22. PUBLIC LOGO SAFETY
+----------------------
+
+Do not stretch logos.
+
+Maintain aspect ratio.
+
+Do not display unapproved logos publicly.
+
+
+23. SPONSORED PRIZES
+--------------------
+
+Integrate with Tombola and FIFA Cup.
+
+A prize can reference sponsor_id.
+
+Sponsor reporting should later be able to show:
+
+prize name
+campaign
+visibility
+winner/result
+
+
+24. SPONSOR ANALYTICS
+---------------------
+
+Prepare metrics such as:
+
+page impressions
+placement impressions if tracked
+campaign posts
+clicks
+tombola entries associated with sponsor prize
+FIFA Cup visibility
+vote category visibility
+
+Do not fabricate audience metrics.
+
+
+25. ADMIN SPONSOR DASHBOARD
+---------------------------
+
+Create:
+
+/admin/sponsors
+
+Show:
+
+lead pipeline
+confirmed sponsors
+target contribution
+confirmed value
+pending proposals
+deliverables due
+deliverables completed
+sponsors by contribution type
+
+
+26. CRM-LIKE LEAD VIEW
+----------------------
+
+For each lead show:
+
+organization
+primary contact
+owner
+stage
+last interaction
+next action
+notes
+proposal history
+documents
+
+
+27. ACTIVITY LOG
+----------------
+
+Track:
+
+call
+WhatsApp message
+email
+meeting
+proposal sent
+document received
+decision
+follow-up
+
+Manual entries allowed.
+
+
+28. REMINDERS
+-------------
+
+Prepare support for due dates:
+
+follow-up date
+proposal expiration
+deliverable deadline
+payment/contribution deadline
+
+
+29. DOCUMENT STORAGE
+--------------------
+
+Sponsor documents may include:
+
+proposal PDF
+agreement
+logo package
+payment evidence
+deliverable evidence
+
+Use secure storage.
+
+
+30. SPONSOR REPORT
+------------------
+
+Prepare downloadable sponsor recap data.
+
+At minimum:
+
+agreement
+contribution
+deliverables
+evidence
+event visibility records
+
+Full PDF generation can be implemented later if necessary.
+
+
+31. ACCESS CONTROL
+------------------
+
+Roles:
+
+super_admin
+partnership_manager
+event_admin
+finance_manager
+content_manager limited access
+
+Content managers may access approved sponsor assets but not confidential negotiation data.
+
+
+32. PHASE 8 ACCEPTANCE
+----------------------
+
+Phase 8 is complete when:
+
+1. Sponsor lead pipeline works.
+2. Organizations and contacts are separated.
+3. Packages are configurable.
+4. Proposals are tracked.
+5. Agreements are stored.
+6. Contributions are structured.
+7. Deliverables are tracked.
+8. Public sponsor pages show only confirmed sponsors.
+9. Sponsor assets are reusable.
+10. Tombola/FIFA sponsor relations work.
+11. Admin sponsorship dashboard works.
+12. Private commercial data is protected.
+13. Activity logs exist.
+14. Production build succeeds.
+15. Existing systems remain functional.
+
+Document:
+
+lead lifecycle
+proposal lifecycle
+agreement model
+deliverables model
+permissions
+public visibility rules
+
+
+============================================================
+PHASE 9 — COMPLETE ORGANIZER ADMIN & OPERATIONS DASHBOARD
+============================================================
+
+OBJECTIVE
+---------
+
+Create the central operational command center for Classico Mboa.
+
+The dashboard must unify existing systems without rebuilding them:
+
+- ticketing
+- ticket check-in
+- voting
+- tombola
+- FIFA Cup
+- Village
+- sponsors
+- payments
+- content
+- programme
+- teams
+- players
+- media
+- contacts
+- analytics
+
+The dashboard should answer:
+
+What is happening?
+What needs attention?
+How much has been sold?
+What is pending?
+What needs action before event day?
+
+
+1. ADMIN INFORMATION ARCHITECTURE
+---------------------------------
+
+Create main sections:
+
+Overview
+Edition
+Tickets
+Check-in
+Voting
+Tombola
+FIFA Cup
+Village
+Sponsors
+Programme
+Teams
+Players
+Content
+Media
+Payments
+Reports
+Users & Roles
+Settings
+Audit
+
+
+2. ADMIN LAYOUT
+---------------
+
+Desktop:
+
+sidebar
+top navigation
+global search
+edition selector
+notifications/action center
+
+Mobile/tablet:
+
+compact navigation
+critical event-day operations prioritized
+
+Do not force a desktop-only dashboard.
+
+
+3. EDITION SELECTOR
+-------------------
+
+Global edition selector is critical.
+
+Admin must clearly know which edition they are managing.
+
+Prevent accidental changes to the wrong edition.
+
+For destructive operations, show edition name in confirmation dialogs.
+
+
+4. OVERVIEW DASHBOARD
+---------------------
+
+Display:
+
+event date/countdown
+ticket revenue
+tickets sold
+check-ins
+vote revenue
+confirmed votes
+tombola revenue
+tombola entries
+FIFA registrations
+stand reservations
+stand revenue
+sponsor value
+pending payments
+open operational alerts
+
+
+5. DATA FRESHNESS
+-----------------
+
+Show:
+
+Last updated
+
+Use realtime only where valuable.
+
+Do not create unnecessary realtime subscriptions for every card.
+
+
+6. ACTION CENTER
+----------------
+
+Display tasks such as:
+
+unpaid stand reservations
+pending sponsor follow-ups
+ticket payment issues
+vendor applications awaiting review
+FIFA disputes
+unverified tombola winner
+programme item missing time
+content awaiting publication
+
+
+7. GLOBAL SEARCH
+----------------
+
+Search:
+
+ticket reference
+order reference
+customer phone
+player
+team
+vendor
+stand
+sponsor
+FIFA participant
+tombola entry
+
+Protect results according to user permissions.
+
+
+8. FILTER SYSTEM
+----------------
+
+Use reusable filters:
+
+date
+status
+edition
+payment
+category
+team
+owner
+
+Persist useful filters in URL query parameters when appropriate.
+
+
+9. TABLE STANDARD
+-----------------
+
+Create reusable admin data table with:
+
+pagination
+sorting
+search
+filters
+column visibility
+row actions
+bulk actions where safe
+export
+
+
+10. BULK ACTION SAFETY
+----------------------
+
+Never allow dangerous bulk operations without confirmation.
+
+Avoid bulk delete of transactional records.
+
+
+11. DASHBOARD REVENUE
+---------------------
+
+Show revenue by source:
+
+tickets
+votes
+tombola
+FIFA Cup
+stands
+other tracked revenue
+
+Sponsor cash contributions should be shown separately from sales unless finance design specifies otherwise.
+
+
+12. REVENUE DATE FILTERS
+------------------------
+
+Today
+Last 7 days
+Last 30 days
+Edition total
+Custom range
+
+
+13. OPERATIONS TIMELINE
+-----------------------
+
+Display recent events:
+
+payment successful
+ticket scanned
+vendor approved
+sponsor confirmed
+vote campaign changed
+tombola draw completed
+FIFA result updated
+content published
+
+
+14. ADMIN NOTIFICATIONS
+-----------------------
+
+Build internal notifications:
+
+priority
+type
+title
+message
+related entity
+read_at
+created_at
+
+Do not use external notification services yet unless needed.
+
+
+15. EDITION SETTINGS
+--------------------
+
+Admin can manage:
+
+edition name
+date
+venue
+city
+status
+public visibility
+hero content
+ticket sales state
+vote state
+tombola state
+FIFA state
+
+Sensitive fields require higher permissions.
+
+
+16. PROGRAMME MANAGEMENT
+------------------------
+
+Create CRUD:
+
+time
+title
+description
+category
+zone/location
+featured
+status
+
+Support drag/reorder if practical.
+
+
+17. TEAMS & PLAYERS
+-------------------
+
+Admin can:
+
+manage team profiles
+upload logo
+manage players
+assign team
+jersey number
+position
+photo
+public visibility
+
+
+18. CONTENT QUICK ACTIONS
+-------------------------
+
+Buttons:
+
+Create news
+Upload gallery
+Add sponsor
+Add programme item
+Add player
+Review vendor
+Open check-in
+
+
+19. REPORTS
+-----------
+
+Create reports center:
+
+ticket sales
+check-ins
+voting
+tombola
+FIFA
+Village
+sponsorship
+payment reconciliation
+event overview
+
+
+20. EXPORTS
+-----------
+
+CSV/Excel exports where appropriate.
+
+Protect PII.
+
+Exports should include metadata:
+
+edition
+date generated
+generated by
+
+
+21. MOBILE EVENT-DAY MODE
+-------------------------
+
+Admin mobile navigation should prioritize:
+
+ticket scanner
+FIFA score entry
+vendor check-in
+programme
+announcements
+tombola winner verification
+
+
+22. PERMISSION-AWARE UI
+-----------------------
+
+Do not just hide links.
+
+Backend authorization must enforce permissions.
+
+UI should also avoid showing inaccessible controls.
+
+
+23. DESTRUCTIVE ACTIONS
+-----------------------
+
+Require:
+
+confirmation
+reason where appropriate
+audit record
+
+Examples:
+
+void ticket
+cancel order
+disqualify FIFA participant
+withdraw candidate
+cancel vendor
+change confirmed sponsor
+
+
+24. AUDIT CENTER
+----------------
+
+Create:
+
+/admin/audit
+
+Search:
+
+admin
+entity type
+entity ID
+action
+date
+
+Store:
+
+actor
+action
+before summary
+after summary
+timestamp
+IP/device when appropriate
+
+
+25. ADMIN PERFORMANCE
+---------------------
+
+Use server-side pagination.
+
+Do not load thousands of records into browser memory.
+
+
+26. ERROR HANDLING
+------------------
+
+Admin actions must provide:
+
+success
+failure
+retry
+validation details
+
+Never silently fail.
+
+
+27. EMPTY STATES
+----------------
+
+Provide useful operational empty states.
+
+Example:
+
+“No vendor applications are awaiting review.”
+
+Not:
+
+“No data.”
+
+
+28. PHASE 9 ACCEPTANCE
+----------------------
+
+Phase 9 is complete when:
+
+1. Admin dashboard unifies all existing modules.
+2. Edition selector works safely.
+3. Overview metrics are accurate.
+4. Global search works.
+5. Role-aware navigation works.
+6. Action center works.
+7. Reports are accessible.
+8. Admin tables are scalable.
+9. Audit center works.
+10. Event-day mobile tools remain fast.
+11. No existing business logic is duplicated.
+12. Permissions are enforced server-side.
+13. Production build passes.
+
+
+============================================================
+PHASE 10 — AUTHENTICATION, USER ACCOUNTS & ROLE MANAGEMENT
+============================================================
+
+OBJECTIVE
+---------
+
+Build a secure identity layer for attendees, participants, vendors and staff without making account creation a barrier to ticket purchase.
+
+Guest checkout must continue to work.
+
+Accounts should add convenience, not friction.
+
+
+1. USER TYPES
+-------------
+
+Support:
+
+guest customer
+registered attendee
+FIFA participant
+vendor user
+staff/admin
+
+Do not create completely separate auth systems.
+
+
+2. SUPABASE AUTH
+----------------
+
+Use Supabase Auth.
+
+Support initial:
+
+email/password or magic link
+phone-ready architecture
+
+Do not implement insecure custom password storage.
+
+
+3. CAMEROON PHONE
+-----------------
+
+Normalize +237 numbers.
+
+If phone OTP is enabled later, integrate through a supported provider rather than inventing SMS verification.
+
+
+4. USER PROFILE
+---------------
+
+profiles table:
+
+id
+auth_user_id
+display_name
+phone
+email
+city
+preferred_locale
+avatar_url
+created_at
+updated_at
+
+
+5. ACCOUNT DASHBOARD
+--------------------
+
+Create:
+
+/account
+
+Show:
+
+upcoming event
+tickets
+orders
+tombola entries
+FIFA registrations
+vote purchase history where appropriate
+profile
+security
+
+
+6. GUEST ORDER CLAIMING
+-----------------------
+
+Important:
+
+Users who bought tickets before account creation should be able to associate eligible orders with their account after verified email/phone ownership.
+
+Do not allow claiming by knowing only an order reference.
+
+
+7. TICKET WALLET
+----------------
+
+Create:
+
+/account/tickets
+
+Display:
+
+valid
+used
+cancelled
+past edition
+
+Provide QR access.
+
+
+8. PURCHASE HISTORY
+-------------------
+
+Create:
+
+/account/orders
+
+Unified view of:
+
+tickets
+votes
+tombola
+FIFA
+stands where user is authorized
+
+
+9. PRIVACY
+----------
+
+Voting history may reveal supported candidates.
+
+Decide whether it is necessary to show exact candidate choices in user history.
+
+Prefer minimal exposure unless product requirements explicitly need it.
+
+
+10. VENDOR ACCOUNT
+------------------
+
+Approved vendors may access:
+
+application
+reservation
+payment status
+stand assignment
+event instructions
+
+
+11. STAFF INVITATIONS
+---------------------
+
+Admins should not self-assign roles.
+
+Use invite flow:
+
+email
+role
+edition scope
+expiration
+
+
+12. ROLE TABLES
+---------------
+
+Create:
+
+roles
+permissions
+user_roles
+role_permissions
+edition_access
+
+or equivalent robust design.
+
+
+13. SUGGESTED ROLES
+-------------------
+
+super_admin
+event_admin
+finance_manager
+ticket_manager
+checkin_staff
+voting_manager
+tombola_manager
+gaming_manager
+gaming_staff
+village_manager
+partnership_manager
+content_manager
+media_manager
+
+
+14. LEAST PRIVILEGE
+-------------------
+
+Each role gets only necessary permissions.
+
+Example:
+
+checkin_staff:
+scan tickets
+view minimal ticket data
+
+Cannot:
+view revenue
+refund orders
+manage sponsors
+
+
+15. EDITION-SCOPED STAFF
+------------------------
+
+Staff access may be restricted to a specific edition.
+
+Super admin can manage all editions.
+
+
+16. SESSION SECURITY
+--------------------
+
+Use:
+
+secure cookies
+server-side auth checks
+session refresh
+logout
+expired-session handling
+
+
+17. ACCOUNT RECOVERY
+--------------------
+
+Provide supported recovery flow.
+
+Do not expose whether arbitrary phone/email accounts exist more than necessary.
+
+
+18. ACCOUNT DELETION REQUEST
+----------------------------
+
+Prepare user data deletion/request workflow compatible with business and legal retention requirements.
+
+Transactional records may require retention.
+
+Do not blindly delete financial records.
+
+
+19. RLS
+------
+
+Implement RLS comprehensively.
+
+Users can access:
+
+their profile
+their permitted orders/tickets
+their vendor records when authorized
+
+Admins according to role.
+
+
+20. AUTH AUDIT
+--------------
+
+Track high-risk events:
+
+staff login
+role assignment
+role removal
+password reset if available
+suspicious access
+
+
+21. PHASE 10 ACCEPTANCE
+-----------------------
+
+Complete when:
+
+1. Secure authentication works.
+2. Guest checkout remains available.
+3. User profiles work.
+4. Ticket wallet works.
+5. Guest orders can be claimed securely.
+6. Vendor access is scoped.
+7. Staff invites work.
+8. Roles/permissions are enforced.
+9. Edition-scoped permissions work.
+10. RLS prevents cross-user data exposure.
+11. Production build and auth tests pass.
+
+
+============================================================
+PHASE 11 — UNIFIED PAYMENTS, REVENUE & FINANCIAL RECONCILIATION
+============================================================
+
+OBJECTIVE
+---------
+
+Consolidate payment logic across:
+
+tickets
+votes
+tombola
+FIFA Cup
+stand reservations
+future merchandise
+
+The platform must have one reliable financial model.
+
+Cameroon-first priorities:
+
+MTN Mobile Money
+Orange Money
+compatible Cameroon payment aggregator
+cards where appropriate
+
+
+1. PAYMENT ABSTRACTION
+----------------------
+
+Maintain shared provider interface:
+
+initializePayment
+verifyPayment
+handleWebhook
+queryStatus
+refundPayment if supported
+
+Never implement business-specific provider code inside tickets/votes/etc.
+
+
+2. CENTRAL TRANSACTIONS
+-----------------------
+
+payment_transactions should include:
+
+id
+edition_id
+order_type
+order_id
+provider
+provider_reference
+internal_reference
+amount_xaf
+currency
+status
+customer_phone
+initiated_at
+confirmed_at
+failed_at
+raw_metadata
+created_at
+
+
+3. ORDER TYPE
+-------------
+
+Support:
+
+ticket
+vote
+tombola
+fifa
+stand
+merchandise
+other approved source
+
+
+4. PAYMENT STATES
+-----------------
+
+initiated
+pending
+successful
+failed
+cancelled
+expired
+refunded
+partially_refunded if supported
+
+
+5. IDEMPOTENCY
+--------------
+
+Every provider callback must be idempotent.
+
+Use database uniqueness and transaction locking.
+
+
+6. PAYMENT ORCHESTRATION
+------------------------
+
+Business modules should request payment through one payment service.
+
+On successful confirmation emit/trigger domain fulfillment:
+
+ticket → issue tickets
+vote → credit votes
+tombola → create entries
+FIFA → confirm registration
+stand → confirm reservation
+
+
+7. FULFILLMENT LOG
+------------------
+
+Record:
+
+transaction
+domain
+fulfillment status
+attempts
+last error
+completed_at
+
+Prevent successful payment with silently missing fulfillment.
+
+
+8. RECOVERY JOB
+---------------
+
+Create reconciliation mechanism for:
+
+payment succeeded at provider
+webhook missed
+internal status still pending
+
+Authorized scheduled reconciliation should query provider status where supported.
+
+
+9. PAYMENT RECEIPT
+------------------
+
+Generate standardized receipt data:
+
+reference
+date
+amount
+purpose
+payer
+edition
+provider
+status
+
+Do not claim a tax invoice unless legal/accounting requirements are satisfied.
+
+
+10. REFUNDS
+-----------
+
+Centralize refund policy handling.
+
+Domain consequences:
+
+ticket refunded → invalidate ticket
+tombola refunded → remove entry eligibility
+FIFA refunded → cancel registration when allowed
+stand refunded → release reservation
+vote refund → follow organizer policy and preserve audit history
+
+
+11. MANUAL PAYMENT
+------------------
+
+Allow only if operationally required.
+
+Require:
+
+reference
+method
+amount
+evidence
+verified_by
+verification_date
+notes
+
+
+12. FINANCE DASHBOARD
+---------------------
+
+Build:
+
+/admin/finance
+
+Show:
+
+gross successful payments
+refunds
+net collected
+pending
+failed
+revenue by domain
+revenue by provider
+daily trend
+
+
+13. RECONCILIATION VIEW
+-----------------------
+
+Compare:
+
+provider transactions
+internal transactions
+fulfilled orders
+
+Highlight mismatches.
+
+
+14. FINANCIAL EXPORT
+--------------------
+
+Export:
+
+date
+reference
+domain
+provider
+amount
+status
+order reference
+
+Protect customer PII.
+
+
+15. XAF RULE
+------------
+
+Store XAF as integers.
+
+Never use floating-point decimals for FCFA.
+
+
+16. PROVIDER CONFIG
+-------------------
+
+Environment-based credentials.
+
+Never expose secrets to client.
+
+Use sandbox/test mode per provider before live activation.
+
+
+17. PAYMENT UX
+--------------
+
+Mobile UX must clearly explain:
+
+amount
+provider
+phone number
+pending state
+what user should do
+how to retry
+
+
+18. PENDING PAYMENT
+-------------------
+
+Do not mark failed immediately if mobile money authorization is delayed.
+
+Use explicit pending states.
+
+
+19. WEBHOOK SECURITY
+--------------------
+
+Verify:
+
+signature/token
+source requirements
+expected reference
+amount
+currency
+
+Reject mismatched amount.
+
+
+20. PHASE 11 ACCEPTANCE
+-----------------------
+
+Complete when:
+
+1. All payment modules use shared payment service.
+2. Transaction states are standardized.
+3. Fulfillment is idempotent.
+4. Recovery/reconciliation exists.
+5. Finance dashboard works.
+6. Refund consequences are correct.
+7. Manual payments are auditable.
+8. XAF calculations are safe.
+9. Provider secrets remain server-only.
+10. Critical payment tests pass.
+
+
+============================================================
+PHASE 12 — CONTENT, MEDIA & COMMUNICATION CMS
+============================================================
+
+OBJECTIVE
+---------
+
+Build the content system supporting communication before, during and after the event.
+
+The Classico plan requires content such as:
+
+Before:
+player interviews
+team presentations
+challenges
+influencer videos
+Barça or Real?
+predictions
+behind-the-scenes
+training
+sponsor presentations
+street videos
+
+Event day:
+professional photos
+videos
+public interviews
+TikTok/Instagram content
+reactions
+activities coverage
+
+After:
+best photos
+aftermovie
+best moments
+vote results
+game winners
+sponsor thanks
+public thanks
+
+
+1. CMS DOMAINS
+--------------
+
+Support:
+
+news articles
+announcements
+media galleries
+videos
+short-form content records
+homepage features
+sponsor features
+player/team features
+
+
+2. TABLES
+---------
+
+content_posts
+content_categories
+content_tags
+content_authors
+media_assets
+galleries
+gallery_items
+homepage_features
+content_schedules
+
+
+3. POST FIELDS
+--------------
+
+id
+edition_id nullable
+title
+slug
+excerpt
+body
+cover_image
+category_id
+status
+published_at
+author_id
+seo_title
+seo_description
+featured
+created_at
+updated_at
+
+
+4. STATUS
+---------
+
+draft
+review
+scheduled
+published
+archived
+
+
+5. SCHEDULED PUBLISHING
+-----------------------
+
+Support Africa/Douala timezone.
+
+Do not depend on a browser remaining open.
+
+
+6. EDITOR
+---------
+
+Use a safe structured editor.
+
+Support:
+
+headings
+paragraphs
+lists
+links
+images
+embeds where controlled
+quotes
+
+Sanitize HTML output.
+
+
+7. MEDIA LIBRARY
+----------------
+
+Create:
+
+/admin/media
+
+Support:
+
+upload
+alt text
+caption
+tags
+credit
+edition
+file type
+dimensions
+usage
+
+
+8. IMAGE OPTIMIZATION
+---------------------
+
+Generate/use optimized variants.
+
+Avoid serving original multi-megabyte photos directly to mobile users.
+
+
+9. VIDEO
+--------
+
+Do not store huge event videos inefficiently if infrastructure is unsuitable.
+
+Support external video providers or optimized storage architecture.
+
+
+10. GALLERIES
+-------------
+
+Create galleries:
+
+training
+behind-the-scenes
+event day
+fans
+artists
+FIFA Cup
+Village
+awards
+
+
+11. PUBLIC NEWS
+--------------
+
+Maintain:
+
+/news
+/news/[slug]
+
+
+12. PUBLIC GALLERY
+-----------------
+
+Maintain:
+
+/gallery
+/gallery/[slug] if useful
+
+
+13. HOMEPAGE CONTENT
+--------------------
+
+Allow admins to control:
+
+featured article
+hero announcement
+featured sponsor
+featured activity
+latest media
+
+
+14. CONTENT CALENDAR
+--------------------
+
+Create content planning view.
+
+Fields:
+
+title
+channel
+planned date
+owner
+status
+related content
+
+
+15. CHANNELS
+------------
+
+Examples:
+
+website
+WhatsApp
+Instagram
+TikTok
+Facebook
+other
+
+The system may track planned posts without automatically publishing to external social platforms.
+
+
+16. SEO
+-------
+
+Per post:
+
+title
+description
+OG image
+canonical
+structured metadata where appropriate
+
+
+17. APPROVAL WORKFLOW
+---------------------
+
+content_manager creates
+reviewer approves
+scheduled/published
+
+Keep simple enough for actual team use.
+
+
+18. SPONSOR CONTENT
+------------------
+
+Allow article/media to associate with sponsor.
+
+Useful for deliverable tracking.
+
+
+19. CONTENT ANALYTICS
+--------------------
+
+Track:
+
+views
+share clicks
+CTA clicks
+
+Do not over-collect user data.
+
+
+20. PHASE 12 ACCEPTANCE
+-----------------------
+
+Complete when:
+
+1. News CMS works.
+2. Media library works.
+3. Galleries work.
+4. Scheduled publishing works.
+5. Content is edition-aware.
+6. Homepage features are manageable.
+7. Sponsor associations work.
+8. Mobile media is optimized.
+9. SEO metadata works.
+10. Content permissions are enforced.
+
+
+============================================================
+PHASE 13 — MATCH-DAY LIVE MODE & EVENT OPERATIONS
+============================================================
+
+OBJECTIVE
+---------
+
+Create a special live experience for 12 December 2026.
+
+The public site should be able to switch from promotional mode into EVENT/LIVE mode.
+
+The event-day experience may include:
+
+match
+animations
+stands
+games
+tombola
+FIFA Cup
+performances
+votes
+awards
+
+
+1. EDITION LIVE STATE
+---------------------
+
+Edition statuses:
+
+upcoming
+live
+completed
+
+When live:
+
+homepage prioritizes live information.
+
+
+2. LIVE HOMEPAGE
+----------------
+
+Display:
+
+CLASSICO LIVE
+current score
+match status
+next programme item
+live FIFA status
+tombola announcement
+important event notices
+
+
+3. MATCH DATA MODEL
+-------------------
+
+Create:
+
+matches
+match_events
+lineups if used
+
+Fields:
+
+team_home
+team_away
+score
+status
+kickoff
+minute
+venue
+
+
+4. MATCH STATES
+---------------
+
+scheduled
+warmup
+first_half
+halftime
+second_half
+finished
+delayed
+cancelled
+
+
+5. MATCH EVENTS
+---------------
+
+Support:
+
+goal
+card
+substitution
+important moment
+
+Do not overbuild professional league-level stats if the organizers will not capture them reliably.
+
+
+6. SCORE CONTROL
+----------------
+
+Authorized operator can update score.
+
+Every score change audited.
+
+
+7. PUBLIC LIVE PAGE
+-------------------
+
+Create:
+
+/live
+
+Display:
+
+score
+match clock/state
+teams
+recent events
+programme
+live notices
+
+
+8. PROGRAMME LIVE STATUS
+------------------------
+
+Programme item states:
+
+upcoming
+now
+completed
+delayed
+cancelled
+
+
+9. ANNOUNCEMENTS
+----------------
+
+Admin can publish urgent public notices:
+
+programme delay
+lost item/contact point
+tombola announcement
+gate notice
+performance update
+
+Avoid emergency claims beyond organizers' verified information.
+
+
+10. LIVE VOTING
+---------------
+
+If MVP voting is active:
+
+show CTA.
+
+Voting remains governed by Phase 4 rules.
+
+
+11. LIVE FIFA
+-------------
+
+Embed:
+
+current matches
+bracket progress
+final result
+
+
+12. LIVE TOMBOLA
+----------------
+
+Display:
+
+draw time
+draw completed
+winning entry when officially published
+
+
+13. EVENT DISPLAY MODE
+----------------------
+
+Create large-screen route:
+
+/display
+
+Rotating modules:
+
+score
+programme
+sponsors
+FIFA
+tombola
+announcements
+
+No admin controls.
+
+
+14. BANDWIDTH
+-------------
+
+Live mode must remain lightweight.
+
+Use efficient polling/realtime.
+
+
+15. OFFLINE OPERATOR RESILIENCE
+-------------------------------
+
+Show clear connectivity status.
+
+Do not pretend updates are saved if connection failed.
+
+
+16. COMPLETION TRANSITION
+-------------------------
+
+After match/event:
+
+switch to completed state.
+
+Homepage promotes:
+
+results
+winners
+gallery
+aftermovie when available
+thanks
+
+
+17. PHASE 13 ACCEPTANCE
+-----------------------
+
+Complete when:
+
+1. Edition live mode works.
+2. Score updates work.
+3. Programme live states work.
+4. Public live page works.
+5. Event display mode works.
+6. FIFA/Tombola/Vote modules integrate.
+7. Operator permissions are secure.
+8. Mobile performance remains strong.
+9. Live changes are audited.
+
+
+============================================================
+PHASE 14 — SECURITY, TESTING, PERFORMANCE & PRODUCTION HARDENING
+============================================================
+
+OBJECTIVE
+---------
+
+Harden the entire platform before production launch.
+
+This phase is not optional.
+
+Review all previous modules as one system.
+
+
+1. SECURITY REVIEW
+------------------
+
+Review:
+
+authentication
+authorization
+RLS
+payment webhooks
+ticket QR
+vote endpoints
+tombola draws
+FIFA score updates
+vendor documents
+sponsor documents
+admin APIs
+
+
+2. SECRET MANAGEMENT
+--------------------
+
+No secrets in:
+
+client bundle
+repository
+public logs
+error messages
+
+
+3. RLS AUDIT
+------------
+
+Test every sensitive table.
+
+Attempt cross-user and public access.
+
+
+4. ADMIN AUTHORIZATION
+----------------------
+
+Verify every mutation on server.
+
+Never rely on hidden UI.
+
+
+5. RATE LIMITING
+----------------
+
+Apply to:
+
+auth
+checkout
+vote creation
+ticket lookup
+QR verification
+contact forms
+vendor applications
+sponsor forms
+
+
+6. INPUT VALIDATION
+-------------------
+
+Use shared schema validation.
+
+Validate:
+
+strings
+IDs
+amounts
+phone numbers
+dates
+file types
+file sizes
+
+
+7. FILE UPLOAD SECURITY
+-----------------------
+
+Validate:
+
+MIME type
+extension
+size
+storage bucket
+access policy
+
+Do not execute uploaded content.
+
+
+8. PAYMENT PENETRATION TEST CASES
+---------------------------------
+
+Test:
+
+modified amount
+modified order ID
+duplicate callback
+fake callback
+replayed callback
+currency mismatch
+fulfilled order callback repeated
+
+
+9. QR SECURITY TESTS
+--------------------
+
+Test:
+
+guessed token
+replay
+double scan
+cancelled ticket
+refunded ticket
+
+
+10. VOTING SECURITY TESTS
+-------------------------
+
+Test:
+
+negative quantity
+huge quantity
+closed campaign
+inactive candidate
+duplicate payment
+
+
+11. TOMBOLA SECURITY
+--------------------
+
+Test:
+
+refunded entry
+duplicate draw
+unauthorized draw
+invalid winner modification
+
+
+12. FIFA SECURITY
+----------------
+
+Test:
+
+unauthorized score update
+bracket regeneration after lock
+participant data access
+
+
+13. UNIT TESTS
+-------------
+
+Critical utilities and domain logic.
+
+
+14. INTEGRATION TESTS
+---------------------
+
+Flows:
+
+ticket purchase
+vote purchase
+tombola purchase
+FIFA registration
+stand reservation
+
+
+15. END-TO-END TESTS
+--------------------
+
+Mobile-first core journeys.
+
+Use staging environment.
+
+
+16. ACCESSIBILITY
+-----------------
+
+Audit:
+
+keyboard
+screen readers
+focus
+contrast
+labels
+reduced motion
+
+
+17. PERFORMANCE
+---------------
+
+Audit:
+
+LCP
+CLS
+INP
+JS bundle
+image weight
+font loading
+API latency
+
+
+18. MOBILE NETWORK TEST
+-----------------------
+
+Test throttled connection.
+
+Critical pages:
+
+home
+tickets
+checkout
+vote
+tombola
+FIFA
+live
+
+
+19. DATABASE PERFORMANCE
+------------------------
+
+Review indexes for:
+
+references
+edition_id
+status
+created_at
+foreign keys
+lookup tokens
+
+
+20. PAGINATION
+--------------
+
+No unlimited admin table queries.
+
+
+21. BACKUPS
+-----------
+
+Configure database backup strategy.
+
+Document restore process.
+
+
+22. OBSERVABILITY
+-----------------
+
+Implement:
+
+error tracking
+server logs
+payment failures
+webhook failures
+background/reconciliation errors
+
+
+23. HEALTH CHECK
+---------------
+
+Create internal health endpoint/page for:
+
+database
+storage
+provider configuration
+critical services
+
+
+24. STAGING
+-----------
+
+Maintain staging environment separate from production.
+
+Use test payments only.
+
+
+25. PRODUCTION CHECKLIST
+------------------------
+
+Before launch verify:
+
+DNS
+SSL
+environment variables
+database migrations
+RLS
+admin accounts
+backup
+payment mode
+webhook URLs
+analytics
+robots
+sitemap
+metadata
+
+
+26. INCIDENT PLAYBOOK
+---------------------
+
+Document response for:
+
+payment outage
+website outage
+QR check-in outage
+mobile money delay
+incorrect score
+tombola dispute
+admin account compromise
+
+
+27. PHASE 14 ACCEPTANCE
+-----------------------
+
+Complete when:
+
+1. Security audit passes.
+2. RLS audit passes.
+3. Payment abuse cases pass.
+4. E2E tests pass.
+5. Accessibility issues are addressed.
+6. Mobile performance is acceptable.
+7. Backups are configured.
+8. Monitoring exists.
+9. Staging is working.
+10. Production checklist is documented.
+
+
+============================================================
+PHASE 15 — PRODUCTION LAUNCH, MULTI-EDITION SYSTEM & LONG-TERM OPERATIONS
+============================================================
+
+OBJECTIVE
+---------
+
+Launch Classico Mboa as a permanent event platform, not a one-time website.
+
+The system must support future editions without rebuilding the application.
+
+
+1. MULTI-EDITION ADMIN
+----------------------
+
+Create:
+
+/admin/editions
+
+Admins can:
+
+create edition
+duplicate selected configuration
+set dates
+set venue
+set status
+configure public launch
+
+
+2. EDITION CREATION
+-------------------
+
+New edition should initialize:
+
+basic settings
+content placeholders
+ticket configuration draft
+programme draft
+sponsor workspace
+Village workspace
+vote workspace
+FIFA workspace
+tombola workspace
+
+
+3. DUPLICATION
+--------------
+
+Allow optional copying of:
+
+sponsor packages
+vendor categories
+content templates
+ticket types as drafts
+programme templates
+roles/access patterns
+
+Never copy:
+
+transactions
+tickets
+votes
+tombola entries
+FIFA results
+
+
+4. PUBLIC EDITION ROUTING
+-------------------------
+
+Support:
+
+/edition/8
+/edition/9
+
+Current edition gets primary CTAs.
+
+
+5. ARCHIVE
+----------
+
+Completed editions remain viewable.
+
+Show:
+
+results
+photos
+champions
+sponsors
+FIFA winner
+awards
+aftermovie
+news
+
+
+6. HOMEPAGE CURRENT EDITION
+---------------------------
+
+Global site should know:
+
+current promoted edition
+next edition
+latest completed edition
+
+
+7. POST-EVENT WORKFLOW
+----------------------
+
+After event:
+
+close ticket sales
+finalize check-ins
+close votes
+publish winners
+finalize tombola
+complete FIFA
+archive programme
+publish gallery
+publish aftermovie
+thank sponsors
+financial reconciliation
+
+
+8. EVENT REPORTING
+------------------
+
+Generate internal edition report data:
+
+attendance
+ticket sales
+check-ins
+vote engagement
+tombola entries
+FIFA participation
+vendors
+sponsors
+revenue
+content metrics
+
+
+9. SPONSOR POST-EVENT REPORT
+----------------------------
+
+Compile deliverables and evidence.
+
+Do not fabricate metrics.
+
+
+10. FINANCIAL CLOSE
+-------------------
+
+Mark edition finance status:
+
+open
+reconciling
+closed
+
+Restrict changes after closure except high-level audited correction.
+
+
+11. DATA RETENTION
+------------------
+
+Define retention policy for:
+
+financial data
+tickets
+user PII
+vendor records
+sponsor documents
+logs
+media
+
+
+12. COMMUNITY CONTINUITY
+------------------------
+
+Between editions website remains active.
+
+Promote:
+
+news
+community
+games
+announcements
+future edition
+previous highlights
+
+
+13. TWO-EDITION READINESS
+-------------------------
+
+Architecture must be able to support the project's long-term plan of more frequent editions.
+
+Do not assume only one active planning cycle forever.
+
+
+14. CAMPAIGN TEMPLATES
+----------------------
+
+Create reusable templates:
+
+ticket launch
+vote campaign
+tombola campaign
+FIFA registration
+vendor application
+sponsor outreach
+countdown
+
+
+15. OPERATIONS DOCUMENTATION
+----------------------------
+
+Create internal docs for:
+
+launching new edition
+ticket setup
+payment setup
+vote setup
+tombola draw
+FIFA bracket
+Village allocation
+sponsor setup
+content publishing
+event-day live mode
+post-event close
+
+
+16. ADMIN ONBOARDING
+--------------------
+
+Create lightweight help content/tooltips.
+
+Do not make core workflows depend on developer knowledge.
+
+
+17. DOMAIN & DEPLOYMENT
+-----------------------
+
+Production deployment should include:
+
+custom domain
+HTTPS
+environment separation
+CI/CD
+migration procedure
+rollback plan
+
+
+18. ANALYTICS BASELINE
+----------------------
+
+Record edition baseline:
+
+traffic
+conversion
+sales
+engagement
+attendance
+
+Use as historical data, not as fabricated predictions.
+
+
+19. PRODUCT HEALTH
+------------------
+
+Admin should see:
+
+failed payments
+stale pending orders
+content errors
+unprocessed forms
+operational alerts
+
+
+20. RELEASE VERSIONING
+----------------------
+
+Maintain release notes.
+
+Tag major production releases.
+
+
+21. FUTURE MODULE READINESS
+---------------------------
+
+Architecture should be able to add later:
+
+merchandise
+membership
+loyalty
+push notifications
+additional tournaments
+other sporting/cultural activities
+
+Do not build them prematurely.
+
+
+22. PHASE 15 ACCEPTANCE
+-----------------------
+
+The Classico Mboa platform is considered launch-ready when:
+
+1. Production infrastructure is stable.
+2. Edition 8 is configured as current edition.
+3. Future editions can be created without code changes.
+4. Completed editions can be archived.
+5. Financial close workflow exists.
+6. Post-event workflow exists.
+7. Sponsor reporting data exists.
+8. Operational documentation exists.
+9. Admin users can operate the platform without developer intervention for routine tasks.
+10. Monitoring, backups and incident procedures are active.
+11. The platform remains useful between editions.
+12. All production-critical tests pass.
+
+
+============================================================
+FINAL ENGINEERING PRINCIPLES — APPLY TO ALL PHASES
+============================================================
+
+1. CLASSICO MBOA IS THE PLATFORM; AN EDITION IS DATA
+-----------------------------------------------------
+
+Never make Edition 8 inseparable from the application.
+
+Future editions should be created through data/configuration.
+
+
+2. CAMEROON-FIRST
+-----------------
+
+Default assumptions:
+
+Locale: fr-CM
+Timezone: Africa/Douala
+Currency: XAF
+Phone country: +237
+Mobile-first
+WhatsApp-friendly
+MTN/Orange payment-ready
+
+
+3. SERVER AUTHORITY
+-------------------
+
+The client must never be authoritative for:
+
+price
+payment success
+ticket validity
+vote count
+tombola eligibility
+draw winner
+FIFA result finalization
+admin permissions
+
+
+4. AUDIT IMPORTANT ACTIONS
+--------------------------
+
+Financial and competition-critical changes must be traceable.
+
+
+5. NEVER DESTROY TRANSACTION HISTORY
+------------------------------------
+
+Use status transitions and audit records instead of deleting:
+
+payments
+orders
+tickets
+votes
+tombola entries
+registrations
+agreements
+
+
+6. DESIGN CONSISTENCY
+---------------------
+
+All new public modules must remain within the Classico Mboa design system.
+
+All admin modules should use shared operational UI patterns.
+
+
+7. MOBILE PERFORMANCE
+---------------------
+
+Assume many users arrive from WhatsApp on mobile data.
+
+Optimize every critical flow accordingly.
+
+
+8. NO FAKE PRODUCTION BEHAVIOR
+------------------------------
+
+If real provider credentials or official event information are unavailable:
+
+use test mode
+use clearly identified placeholders
+do not simulate a successful real-world transaction as though it occurred
+
+
+9. NO INVENTED EVENT FACTS
+--------------------------
+
+Do not invent:
+
+players
+artists
+confirmed sponsors
+prizes
+stand prices
+VIP benefits
+attendance numbers
+programme times
+legal registration details
+
+Make such fields configurable and use neutral placeholders until confirmed.
+
+
+10. DEFINITION OF DONE
+----------------------
+
+Every phase should finish with:
+
+production build
+type checks
+critical tests
+mobile review
+security review for new endpoints
+documentation
+migration notes
+environment variables
+known limitations
+next-phase dependencies
+
+CLASSICO MBOA — DEVELOPMENT ROADMAP
+DETAILED IMPLEMENTATION PROMPTS — PHASES 10 TO 15
+Cameroon-first production build
+============================================================
+
+PROJECT CONTEXT
+---------------
+
+Continue from the existing Classico Mboa application after Phases 1–9.
+
+Do not restart the project.
+Do not replace established architecture without a documented technical reason.
+Do not duplicate existing business logic.
+
+Product:
+CLASSICO MBOA
+
+Current edition:
+Classico Mboa — 8th Edition
+
+Date:
+12 December 2026
+
+Venue:
+Omnisports Bépanda
+
+City:
+Douala, Cameroon
+
+Timezone:
+Africa/Douala
+
+Default locale:
+fr-CM
+
+Secondary locale architecture:
+en-CM
+
+Currency:
+XAF / FCFA
+
+Phone:
++237
+
+Primary payment direction:
+- MTN Mobile Money Cameroon
+- Orange Money Cameroon
+- Compatible Cameroon payment aggregators
+- Card where supported
+
+Primary communication/share channel:
+WhatsApp
+
+CORE ARCHITECTURAL RULE
+-----------------------
+
+Classico Mboa is the permanent platform.
+
+Each edition is data.
+
+Classico Mboa
+→ Edition 8
+→ Edition 9
+→ Future Editions
+
+Each edition may own:
+
+- tickets
+- programme
+- teams
+- players
+- voting
+- tombola
+- FIFA Cup
+- Village
+- stands
+- sponsors
+- content
+- media
+- payments
+- analytics
+- results
+
+Never hardcode Edition 8 into permanent application logic.
+
+
+============================================================
+PHASE 10 — AUTHENTICATION, USER ACCOUNTS & ROLE MANAGEMENT
+============================================================
+
+OBJECTIVE
+---------
+
+Build a secure identity, user-account, staff-access and permission system for:
+
+- attendees
+- ticket buyers
+- FIFA Cup participants
+- vendors
+- staff
+- managers
+- administrators
+
+Account creation must improve the experience without creating unnecessary friction.
+
+Guest checkout must remain supported.
+
+
+1. AUTHENTICATION PLATFORM
+--------------------------
+
+Use Supabase Auth.
+
+Initial authentication options:
+
+- email/password
+- magic link
+
+Prepare architecture for future:
+
+- phone OTP
+- SMS authentication
+- social login if required
+
+Do not build custom password storage.
+
+
+2. USER TYPES
+-------------
+
+Support:
+
+- guest customer
+- registered attendee
+- FIFA Cup participant
+- vendor user
+- staff member
+- administrator
+
+Do not create separate authentication systems for each feature.
+
+
+3. USER PROFILE
+---------------
+
+Create profiles table.
+
+Suggested fields:
+
+id
+auth_user_id
+display_name
+first_name nullable
+last_name nullable
+phone nullable
+email nullable
+city nullable
+country
+preferred_locale
+avatar_url nullable
+status
+created_at
+updated_at
+
+Status:
+
+active
+suspended
+disabled
+pending_verification
+
+
+4. CAMEROON PHONE NORMALIZATION
+-------------------------------
+
+Reuse shared +237 phone utilities.
+
+Accept:
+
+6XXXXXXXX
+2376XXXXXXXX
++2376XXXXXXXX
+
+Normalize internally to:
+
++2376XXXXXXXX
+
+
+5. ACCOUNT DASHBOARD
+--------------------
+
+Create:
+
+/account
+
+Show:
+
+- current/upcoming Classico edition
+- tickets
+- QR shortcuts
+- order history
+- tombola entries
+- FIFA registrations
+- profile
+- security settings
+
+
+6. TICKET WALLET
+----------------
+
+Create:
+
+/account/tickets
+
+Sections:
+
+- valid tickets
+- used tickets
+- cancelled/refunded tickets
+- past-edition tickets
+
+Ticket card:
+
+edition
+date
+ticket type
+status
+QR access
+details
+
+
+7. PURCHASE HISTORY
+-------------------
+
+Create:
+
+/account/orders
+
+Unified order history can include:
+
+- tickets
+- tombola
+- FIFA registration
+- stand reservations where applicable
+
+Treat voting history carefully because candidate preference may be sensitive.
+
+Only expose detailed voting choices when explicitly required by product design.
+
+
+8. GUEST CHECKOUT
+-----------------
+
+Do not force account creation before:
+
+- ticket purchase
+- tombola entry
+- FIFA registration
+
+where guest purchase is permitted.
+
+
+9. GUEST ORDER CLAIMING
+-----------------------
+
+Allow a user who purchased as a guest to later attach eligible orders to their account.
+
+Secure flow:
+
+guest purchase uses phone/email
+→ user creates account
+→ user verifies ownership of same phone/email
+→ matching eligible orders become claimable
+
+Never allow order claiming from order reference alone.
+
+
+10. VENDOR ACCOUNTS
+-------------------
+
+Approved vendor users may view:
+
+- application
+- application status
+- reservation
+- payment status
+- stand package
+- stand assignment
+- event instructions
+- uploaded vendor documents
+
+Do not expose internal organizer notes.
+
+
+11. STAFF INVITATION FLOW
+-------------------------
+
+Only authorized admins may invite staff.
+
+Flow:
+
+enter email
+→ select role
+→ select edition scope
+→ send invitation
+→ invitation expires
+→ recipient accepts
+→ staff access becomes active
+
+Users must never self-assign staff roles.
+
+
+12. ROLE MODEL
+--------------
+
+Create normalized authorization architecture such as:
+
+roles
+permissions
+role_permissions
+user_roles
+edition_access
+
+
+13. SUGGESTED ROLES
+-------------------
+
+super_admin
+event_admin
+finance_manager
+ticket_manager
+checkin_staff
+voting_manager
+tombola_manager
+gaming_manager
+gaming_staff
+village_manager
+partnership_manager
+content_manager
+media_manager
+
+
+14. PERMISSION MODEL
+--------------------
+
+Use granular permissions.
+
+Examples:
+
+tickets.read
+tickets.manage
+tickets.scan
+
+payments.read
+payments.refund
+
+voting.manage
+voting.results
+
+tombola.manage
+tombola.draw
+
+fifa.manage
+fifa.score
+
+village.manage
+
+sponsors.manage
+
+content.publish
+
+users.manage_roles
+
+
+15. LEAST PRIVILEGE
+-------------------
+
+Roles get only what they need.
+
+Example:
+
+checkin_staff CAN:
+- scan tickets
+- view minimum ticket details
+
+checkin_staff CANNOT:
+- view finance
+- refund orders
+- manage sponsors
+- edit voting
+- change edition settings
+
+
+16. EDITION-SCOPED ACCESS
+-------------------------
+
+Staff access may be limited to one edition.
+
+Example:
+
+A gaming manager for Edition 8 must not automatically control Edition 9.
+
+Super admin may manage all editions.
+
+
+17. SERVER AUTHORIZATION
+------------------------
+
+Every protected action must verify authorization server-side.
+
+Do not rely on:
+
+- hidden buttons
+- route hiding
+- client-only guards
+
+
+18. ADMIN ROUTE PROTECTION
+--------------------------
+
+Protect:
+
+/admin
+
+and nested admin routes.
+
+Unauthenticated:
+redirect to login.
+
+Unauthorized:
+show access denied.
+
+
+19. ROW LEVEL SECURITY
+----------------------
+
+Implement comprehensive Supabase RLS.
+
+Users may access:
+
+- own profile
+- own tickets
+- permitted own orders
+- own FIFA registration
+- own vendor records where authorized
+
+Admins:
+according to explicit role and edition scope.
+
+
+20. SESSION MANAGEMENT
+----------------------
+
+Use:
+
+- secure cookies
+- server-side session checks
+- session refresh
+- logout
+- expired-session handling
+
+
+21. ACCOUNT SECURITY PAGE
+-------------------------
+
+Create:
+
+/account/security
+
+Support:
+
+- password change
+- logout
+- session management where feasible
+- recovery settings
+
+
+22. PASSWORD RECOVERY
+---------------------
+
+Use Supabase-supported recovery.
+
+Avoid leaking whether arbitrary email addresses or phone numbers exist.
+
+
+23. ACCOUNT DELETION REQUEST
+----------------------------
+
+Prepare a deletion-request workflow.
+
+Do not blindly delete:
+
+- payment records
+- ticket records
+- audit records
+- legally required transaction history
+
+Anonymize personal data where appropriate.
+
+
+24. USER SUSPENSION
+-------------------
+
+Authorized admins may suspend accounts.
+
+Record:
+
+reason
+administrator
+timestamp
+
+
+25. STAFF ROLE CHANGES
+----------------------
+
+Audit every role assignment/removal.
+
+Store:
+
+actor
+target user
+old role
+new role
+edition scope
+timestamp
+
+
+26. AUTH AUDIT LOG
+------------------
+
+Track high-risk activity:
+
+- staff login
+- role assignment
+- role removal
+- account suspension
+- password-reset events where relevant
+- denied privileged actions
+
+
+27. PROFILE PRIVACY
+-------------------
+
+Never expose:
+
+- private phone
+- private email
+- payment details
+
+on public user pages.
+
+
+28. MOBILE ACCOUNT UX
+---------------------
+
+Prioritize:
+
+My Tickets
+My QR
+Upcoming Event
+My Orders
+
+Avoid admin-style complexity for normal users.
+
+
+29. AUTH TESTING
+----------------
+
+Test:
+
+login
+logout
+expired session
+protected route access
+cross-user ticket access
+cross-user order access
+guest-order claiming
+wrong email claim
+wrong phone claim
+role restrictions
+edition access
+suspended-user behavior
+
+
+30. PHASE 10 ACCEPTANCE CRITERIA
+--------------------------------
+
+Phase 10 is complete when:
+
+1. Secure authentication works.
+2. Guest checkout remains available.
+3. Profiles work.
+4. Ticket wallet works.
+5. Order history works.
+6. Guest order claiming is secure.
+7. Vendor account access is scoped.
+8. Staff invitations work.
+9. Roles and permissions are enforced.
+10. Edition-scoped access works.
+11. RLS blocks cross-user access.
+12. Role changes are audited.
+13. Mobile account UX is polished.
+14. Critical auth tests pass.
+15. Production build succeeds.
+
+
+============================================================
+PHASE 11 — UNIFIED PAYMENTS, REVENUE & FINANCIAL RECONCILIATION
+============================================================
+
+OBJECTIVE
+---------
+
+Consolidate payment handling for:
+
+- tickets
+- votes
+- tombola
+- FIFA Cup
+- stand reservations
+- future merchandise
+- other approved revenue streams
+
+Cameroon-first provider priorities:
+
+- MTN Mobile Money
+- Orange Money
+- compatible Cameroon payment aggregator
+- cards where supported
+
+
+1. CENTRAL PAYMENT ARCHITECTURE
+-------------------------------
+
+All modules must use one shared payment service.
+
+Do not embed provider-specific code inside domain modules.
+
+
+2. PAYMENT PROVIDER INTERFACE
+-----------------------------
+
+Conceptual interface:
+
+initializePayment()
+verifyPayment()
+handleWebhook()
+queryStatus()
+refundPayment()
+
+Provider adapters handle provider-specific behavior.
+
+Domain services handle Classico business rules.
+
+
+3. PAYMENT TRANSACTIONS
+-----------------------
+
+Create/standardize:
+
+payment_transactions
+
+Suggested fields:
+
+id
+edition_id
+order_type
+order_id
+provider
+provider_reference
+internal_reference
+amount_xaf
+currency
+status
+customer_phone nullable
+customer_email nullable
+initiated_at
+confirmed_at nullable
+failed_at nullable
+refunded_at nullable
+raw_metadata
+created_at
+updated_at
+
+
+4. ORDER TYPES
+--------------
+
+Support:
+
+ticket
+vote
+tombola
+fifa
+stand
+merchandise
+other
+
+
+5. PAYMENT STATUS MODEL
+-----------------------
+
+Use:
+
+initiated
+pending
+successful
+failed
+cancelled
+expired
+refunded
+partially_refunded
+
+
+6. SERVER AUTHORITY
+-------------------
+
+The server controls:
+
+amount
+currency
+order reference
+payment purpose
+fulfillment
+
+Never trust browser-provided totals.
+
+
+7. PAYMENT INITIALIZATION
+-------------------------
+
+Flow:
+
+domain validates order
+→ payment service loads authoritative total
+→ provider initializes payment
+→ provider reference stored
+→ user completes provider flow
+
+
+8. WEBHOOK PROCESSING
+---------------------
+
+Verify:
+
+provider authenticity
+signature/token where supported
+provider reference
+internal order reference
+amount
+currency
+status
+
+
+9. IDEMPOTENCY
+--------------
+
+Repeated callbacks must never:
+
+- issue duplicate tickets
+- credit duplicate votes
+- create duplicate tombola entries
+- confirm FIFA registration twice
+- confirm stand reservation twice
+
+
+10. DOMAIN FULFILLMENT
+----------------------
+
+On verified success:
+
+ticket:
+issue tickets
+
+vote:
+credit votes
+
+tombola:
+generate entries
+
+FIFA:
+confirm registration
+
+stand:
+confirm reservation
+
+
+11. FULFILLMENT LOG
+-------------------
+
+Create:
+
+payment_fulfillments
+
+Fields:
+
+id
+transaction_id
+domain
+order_id
+status
+attempts
+last_error nullable
+completed_at nullable
+created_at
+
+Status:
+
+pending
+processing
+completed
+failed
+
+
+12. RECONCILIATION
+------------------
+
+Handle cases where:
+
+provider succeeded
+but webhook failed
+or internal fulfillment failed.
+
+Create reconciliation process.
+
+
+13. RECONCILIATION JOB
+----------------------
+
+Check:
+
+- stale pending payments
+- provider-success/internal-pending mismatch
+- failed fulfillment
+- duplicate provider reference
+- amount mismatch
+
+
+14. STANDARD PAYMENT RECEIPT
+----------------------------
+
+Display:
+
+reference
+date
+amount
+purpose
+edition
+provider
+status
+
+Do not call this a tax invoice unless legal/accounting requirements support that.
+
+
+15. REFUND MODEL
+----------------
+
+Track:
+
+requested_at
+requested_by
+reason
+provider_refund_reference
+status
+completed_at
+
+
+16. DOMAIN REFUND CONSEQUENCES
+------------------------------
+
+Ticket:
+invalidate ticket
+
+Tombola:
+remove entry eligibility
+
+FIFA:
+cancel registration if permitted
+
+Stand:
+release reservation where policy allows
+
+Vote:
+preserve audit history and apply organizer policy
+
+
+17. MANUAL PAYMENTS
+-------------------
+
+If organizers allow manual/cash/bank payments:
+
+require:
+
+method
+reference
+amount
+evidence optional
+verified_by
+verified_at
+notes
+
+Only authorized finance roles may confirm.
+
+
+18. PAYMENT METHOD CONFIG
+-------------------------
+
+Possible:
+
+MTN MoMo
+Orange Money
+Card
+Manual/Bank if enabled
+
+Make methods configurable.
+
+
+19. MOBILE MONEY UX
+-------------------
+
+Payment page should clearly show:
+
+amount
+provider
+phone
+what user should do next
+pending state
+retry/status-check behavior
+
+
+20. PENDING PAYMENT
+-------------------
+
+Do not immediately mark delayed mobile-money payments as failed.
+
+Use explicit pending status.
+
+
+21. PAYMENT EXPIRATION
+----------------------
+
+Expired orders may:
+
+release ticket inventory
+release FIFA slots
+release stand inventory
+
+depending on domain policy.
+
+
+22. FINANCE DASHBOARD
+---------------------
+
+Create:
+
+/admin/finance
+
+Show:
+
+gross successful payments
+refunds
+net collected
+pending amount
+failed transactions
+revenue by domain
+revenue by provider
+daily revenue trend
+
+
+23. REVENUE SOURCES
+-------------------
+
+Separate:
+
+ticket revenue
+vote revenue
+tombola revenue
+FIFA revenue
+stand revenue
+other revenue
+
+Sponsor contributions should be reported separately from consumer sales.
+
+
+24. DATE FILTERS
+----------------
+
+Support:
+
+Today
+Last 7 days
+Last 30 days
+Edition total
+Custom
+
+
+25. RECONCILIATION SCREEN
+-------------------------
+
+Create:
+
+/admin/finance/reconciliation
+
+Show:
+
+provider reference
+internal transaction
+amount
+payment state
+fulfillment state
+mismatch state
+
+
+26. PAYMENT SEARCH
+------------------
+
+Search:
+
+internal reference
+provider reference
+order reference
+phone
+customer name where authorized
+
+
+27. REFUND UI
+-------------
+
+Authorized finance/admin:
+
+select transaction
+review related order
+enter reason
+confirm refund
+
+
+28. XAF RULE
+------------
+
+Store XAF values as integers.
+
+Never use floating-point FCFA calculations.
+
+
+29. FINANCIAL EXPORT
+--------------------
+
+CSV/Excel export:
+
+date
+internal reference
+provider reference
+domain
+amount
+status
+order reference
+
+Protect unnecessary PII.
+
+
+30. PROVIDER SECRET SECURITY
+----------------------------
+
+Secrets remain server-only.
+
+Never log API secret keys or full auth tokens.
+
+
+31. WEBHOOK REPLAY PROTECTION
+-----------------------------
+
+Use:
+
+unique provider references
+signature/timestamp where available
+idempotency records
+
+
+32. PAYMENT ERROR LOGGING
+-------------------------
+
+Log safe information:
+
+provider error code
+safe description
+order reference
+timestamp
+
+Do not expose confidential provider internals to users.
+
+
+33. TEST/SANDBOX MODE
+---------------------
+
+Separate:
+
+development
+staging
+production
+
+Use provider sandbox where available.
+
+
+34. PAYMENT TESTS
+----------------
+
+Test:
+
+modified amount
+invalid provider reference
+duplicate callback
+fake callback
+replay
+currency mismatch
+missed webhook
+provider reconciliation
+fulfillment retry
+refund
+expired payment
+
+
+35. PHASE 11 ACCEPTANCE CRITERIA
+--------------------------------
+
+Complete when:
+
+1. All modules use one payment service.
+2. Payment states are standardized.
+3. Fulfillment is idempotent.
+4. Fulfillment logs exist.
+5. Reconciliation works.
+6. Finance dashboard works.
+7. Refund behavior is domain-aware.
+8. Manual payments are auditable.
+9. XAF calculations are safe.
+10. Provider secrets remain private.
+11. Test/staging/live environments are separated.
+12. Payment abuse tests pass.
+13. Production build succeeds.
+
+
+============================================================
+PHASE 12 — CONTENT, MEDIA & COMMUNICATION CMS
+============================================================
+
+OBJECTIVE
+---------
+
+Build the Classico Mboa content-management platform for communication before, during and after each edition.
+
+Support:
+
+- news
+- announcements
+- team content
+- player content
+- sponsor content
+- galleries
+- videos
+- homepage features
+- event updates
+- aftermovie content
+- communication planning
+
+
+1. CONTENT TABLES
+-----------------
+
+Create:
+
+content_posts
+content_categories
+content_tags
+content_post_tags
+content_authors
+media_assets
+galleries
+gallery_items
+homepage_features
+content_schedules
+content_activity_logs
+
+
+2. CONTENT POST
+---------------
+
+Suggested fields:
+
+id
+edition_id nullable
+title
+slug
+excerpt
+body
+cover_image_id
+category_id
+status
+published_at
+scheduled_at nullable
+author_id
+seo_title
+seo_description
+featured
+created_at
+updated_at
+
+
+3. STATUS
+---------
+
+draft
+review
+scheduled
+published
+archived
+
+
+4. CATEGORIES
+-------------
+
+Examples:
+
+Classico
+Teams
+Players
+Sponsors
+FIFA Cup
+Tombola
+Village
+Artists
+Community
+Announcements
+
+
+5. CONTENT EDITOR
+-----------------
+
+Use a safe structured editor.
+
+Support:
+
+headings
+paragraphs
+lists
+links
+images
+quotes
+controlled embeds
+
+Sanitize rendered output.
+
+
+6. CONTENT WORKFLOW
+-------------------
+
+Example:
+
+draft
+→ review
+→ approved
+→ scheduled/published
+
+
+7. SCHEDULED PUBLISHING
+-----------------------
+
+Respect:
+
+Africa/Douala
+
+Scheduled publishing must happen server-side/scheduled.
+
+Do not depend on a browser staying open.
+
+
+8. MEDIA LIBRARY
+----------------
+
+Create:
+
+/admin/media
+
+Support:
+
+upload
+search
+filter
+preview
+alt text
+caption
+credit
+tags
+edition
+file type
+dimensions
+usage
+
+
+9. STORAGE STRATEGY
+-------------------
+
+Use Supabase Storage initially or configured media provider.
+
+Separate:
+
+public media
+private documents
+
+
+10. IMAGE OPTIMIZATION
+----------------------
+
+Use:
+
+responsive variants
+Next/Image
+thumbnails
+compression
+
+Avoid serving full-size raw photography to mobile users.
+
+
+11. MEDIA METADATA
+------------------
+
+Fields:
+
+id
+edition_id nullable
+type
+url
+thumbnail_url
+filename
+mime_type
+width
+height
+duration nullable
+alt_text
+caption
+credit
+created_by
+created_at
+
+
+12. VIDEO
+---------
+
+Support:
+
+short uploaded clips
+YouTube/Vimeo links
+external video
+optimized hosted video
+
+Avoid inefficient raw event video storage.
+
+
+13. GALLERIES
+-------------
+
+Examples:
+
+training
+behind the scenes
+supporters
+event day
+artists
+FIFA Cup
+Village
+awards
+sponsors
+
+
+14. PUBLIC NEWS
+---------------
+
+Maintain:
+
+/news
+/news/[slug]
+
+
+15. PUBLIC GALLERY
+------------------
+
+Maintain:
+
+/gallery
+
+Optional:
+
+/gallery/[slug]
+
+
+16. HOMEPAGE FEATURES
+---------------------
+
+Admin can manage:
+
+hero announcement
+featured article
+featured sponsor
+featured activity
+latest media
+featured player/team
+
+
+17. CONTENT CALENDAR
+--------------------
+
+Create:
+
+/admin/content/calendar
+
+Fields:
+
+title
+channel
+planned_date
+owner
+status
+related_content
+notes
+
+
+18. CHANNELS
+------------
+
+Support planning for:
+
+website
+WhatsApp
+Instagram
+TikTok
+Facebook
+other
+
+Planning does not imply automatic publishing.
+
+
+19. PRE-EVENT CONTENT
+---------------------
+
+Support:
+
+player interviews
+team presentations
+training
+challenges
+predictions
+Barça or Real?
+influencer content
+street interviews
+sponsor presentations
+behind the scenes
+
+
+20. EVENT-DAY CONTENT
+---------------------
+
+Support:
+
+professional photos
+short videos
+public interviews
+reactions
+activity coverage
+artist coverage
+fan moments
+
+
+21. POST-EVENT CONTENT
+----------------------
+
+Support:
+
+best photos
+aftermovie
+best moments
+match results
+vote winners
+tombola winners
+FIFA champion
+sponsor thanks
+public thanks
+
+
+22. SPONSOR ASSOCIATION
+-----------------------
+
+Content can reference sponsors.
+
+Useful for sponsorship deliverable tracking.
+
+
+23. TEAM/PLAYER ASSOCIATION
+---------------------------
+
+Content can reference:
+
+team
+player
+FIFA participant where relevant
+
+
+24. SEO
+-------
+
+Per post:
+
+SEO title
+description
+OG image
+canonical
+structured metadata where appropriate
+
+
+25. SOCIAL SHARING
+------------------
+
+Support:
+
+WhatsApp
+Facebook
+X
+native share
+copy link
+
+
+26. CONTENT ANALYTICS
+---------------------
+
+Track:
+
+page views
+share clicks
+CTA clicks
+
+Avoid excessive tracking.
+
+
+27. CONTENT PERMISSIONS
+-----------------------
+
+Roles:
+
+content_manager
+media_manager
+event_admin
+
+
+28. REVISION HISTORY
+--------------------
+
+At minimum record:
+
+updated_by
+updated_at
+
+Optional full version history.
+
+
+29. CONTENT PREVIEW
+-------------------
+
+Allow preview before publish.
+
+Preview must not be indexed publicly.
+
+
+30. MEDIA PRIVACY
+----------------
+
+Private documents must not appear in public media browsing.
+
+
+31. PHASE 12 ACCEPTANCE CRITERIA
+--------------------------------
+
+Complete when:
+
+1. News CMS works.
+2. Categories work.
+3. Media library works.
+4. Galleries work.
+5. Scheduled publishing works.
+6. Content is edition-aware.
+7. Homepage features are manageable.
+8. Sponsor associations work.
+9. Media is optimized.
+10. SEO works.
+11. Permissions are enforced.
+12. Content calendar works.
+13. Production build succeeds.
+
+
+============================================================
+PHASE 13 — MATCH-DAY LIVE MODE & EVENT OPERATIONS
+============================================================
+
+OBJECTIVE
+---------
+
+Build a live public experience and event-day operator tools.
+
+When an edition goes live, the website should shift from promotional mode toward event mode.
+
+Support:
+
+- live match score/state
+- programme status
+- FIFA Cup live data
+- tombola announcements
+- active voting
+- public announcements
+- sponsor visibility
+- event display screens
+
+
+1. EDITION LIVE STATE
+---------------------
+
+Edition states:
+
+draft
+upcoming
+live
+completed
+cancelled
+
+
+2. HOMEPAGE LIVE MODE
+---------------------
+
+When live:
+
+replace normal hero focus with:
+
+CLASSICO LIVE
+
+Show:
+
+score
+match state
+next programme activity
+important announcement
+FIFA status
+tombola status
+
+
+3. MATCH MODEL
+--------------
+
+Create:
+
+matches
+match_events
+lineups optional
+
+Match fields:
+
+id
+edition_id
+home_team_id
+away_team_id
+home_score
+away_score
+kickoff_at
+status
+minute nullable
+venue
+created_at
+updated_at
+
+
+4. MATCH STATUS
+---------------
+
+scheduled
+warmup
+first_half
+halftime
+second_half
+finished
+delayed
+cancelled
+
+
+5. MATCH EVENTS
+---------------
+
+Support:
+
+goal
+yellow_card
+red_card
+substitution
+important_moment
+
+Avoid overbuilding professional-league statistics unless organizers can reliably capture them.
+
+
+6. SCORE CONTROL
+----------------
+
+Authorized operator can update:
+
+score
+match state
+minute/status
+
+Audit every change.
+
+
+7. PUBLIC LIVE PAGE
+-------------------
+
+Create:
+
+/live
+
+Display:
+
+score
+status
+teams
+recent events
+programme
+announcements
+sponsors
+
+
+8. PROGRAMME LIVE STATE
+-----------------------
+
+Programme items:
+
+upcoming
+now
+completed
+delayed
+cancelled
+
+
+9. PROGRAMME OPERATOR
+---------------------
+
+Authorized staff can:
+
+start item
+complete item
+delay item
+cancel item
+update time
+
+
+10. ANNOUNCEMENTS
+-----------------
+
+Public live announcements:
+
+programme update
+gate information
+FIFA final
+tombola draw
+artist update
+
+
+11. ANNOUNCEMENT MODEL
+----------------------
+
+Fields:
+
+id
+edition_id
+title
+message
+priority
+starts_at
+ends_at
+status
+created_by
+created_at
+
+
+12. PRIORITY
+------------
+
+normal
+important
+urgent
+
+Use urgent styling carefully.
+
+
+13. LIVE VOTING
+---------------
+
+If campaign open:
+
+show voting CTA.
+
+Voting rules remain controlled by Phase 4.
+
+
+14. LIVE FIFA
+-------------
+
+Integrate:
+
+current matches
+upcoming matches
+bracket progress
+champion
+
+
+15. LIVE TOMBOLA
+----------------
+
+Display:
+
+draw time
+campaign state
+draw completed
+winning entry after official publication
+
+
+16. SPONSOR ROTATION
+--------------------
+
+Use configured placements.
+
+Show sponsors on:
+
+live page
+display screens
+programme interstitials
+
+
+17. EVENT DISPLAY MODE
+----------------------
+
+Create:
+
+/display
+
+For:
+
+TV
+projector
+LED screen
+
+Rotate:
+
+score
+programme
+FIFA
+tombola
+sponsors
+announcements
+
+
+18. DISPLAY DESIGN
+------------------
+
+Use:
+
+large typography
+high contrast
+minimal controls
+auto refresh
+fullscreen-safe layout
+
+
+19. MOBILE LIVE UX
+------------------
+
+Keep /live lightweight.
+
+Avoid:
+
+heavy animations
+large image payloads
+excessive polling
+
+
+20. REALTIME
+------------
+
+Use:
+
+Supabase Realtime
+
+or efficient polling.
+
+Only subscribe to required public data.
+
+
+21. CONNECTION STATUS
+---------------------
+
+Operator interfaces show:
+
+connected
+reconnecting
+offline
+
+
+22. OPERATOR FEEDBACK
+---------------------
+
+Every mutation must show:
+
+saved
+failed
+retry
+
+
+23. EVENT-DAY ADMIN SHORTCUTS
+-----------------------------
+
+Mobile admin prioritizes:
+
+ticket scanner
+score control
+programme
+FIFA scores
+tombola verification
+announcements
+
+
+24. MATCH COMPLETION
+--------------------
+
+At final whistle:
+
+status = finished
+
+store final score.
+
+
+25. EDITION COMPLETION
+----------------------
+
+After event:
+
+status = completed
+
+Public emphasis becomes:
+
+results
+gallery
+winners
+aftermovie
+thank-you content
+
+
+26. LIVE SECURITY
+-----------------
+
+Only authorized roles may:
+
+change score
+publish announcements
+change programme states
+
+All mutations server-side.
+
+
+27. AUDIT
+---------
+
+Log:
+
+score changes
+match-state changes
+programme-state changes
+announcement changes
+live overrides
+
+
+28. LIVE TESTING
+---------------
+
+Test:
+
+score update
+duplicate operator action
+offline state
+reconnect
+programme delay
+announcement expiry
+FIFA integration
+tombola integration
+voting CTA
+event completion
+
+
+29. PHASE 13 ACCEPTANCE CRITERIA
+--------------------------------
+
+Complete when:
+
+1. Edition live state works.
+2. Homepage live mode works.
+3. Match score/state works.
+4. Public /live works.
+5. Programme live state works.
+6. Announcements work.
+7. FIFA live integration works.
+8. Tombola live integration works.
+9. Voting CTA works safely.
+10. Display mode works.
+11. Operator permissions are secure.
+12. Mobile performance remains strong.
+13. Live changes are audited.
+14. Production build succeeds.
+
+
+============================================================
+PHASE 14 — SECURITY, TESTING, PERFORMANCE & PRODUCTION HARDENING
+============================================================
+
+OBJECTIVE
+---------
+
+Audit and harden the entire Classico Mboa platform before production launch.
+
+This phase is mandatory.
+
+
+1. SECURITY REVIEW
+------------------
+
+Review:
+
+authentication
+authorization
+RLS
+payments
+ticket QR
+voting
+tombola
+FIFA Cup
+Village/vendor data
+sponsor data
+admin APIs
+content uploads
+media storage
+
+
+2. SECRET MANAGEMENT
+--------------------
+
+No secrets in:
+
+client bundle
+repository
+browser source
+public logs
+error messages
+
+
+3. ENVIRONMENT SEPARATION
+-------------------------
+
+Maintain:
+
+development
+staging
+production
+
+Separate:
+
+database
+credentials
+webhooks
+payment configuration
+
+
+4. RLS AUDIT
+------------
+
+Test:
+
+anonymous reads
+cross-user reads
+cross-user writes
+role escalation
+edition crossover
+
+
+5. ADMIN AUTHORIZATION AUDIT
+----------------------------
+
+Every privileged mutation must validate server-side.
+
+
+6. RATE LIMITING
+----------------
+
+Protect:
+
+auth
+checkout
+ticket lookup
+QR verification
+vote creation
+tombola creation
+FIFA registration
+contact forms
+stand applications
+partnership forms
+
+
+7. INPUT VALIDATION
+-------------------
+
+Validate:
+
+IDs
+strings
+amounts
+phone numbers
+dates
+URLs
+file types
+file sizes
+enum values
+
+
+8. FILE UPLOAD SECURITY
+-----------------------
+
+Validate:
+
+MIME
+extension
+size
+bucket
+access policy
+
+
+9. PAYMENT SECURITY TESTS
+-------------------------
+
+Test:
+
+modified amount
+modified order
+fake callback
+duplicate callback
+replay
+currency mismatch
+reference mismatch
+missed webhook
+double fulfillment
+
+
+10. TICKET SECURITY TESTS
+-------------------------
+
+Test:
+
+guessed token
+invalid QR
+double scan
+cancelled ticket
+refunded ticket
+wrong-edition ticket
+
+
+11. VOTING SECURITY TESTS
+-------------------------
+
+Test:
+
+negative quantity
+zero quantity
+extreme quantity
+closed campaign
+inactive candidate
+price manipulation
+duplicate callback
+restricted result visibility
+
+
+12. TOMBOLA SECURITY TESTS
+--------------------------
+
+Test:
+
+refunded entry
+cancelled entry
+duplicate draw
+unauthorized draw
+winner modification
+invalid eligibility
+
+
+13. FIFA SECURITY TESTS
+-----------------------
+
+Test:
+
+unauthorized score update
+bracket regeneration after lock
+private participant access
+fake registration confirmation
+role abuse
+
+
+14. VENDOR SECURITY
+-------------------
+
+Test:
+
+private docs public
+cross-vendor access
+stand-price manipulation
+admin-note exposure
+
+
+15. SPONSOR SECURITY
+--------------------
+
+Test:
+
+private agreements public
+private contacts public
+unauthorized proposal access
+document leakage
+
+
+16. UNIT TESTS
+-------------
+
+Cover critical domain logic.
+
+Examples:
+
+XAF formatting
+phone normalization
+price math
+status transitions
+permission checks
+bracket logic
+draw eligibility
+
+
+17. INTEGRATION TESTS
+---------------------
+
+Test complete flows:
+
+ticket purchase
+vote purchase
+tombola purchase
+FIFA registration
+stand reservation
+payment reconciliation
+
+
+18. END-TO-END TESTS
+--------------------
+
+Run mobile-first staging flows:
+
+homepage → ticket purchase
+ticket QR
+vote
+tombola
+FIFA
+vendor application
+staff login
+ticket check-in
+
+
+19. ACCESSIBILITY AUDIT
+-----------------------
+
+Review:
+
+keyboard
+focus order
+screen-reader labels
+contrast
+forms
+error messages
+reduced motion
+
+
+20. PERFORMANCE AUDIT
+---------------------
+
+Measure:
+
+LCP
+CLS
+INP
+JS bundle
+image size
+font loading
+API latency
+
+
+21. MOBILE NETWORK TESTING
+--------------------------
+
+Test slow/throttled network on:
+
+/
+ /tickets
+ /tickets/checkout
+ /vote
+ /tombola
+ /fifa-cup
+ /live
+
+
+22. DATABASE PERFORMANCE
+------------------------
+
+Review indexes on:
+
+edition_id
+status
+created_at
+references
+tokens
+foreign keys
+provider_reference
+
+
+23. PAGINATION
+--------------
+
+Do not load unlimited admin records.
+
+Use:
+
+server pagination
+cursor pagination
+filtered queries
+
+
+24. BACKUPS
+-----------
+
+Configure database backup strategy.
+
+Document:
+
+schedule
+restore process
+responsible role
+
+
+25. OBSERVABILITY
+-----------------
+
+Implement:
+
+error tracking
+server logs
+payment failure alerts
+webhook failure alerts
+reconciliation failure alerts
+critical API monitoring
+
+
+26. HEALTH CHECK
+---------------
+
+Create internal health status for:
+
+database
+storage
+payments
+critical services
+
+
+27. STAGING
+-----------
+
+Staging must be separate from production.
+
+Use:
+
+test users
+test data
+test payments
+test webhooks
+
+
+28. DOMAIN & HTTPS
+------------------
+
+Verify:
+
+production domain
+HTTPS
+redirects
+canonical domain
+
+
+29. SEO PRODUCTION CHECK
+------------------------
+
+Verify:
+
+robots
+sitemap
+canonical
+OpenGraph
+metadata
+Event structured data
+
+
+30. PRODUCTION CHECKLIST
+------------------------
+
+Verify:
+
+DNS
+SSL
+env variables
+migrations
+RLS
+admin users
+backups
+payment mode
+webhook URLs
+analytics
+monitoring
+robots
+sitemap
+
+
+31. INCIDENT PLAYBOOK
+---------------------
+
+Document response for:
+
+site outage
+database outage
+payment outage
+QR outage
+mobile-money delay
+wrong score
+tombola dispute
+admin compromise
+
+
+32. PAYMENT OUTAGE PLAN
+-----------------------
+
+Document safe operational fallback.
+
+Never accept unverified digital payments silently.
+
+
+33. CHECK-IN OUTAGE PLAN
+------------------------
+
+Document event-day fallback.
+
+Do not introduce insecure offline validation accidentally.
+
+
+34. ADMIN HARDENING
+-------------------
+
+Require strong passwords.
+
+Use MFA for high-level admin if supported and practical.
+
+
+35. LOG PRIVACY
+--------------
+
+Do not log:
+
+passwords
+auth tokens
+provider secrets
+unnecessary personal information
+
+
+36. LOAD TESTING
+---------------
+
+Test expected bursts:
+
+ticket launch
+event day
+voting close
+tombola draw
+FIFA final
+
+
+37. RELEASE BLOCKERS
+--------------------
+
+Do not launch with:
+
+payment duplication vulnerability
+cross-user data access
+broken RLS
+QR reuse vulnerability
+insecure tombola draw
+unauthorized score updates
+service-role exposure
+
+
+38. PHASE 14 ACCEPTANCE CRITERIA
+--------------------------------
+
+Complete when:
+
+1. Security audit passes.
+2. RLS audit passes.
+3. Payment abuse tests pass.
+4. Ticket QR tests pass.
+5. Vote/tombola/FIFA security tests pass.
+6. E2E tests pass.
+7. Accessibility issues are resolved.
+8. Mobile performance is acceptable.
+9. Database indexes are reviewed.
+10. Backups exist.
+11. Monitoring exists.
+12. Staging works.
+13. Production checklist exists.
+14. Incident playbook exists.
+15. No critical release blocker remains.
+
+
+============================================================
+PHASE 15 — PRODUCTION LAUNCH, MULTI-EDITION SYSTEM & LONG-TERM OPERATIONS
+============================================================
+
+OBJECTIVE
+---------
+
+Launch Classico Mboa as a permanent event platform capable of supporting Edition 8 and future editions without rebuilding the app.
+
+
+1. MULTI-EDITION ADMIN
+----------------------
+
+Create:
+
+/admin/editions
+
+Admins can:
+
+create edition
+edit edition
+set dates
+set venue
+set city
+set status
+configure public launch
+choose current edition
+archive completed edition
+
+
+2. NEW EDITION WORKFLOW
+-----------------------
+
+Fields:
+
+edition number
+name
+slug
+date
+venue
+city
+country
+timezone
+description
+status
+
+
+3. EDITION INITIALIZATION
+-------------------------
+
+New edition creates draft workspaces for:
+
+ticketing
+programme
+voting
+tombola
+FIFA Cup
+Village
+sponsors
+content
+
+
+4. DUPLICATE CONFIGURATION
+--------------------------
+
+Allow selective copying from prior edition:
+
+ticket-type templates
+sponsor packages
+vendor categories
+programme templates
+content templates
+role/access patterns
+
+
+5. NEVER COPY TRANSACTIONAL DATA
+--------------------------------
+
+Never duplicate:
+
+orders
+payments
+tickets
+votes
+tombola entries
+FIFA results
+check-ins
+financial transactions
+
+
+6. PUBLIC EDITION ROUTING
+-------------------------
+
+Support:
+
+/edition/8
+/edition/9
+/edition/10
+
+Current edition receives primary promotion.
+
+
+7. CURRENT EDITION CONFIG
+-------------------------
+
+Global site should know:
+
+current promoted edition
+next edition
+latest completed edition
+
+
+8. EDITION ARCHIVE
+------------------
+
+Completed editions remain viewable.
+
+Archive may include:
+
+date
+venue
+final result
+photos
+awards
+FIFA champion
+tombola winners where appropriate
+sponsors
+aftermovie
+news
+
+
+9. POST-EVENT WORKFLOW
+----------------------
+
+Create closeout workflow:
+
+close ticket sales
+finalize check-ins
+close voting
+publish winners
+finalize tombola
+complete FIFA
+finalize programme
+publish gallery
+publish aftermovie
+thank sponsors
+complete financial reconciliation
+
+
+10. COMPLETION CHECKLIST
+------------------------
+
+Before closing an edition, show outstanding items:
+
+pending payments
+unverified tombola winner
+unfinished FIFA match
+unpublished results
+open vendor reservation
+unfinished sponsor deliverable
+
+
+11. FINANCIAL CLOSE
+-------------------
+
+Edition finance state:
+
+open
+reconciling
+closed
+
+After closure, changes require high-level audited override.
+
+
+12. EVENT REPORTING
+-------------------
+
+Generate internal edition report data:
+
+attendance
+ticket sales
+check-ins
+vote engagement
+tombola entries
+FIFA participation
+vendors
+sponsors
+revenue
+content metrics
+
+
+13. SPONSOR POST-EVENT REPORTING
+--------------------------------
+
+Compile:
+
+agreement
+contribution
+deliverables
+evidence
+event visibility data
+
+Do not fabricate metrics.
+
+
+14. DATA RETENTION
+------------------
+
+Define retention rules for:
+
+financial records
+tickets
+user PII
+vendor records
+sponsor documents
+audit logs
+media
+
+
+15. COMMUNITY CONTINUITY
+------------------------
+
+Between editions, website remains active.
+
+Promote:
+
+news
+community
+games
+previous highlights
+next edition
+announcements
+
+
+16. TWO-EDITION READINESS
+-------------------------
+
+Architecture should support multiple planning cycles.
+
+Do not assume only one future edition can be in preparation.
+
+
+17. CAMPAIGN TEMPLATES
+----------------------
+
+Create reusable templates for:
+
+ticket launch
+vote campaign
+tombola campaign
+FIFA registration
+vendor application
+sponsor outreach
+countdown
+
+
+18. OPERATIONS DOCUMENTATION
+----------------------------
+
+Document:
+
+creating new edition
+ticket setup
+payment setup
+vote setup
+tombola draw
+FIFA bracket
+Village allocation
+sponsor setup
+content publishing
+live mode
+post-event closeout
+
+
+19. ADMIN ONBOARDING
+--------------------
+
+Create lightweight help content.
+
+Routine operation should not require a developer.
+
+
+20. DEPLOYMENT
+--------------
+
+Production should use:
+
+custom domain
+HTTPS
+environment separation
+CI/CD
+migration procedure
+rollback procedure
+
+
+21. ANALYTICS BASELINE
+----------------------
+
+Record edition baseline:
+
+traffic
+conversion
+sales
+engagement
+attendance
+
+Use actual historical data only.
+
+
+22. PRODUCT HEALTH
+------------------
+
+Admin should see:
+
+failed payments
+stale pending orders
+unprocessed forms
+broken content
+operational alerts
+
+
+23. RELEASE VERSIONING
+----------------------
+
+Maintain:
+
+release notes
+version tags
+deployment history
+
+
+24. ROLLBACK PLAN
+-----------------
+
+Document safe rollback for:
+
+application release
+database migration
+configuration changes
+
+
+25. FUTURE MODULE READINESS
+---------------------------
+
+Architecture should be able to add:
+
+merchandise
+memberships
+loyalty
+push notifications
+additional tournaments
+new sports/cultural events
+
+Do not build these prematurely.
+
+
+26. LONG-TERM BRAND MODEL
+-------------------------
+
+Classico Mboa should remain useful year-round.
+
+The permanent platform should support:
+
+community growth
+sponsor relationships
+content
+archived editions
+future event announcements
+
+
+27. EDITION STATUS MODEL
+------------------------
+
+Possible lifecycle:
+
+draft
+planning
+announced
+sales_open
+live
+completed
+archived
+cancelled
+
+
+28. EDITION DUPLICATION SAFETY
+------------------------------
+
+When copying prior configuration:
+
+mark copied elements as draft
+require review
+never inherit outdated dates
+never inherit transactional IDs
+
+
+29. POST-EVENT PUBLIC EXPERIENCE
+--------------------------------
+
+After completion, homepage should transition toward:
+
+final result
+winners
+best moments
+photos
+aftermovie
+sponsor appreciation
+next-edition/community CTA
+
+
+30. DATA EXPORT
+---------------
+
+Authorized admins should be able to export final edition datasets.
+
+Examples:
+
+tickets
+check-ins
+voting aggregates
+tombola
+FIFA
+Village
+sponsorship
+finance
+
+Respect privacy.
+
+
+31. ARCHIVE PERFORMANCE
+-----------------------
+
+Historical editions should remain fast.
+
+Do not load every historical dataset on the current homepage.
+
+
+32. OPERATIONAL OWNERSHIP
+-------------------------
+
+Define which role owns:
+
+ticketing
+finance
+voting
+tombola
+FIFA
+Village
+sponsorship
+content
+live operations
+
+
+33. HANDOVER DOCUMENTATION
+--------------------------
+
+Prepare developer handover:
+
+architecture
+database schema
+environment variables
+deployment
+security
+backup
+provider integrations
+common troubleshooting
+
+
+34. FINAL PRODUCTION ACCEPTANCE
+-------------------------------
+
+Classico Mboa is considered production-ready when:
+
+1. Edition 8 is configured as current edition.
+2. Production infrastructure is stable.
+3. Future editions can be created without code changes.
+4. Completed editions can be archived.
+5. Post-event workflow exists.
+6. Financial close workflow exists.
+7. Sponsor reporting data exists.
+8. Operational documentation exists.
+9. Routine administration does not require a developer.
+10. Monitoring is active.
+11. Backups are active.
+12. Incident procedures exist.
+13. Security tests pass.
+14. Payment reconciliation works.
+15. Platform remains useful between editions.
+16. Mobile performance is acceptable.
+17. Release and rollback procedures are documented.
+18. All production-critical tests pass.
+
+
+============================================================
+FINAL ENGINEERING PRINCIPLES — PHASES 10 TO 15
+============================================================
+
+1. CLASSICO MBOA IS THE PLATFORM
+--------------------------------
+
+An edition is data, not a separate codebase.
+
+
+2. CAMEROON-FIRST
+-----------------
+
+Default:
+
+fr-CM
+Africa/Douala
+XAF
++237
+mobile-first
+WhatsApp-friendly
+MTN/Orange payment-ready
+
+
+3. SERVER AUTHORITY
+-------------------
+
+Client must never control:
+
+price
+payment success
+permissions
+ticket validity
+vote results
+tombola winner
+FIFA results
+
+
+4. AUDIT CRITICAL ACTIONS
+-------------------------
+
+Financial, competition and admin changes must be traceable.
+
+
+5. NEVER DESTROY TRANSACTION HISTORY
+------------------------------------
+
+Use status changes and audit logs rather than deleting:
+
+payments
+orders
+tickets
+votes
+tombola entries
+registrations
+agreements
+
+
+6. DO NOT INVENT EVENT FACTS
+----------------------------
+
+Do not invent:
+
+players
+artists
+confirmed sponsors
+prizes
+programme times
+VIP benefits
+stand prices
+legal registration details
+
+
+7. MOBILE PERFORMANCE
+---------------------
+
+Assume many visitors arrive from WhatsApp on mobile data.
+
+Keep core flows lightweight.
+
+
+8. NO FAKE PRODUCTION BEHAVIOR
+------------------------------
+
+If live provider credentials are unavailable:
+
+use test mode
+label test state clearly
+do not simulate real payment success as if it occurred
+
+
+9. DEFINITION OF DONE
+---------------------
+
+Every phase should finish with:
+
+production build
+type check
+critical tests
+mobile review
+security review
+documentation
+migration notes
+environment variables
+known limitations
+next dependencies
+
+
+
