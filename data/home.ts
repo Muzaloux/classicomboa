@@ -1,4 +1,5 @@
 import { getEventPhoto } from './event-photos'
+import { getAdditionalEventPhoto } from './additional-event-photos'
 import type { EventPhotoData } from './event-photos'
 import tombolaImage from '../public/images/events/tombola.webp'
 export interface ExperienceCardData {
@@ -28,7 +29,7 @@ export const experienceCards: ExperienceCardData[] = [
   {
     id: 'culture',
     className: 'experience-culture',
-    photo: getEventPhoto('entertainment'),
+    photo: getAdditionalEventPhoto('archive-6663'),
     category: 'CULTURE',
     eyebrow: 'UNE EXPÉRIENCE À DOUALA',
     title: 'FOOTBALL\nET CULTURE.',
