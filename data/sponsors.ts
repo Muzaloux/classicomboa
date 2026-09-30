@@ -4,11 +4,15 @@ export const sponsors = [
     name: 'WA Business',
     image: '/images/sponsors/wa-business-transparent.png',
     alt: 'Logo WA Business',
+    tier: 'Partenaire officiel',
+    featured: true,
   },
   {
     id: 'sponsor-1',
     name: 'Partenaire officiel',
     image: '/images/sponsors/sponsor-1-transparent.png',
     alt: 'Logo du partenaire officiel',
+    tier: 'Partenaire',
+    featured: false,
   },
 ] as const

@@ -37,7 +37,7 @@ For a fresh checkout, copy `.env.example` to `.env.local` and follow [the setup 
 - Locale: fr-CM
 - Currency: XAF
 
-Confirmed ticket prices: Classique 1,000 XAF and VIP 2,000 XAF, sharing an edition-wide capacity of 500. Programme times, voting campaigns, tombola prizes, tournament rules, artists and sponsors still require confirmation.
+Confirmed ticket prices: Classique 1,000 XAF and VIP 2,000 XAF, sharing an edition-wide capacity of 5,000. Programme times, voting campaigns, tombola prizes, tournament rules, artists and sponsors still require confirmation.
 
 ## Roadmap Status
 

@@ -119,9 +119,9 @@ Password setup is now available at `/admin/security` after organizer authenticat
 
 ## Manual Mobile Money release - current configuration
 
-The owner confirmed 19 December 2026, Classique 1,000 XAF, VIP 2,000 XAF and approximately 500 places. Migrations 004 and 005 are applied. Migration 004 was renumbered from the conflicting 003 date-change filename; the already-applied ticketing migration retains version 003.
+The owner confirmed 19 December 2026, Classique 1,000 XAF, VIP 2,000 XAF and approximately 5,000 places. Migrations 004 and 005 are applied. Migration 004 was renumbered from the conflicting 003 date-change filename; the already-applied ticketing migration retains version 003.
 
-Production mode is manual. Both real categories share one edition-wide capacity of 500; they are not 500 places each. A guest chooses Manuel (+237658846124) or Youana (+237699051046), reserves for two hours, and is redirected to a prefilled WhatsApp conversation. A redirect never marks an order paid. No message is sent automatically. Recent orders can be recovered on the same browser using private cookies; cross-device access requires the recovery key.
+Production mode is manual. Both real categories share one edition-wide capacity of 5,000; they are not 5,000 places each. A guest chooses Manuel (+237658846124) or Youana (+237699051046), reserves for two hours, and is redirected to a prefilled WhatsApp conversation. A redirect never marks an order paid. No message is sent automatically. Recent orders can be recovered on the same browser using private cookies; cross-device access requires the recovery key.
 
 An admin/manager verifies receipt in the destination Mobile Money account and enters the actual amount plus a unique receipt in the order detail. Confirmation, ticket issuance and audit logging are atomic. Wrong amounts, reused receipts, unauthorized confirmations and overselling are rejected. Expired orders can be reconciled only when capacity is still available; otherwise staff must resolve the payment directly with the customer. No automatic refund or email delivery exists.
 

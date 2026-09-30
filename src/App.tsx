@@ -9,6 +9,7 @@ import { EventPhoto } from '../components/shared/event-photo'
 import { Reveal } from '../components/shared/reveal'
 import { SponsorStrip } from '../components/shared/sponsor-strip'
 import { ScrollPanImage } from '../components/shared/scroll-pan-image'
+import { CameroonFlag } from '../components/shared/cameroon-flag'
 import { getEventPhoto } from '../data/event-photos'
 import { getAdditionalEventPhoto } from '../data/additional-event-photos'
 import {
@@ -47,7 +48,7 @@ function App() {
           <div className="hero-image"><ScrollPanImage src={heroImage} alt="Deux joueurs du Classico Mboa poursuivent le ballon sur le terrain." /><div className="hero-photo-shade" /></div>
           <div className="hero-grain" />
           <div className="hero-content">
-            <div className="edition-kicker"><span className="live-dot" /> {currentEdition.city.toUpperCase()} · {formatEventDate(currentEdition.eventDate).toUpperCase()}</div>
+            <div className="edition-kicker"><CameroonFlag /><span className="live-dot" /> {currentEdition.city.toUpperCase()} · {formatEventDate(currentEdition.eventDate).toUpperCase()}</div>
             <p className="hero-edition">{currentEdition.editionNumber}E ÉDITION</p>
             <h1 id="hero-title">LE CLASSICO.<br /><span>VERSION MBOA.</span></h1>
             <p className="hero-copy">Real Mboa face à Barça Mboa.<br />Plus qu’un match, un rendez-vous autour du football et de la culture.</p>
@@ -126,7 +127,7 @@ function App() {
         </section></Reveal>
 
         <Reveal><section className="legacy" id="legacy">
-          <div className="legacy-image"><EventPhoto photo={getEventPhoto("teams-together")} sizes="100vw" /><div className="legacy-photo-shade" /></div>
+          <div className="legacy-image"><EventPhoto photo={getAdditionalEventPhoto('archive-6684')} sizes="100vw" /><div className="legacy-photo-shade" /></div>
           <div className="legacy-copy"><span className="eyebrow">L’HISTOIRE CLASSICO MBOA</span><h2>{currentEdition.editionNumber}E ÉDITION.<br /><span>UN MBOA.</span></h2><p>Né autour du football, Classico Mboa rassemble le public autour d’une rivalité réinventée et d’une expérience ancrée au Cameroun.</p><a className="button button-ghost" href="/classico">Découvrir Classico Mboa <ArrowRight size={15} /></a></div>
           <div className="legacy-number">{String(currentEdition.editionNumber).padStart(2, '0')}</div>
           <span className="legacy-caption">ARCHIVES CLASSICO MBOA</span>
