@@ -20,6 +20,7 @@ export const players: Player[] = [
   { id: 'edition-8-barca-15', editionId: 'edition-8', teamId: 'barca-mboa', name: "MANITOU", number: 95, public: true },
   { id: 'edition-8-barca-16', editionId: 'edition-8', teamId: 'barca-mboa', name: "ADRIEL", number: 19, public: true },
   { id: 'edition-8-barca-17', editionId: 'edition-8', teamId: 'barca-mboa', name: "PA'A BONGUE", number: 27, public: true },
+  { id: 'edition-8-barca-18', editionId: 'edition-8', teamId: 'barca-mboa', name: "MUSA", number: 23, public: true },
   { id: 'edition-8-real-1', editionId: 'edition-8', teamId: 'real-mboa', name: "LOÏC MOURAD", position: 'Défenseur', number: 1, public: true },
   { id: 'edition-8-real-2', editionId: 'edition-8', teamId: 'real-mboa', name: "STEPHEN", position: 'Défenseur', number: 22, public: true },
   { id: 'edition-8-real-3', editionId: 'edition-8', teamId: 'real-mboa', name: "TRÉSOR", position: 'Milieu', number: 47, public: true },

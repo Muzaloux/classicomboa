@@ -522,6 +522,18 @@ export type Database = {
         }
         Relationships: []
       }
+      player_registration_settings: {
+        Row: { edition_id: string; fee_xaf: number; is_open: boolean }
+        Insert: { edition_id: string; fee_xaf?: number; is_open?: boolean }
+        Update: { edition_id?: string; fee_xaf?: number; is_open?: boolean }
+        Relationships: []
+      }
+      player_registrations: {
+        Row: { access_hash: string; amount_xaf: number; club: string; confirmed_by: string | null; contact: string; created_at: string; edition_id: string; id: string; paid_at: string | null; player_name: string; player_phone: string; receipt_reference: string | null; reference: string; request_id: string; status: string }
+        Insert: { access_hash: string; amount_xaf: number; club: string; confirmed_by?: string | null; contact: string; created_at?: string; edition_id: string; id?: string; paid_at?: string | null; player_name: string; player_phone: string; receipt_reference?: string | null; reference?: string; request_id: string; status?: string }
+        Update: { access_hash?: string; amount_xaf?: number; club?: string; confirmed_by?: string | null; contact?: string; created_at?: string; edition_id?: string; id?: string; paid_at?: string | null; player_name?: string; player_phone?: string; receipt_reference?: string | null; reference?: string; request_id?: string; status?: string }
+        Relationships: []
+      }
       vote_orders: {
         Row: {
           access_hash: string
@@ -977,6 +989,14 @@ export type Database = {
           name: string
           price_xaf: number
         }[]
+      }
+      confirm_player_payment: {
+        Args: { p_amount: number; p_edition: string; p_receipt: string; p_reference: string }
+        Returns: string
+      }
+      reserve_player_registration: {
+        Args: { p_access_hash: string; p_club: string; p_contact: string; p_edition: string; p_name: string; p_phone: string; p_request: string }
+        Returns: string
       }
       confirm_vote_payment: {
         Args: { p_amount: number; p_edition: string; p_receipt: string; p_reference: string }

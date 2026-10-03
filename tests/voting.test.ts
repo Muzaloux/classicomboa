@@ -31,7 +31,7 @@ async function reserve(quantity: number, request = randomUUID()) {
 
 test('seeded categories carry the squads as candidates', async () => {
   const rows = (await db.query<{ slug: string; n: number }>("select c.slug, count(*)::int n from vote_categories c join vote_candidates k on k.category_id=c.id group by c.slug")).rows
-  assert.deepEqual(Object.fromEntries(rows.map(r => [r.slug, r.n])), { mvp: 37, 'meilleur-real': 20, 'meilleur-barca': 17 })
+  assert.deepEqual(Object.fromEntries(rows.map(r => [r.slug, r.n])), { mvp: 38, 'meilleur-real': 20, 'meilleur-barca': 18 })
 })
 test('votes are priced by the server and retries reuse one order', async () => {
   const request = randomUUID()
@@ -72,5 +72,5 @@ test('full tallies are limited to organizers', async () => {
     await assert.rejects(db.query("select * from vote_results('edition-8', false)"), /FORBIDDEN/)
     assert.ok((await db.query("select * from vote_results('edition-8', true)")).rows.length > 0)
   })
-  await asUser(admin, async () => assert.ok((await db.query("select * from vote_results('edition-8', false)")).rows.length === 74))
+  await asUser(admin, async () => assert.ok((await db.query("select * from vote_results('edition-8', false)")).rows.length === 76))
 })
