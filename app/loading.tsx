@@ -1,11 +1,10 @@
+import Image from 'next/image'
+
 export default function Loading() {
   return (
     <div className="site-loading" role="status" aria-busy="true" aria-label="Chargement de Classico Mboa">
       <div className="site-loading-content">
-        <video className="site-loading-video" autoPlay muted loop playsInline preload="auto" aria-hidden="true">
-          <source src="/classico-loading.mp4" type="video/mp4" />
-        </video>
-        <span className="site-loading-name">CLASSICO <b>MBOA</b></span>
+        <Image className="site-loading-logo" src="/classico-mboa-wordmark.png" alt="Classico Mboa" width={860} height={960} preload sizes="(max-width: 600px) 84vw, 600px" />
         <span className="site-loading-progress" aria-hidden="true"><span /></span>
         <span className="site-loading-label">CHARGEMENT…</span>
       </div>
