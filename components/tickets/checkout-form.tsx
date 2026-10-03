@@ -34,6 +34,6 @@ export function TestPaymentForm({ reference }: { reference: string }) {
 }
 export function RetrieveOrderForm() {
   const [state, action, pending] = useActionState(retrieveOrder, initialFormState)
-  return <form action={action} className="platform-form"><fieldset disabled={pending}><label>Référence de commande<input name="reference" required placeholder="CM-…" autoComplete="off" maxLength={35} /></label><label>Clé de récupération<input name="access" type="password" required autoComplete="off" maxLength={64} /></label><button className="button button-primary">{pending ? 'Recherche…' : 'Retrouver ma commande'}</button></fieldset><FormFeedback state={state} /></form>
+  return <form action={action} className="platform-form"><fieldset disabled={pending}><label>Référence de commande<input name="reference" required placeholder="ABC123" autoComplete="off" maxLength={35} /></label><label>Code de récupération à 6 chiffres<input name="access" type="password" inputMode="numeric" autoComplete="one-time-code" placeholder="123456" required maxLength={64} /></label><small>Les anciennes commandes peuvent encore utiliser leur clé de récupération précédente.</small><button className="button button-primary">{pending ? 'Recherche…' : 'Retrouver ma commande'}</button></fieldset><FormFeedback state={state} /></form>
 }
 export function PrintTickets() { return <button className="button button-outline no-print" onClick={() => window.print()}>Imprimer / Enregistrer en PDF</button> }

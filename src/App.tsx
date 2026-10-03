@@ -1,6 +1,10 @@
 import Link from 'next/link'
 import { TeamEmblem } from '../components/shared/team-emblem'
 import heroImage from '../public/images/events/hero.webp'
+import slideTeams from '../public/images/events/archive-6667-2.webp'
+import slideReal from '../public/images/events/archive-6689.webp'
+import slideBarca from '../public/images/events/archive-6690.webp'
+import slideTrophy from '../public/images/events/archive-6683.webp'
 import { EventCountdown } from '../components/shared/event-countdown'
 import { currentEdition } from '../data/current-edition'
 import { formatEventDate } from '../lib/formatting'
@@ -46,7 +50,7 @@ function App() {
     <>
 <main id="main-content">
         <section className="hero" id="home" aria-labelledby="hero-title">
-          <div className="hero-image"><ScrollPanImage src={heroImage} alt="Deux joueurs du Classico Mboa poursuivent le ballon sur le terrain." /><div className="hero-photo-shade" /></div>
+          <div className="hero-image"><ScrollPanImage slides={heroSlides} /><div className="hero-photo-shade" /></div>
           <div className="hero-grain" />
           <div className="hero-content">
             <div className="edition-kicker"><CameroonFlag /><span className="live-dot" /> {currentEdition.city.toUpperCase()} · {formatEventDate(currentEdition.eventDate).toUpperCase()}</div>
@@ -155,6 +159,14 @@ function App() {
     </>
   )
 }
+
+const heroSlides = [
+  { src: heroImage, alt: 'Deux joueurs du Classico Mboa poursuivent le ballon sur le terrain.' },
+  { src: slideTeams, alt: 'Les équipes de Real Mboa et de Barça Mboa réunies sur la pelouse.' },
+  { src: slideReal, alt: 'L’équipe de Real Mboa en maillot blanc avant le coup d’envoi.' },
+  { src: slideBarca, alt: 'L’équipe de Barça Mboa alignée sur le terrain.' },
+  { src: slideTrophy, alt: 'Remise du trophée du Classico Mboa.' },
+]
 
 export default App
 

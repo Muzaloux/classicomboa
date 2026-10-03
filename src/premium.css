@@ -147,3 +147,13 @@ body { background: radial-gradient(ellipse at 90% 10%, rgba(122, 122, 122, .1), 
 .tombola-numbers span { min-width: 3rem; padding: 8px 12px; border: 1px solid var(--green); border-radius: 10px; font-weight: 800; font-size: 1.15rem; text-align: center; color: var(--green); }
 
 .page-container .platform-form input::placeholder, .page-container .platform-form textarea::placeholder { color: #4a4a4a; opacity: 1; }
+
+.hero-slides { position: absolute; inset: 0; }
+.hero-slide { opacity: 0; transition: opacity 1.4s ease; }
+.hero-slide.is-active { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .hero-slide { transition: none; } }
+@media (max-width: 720px) {
+  .hero-slides { inset: auto; top: 64px; left: 0; width: 100vw; aspect-ratio: 1473 / 1068; }
+  .hero-image .hero-slide { top: 0 !important; width: 100% !important; height: 100% !important; aspect-ratio: auto; object-fit: cover !important; mask-image: none; -webkit-mask-image: none; }
+  .hero-slides { -webkit-mask-image: linear-gradient(180deg, #000 80%, transparent); mask-image: linear-gradient(180deg, #000 80%, transparent); }
+}
