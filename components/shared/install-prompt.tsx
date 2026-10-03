@@ -10,7 +10,7 @@ interface BeforeInstallPromptEvent extends Event {
 
 const dismissKey = 'classico-install-dismissed-until'
 const installedKey = 'classico-installed'
-const dismissForMs = 2 * 24 * 60 * 60 * 1000
+const dismissForMs = 3 * 60 * 1000
 
 function isInstalled() {
   try { if (localStorage.getItem(installedKey)) return true } catch { /* Storage may be unavailable. */ }
@@ -28,6 +28,8 @@ function installInstructions() {
   return 'Ouvrez le menu de votre navigateur, puis choisissez « Installer l’application » ou « Ajouter à l’écran d’accueil ».'
 }
 
+let reschedule: ((delay: number) => void) | null = null
+
 export function InstallPrompt() {
   const [visible, setVisible] = useState(false)
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null)
@@ -35,10 +37,15 @@ export function InstallPrompt() {
 
   useEffect(() => {
     if (isInstalled()) return
-    try {
-      if (Number(localStorage.getItem(dismissKey)) > Date.now()) return
-    } catch { /* Storage may be unavailable; the prompt remains dismissible. */ }
-    setVisible(true)
+    let remaining = 0
+    try { remaining = Number(localStorage.getItem(dismissKey)) - Date.now() } catch { /* Storage may be unavailable; the prompt remains dismissible. */ }
+    let timer: ReturnType<typeof setTimeout> | undefined
+    const schedule = (delay: number) => {
+      timer = setTimeout(() => { if (!isInstalled()) setVisible(true) }, delay)
+    }
+    if (remaining > 0) schedule(remaining)
+    else setVisible(true)
+    reschedule = schedule
 
     const onBeforeInstall = (event: Event) => {
       event.preventDefault()
@@ -51,6 +58,8 @@ export function InstallPrompt() {
     window.addEventListener('beforeinstallprompt', onBeforeInstall)
     window.addEventListener('appinstalled', onInstalled)
     return () => {
+      clearTimeout(timer)
+      reschedule = null
       window.removeEventListener('beforeinstallprompt', onBeforeInstall)
       window.removeEventListener('appinstalled', onInstalled)
     }
@@ -60,6 +69,7 @@ export function InstallPrompt() {
     setVisible(false)
     try { localStorage.setItem(dismissKey, String(Date.now() + dismissForMs)) }
     catch { /* Dismiss for this visit if storage is unavailable. */ }
+    reschedule?.(dismissForMs)
   }
 
   function onInstalledChoice() {
