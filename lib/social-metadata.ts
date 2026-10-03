@@ -4,7 +4,7 @@ import { formatEventDate } from './formatting'
 
 // Keep the preview asset reachable while the custom domain's DNS is configured.
 export const socialImage = {
-  url: 'https://classicomboa.vercel.app/share-image?v=1',
+  url: 'https://classicomboa.com/share-image?v=2',
   width: 1200,
   height: 630,
   type: 'image/png',
