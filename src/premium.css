@@ -142,3 +142,6 @@ body { background: radial-gradient(ellipse at 90% 10%, rgba(122, 122, 122, .1), 
 .payment-card-details .payment-number { border-color: var(--green); }
 .payment-card-details .payment-number strong { color: var(--green); font-size: 1.7rem; }
 .payment-warning { padding: 10px 14px; border-left: 4px solid var(--green); background: rgba(181,227,72,.08); }
+
+.tombola-numbers { display: flex; flex-wrap: wrap; gap: 8px; }
+.tombola-numbers span { min-width: 3rem; padding: 8px 12px; border: 1px solid var(--green); border-radius: 10px; font-weight: 800; font-size: 1.15rem; text-align: center; color: var(--green); }

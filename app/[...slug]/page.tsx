@@ -13,7 +13,7 @@ export const dynamicParams = false
 
 type Props = { params: Promise<{ slug: string[] }> }
 export function generateStaticParams() {
-  return publicPages.filter(({ path }) => !path.startsWith('/edition/') && !path.startsWith('/tickets') && !path.startsWith('/vote')).map(({ path }) => ({ slug: path.split('/').filter(Boolean) }))
+  return publicPages.filter(({ path }) => !path.startsWith('/edition/') && !path.startsWith('/tickets') && !path.startsWith('/vote') && !path.startsWith('/tombola')).map(({ path }) => ({ slug: path.split('/').filter(Boolean) }))
 }
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params

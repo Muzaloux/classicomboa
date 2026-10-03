@@ -585,6 +585,150 @@ export type Database = {
         }
         Relationships: []
       }
+      tombola_draws: {
+        Row: {
+          drawn_at: string | null
+          drawn_by: string | null
+          edition_id: string
+          id: string
+          name: string
+          prize: string
+          price_xaf: number
+          results_public: boolean
+          sort_order: number
+          status: string
+          winners_count: number
+        }
+        Insert: {
+          drawn_at?: string | null
+          drawn_by?: string | null
+          edition_id: string
+          id?: string
+          name: string
+          prize?: string
+          price_xaf?: number
+          results_public?: boolean
+          sort_order?: number
+          status?: string
+          winners_count?: number
+        }
+        Update: {
+          drawn_at?: string | null
+          drawn_by?: string | null
+          edition_id?: string
+          id?: string
+          name?: string
+          prize?: string
+          price_xaf?: number
+          results_public?: boolean
+          sort_order?: number
+          status?: string
+          winners_count?: number
+        }
+        Relationships: []
+      }
+      tombola_orders: {
+        Row: {
+          access_hash: string
+          buyer_name: string
+          buyer_phone: string
+          confirmed_by: string | null
+          contact: string
+          created_at: string
+          draw_id: string
+          edition_id: string
+          expires_at: string
+          id: string
+          paid_at: string | null
+          quantity: number
+          receipt_reference: string | null
+          reference: string
+          request_id: string
+          status: string
+          total_xaf: number
+        }
+        Insert: {
+          access_hash: string
+          buyer_name: string
+          buyer_phone: string
+          confirmed_by?: string | null
+          contact: string
+          created_at?: string
+          draw_id: string
+          edition_id: string
+          expires_at: string
+          id?: string
+          paid_at?: string | null
+          quantity: number
+          receipt_reference?: string | null
+          reference?: string
+          request_id: string
+          status?: string
+          total_xaf: number
+        }
+        Update: {
+          access_hash?: string
+          buyer_name?: string
+          buyer_phone?: string
+          confirmed_by?: string | null
+          contact?: string
+          created_at?: string
+          draw_id?: string
+          edition_id?: string
+          expires_at?: string
+          id?: string
+          paid_at?: string | null
+          quantity?: number
+          receipt_reference?: string | null
+          reference?: string
+          request_id?: string
+          status?: string
+          total_xaf?: number
+        }
+        Relationships: []
+      }
+      tombola_entries: {
+        Row: {
+          draw_id: string
+          entry_number: number
+          id: string
+          order_id: string
+        }
+        Insert: {
+          draw_id: string
+          entry_number: number
+          id?: string
+          order_id: string
+        }
+        Update: {
+          draw_id?: string
+          entry_number?: number
+          id?: string
+          order_id?: string
+        }
+        Relationships: []
+      }
+      tombola_winners: {
+        Row: {
+          draw_id: string
+          entry_id: string
+          id: string
+          rank: number
+        }
+        Insert: {
+          draw_id: string
+          entry_id: string
+          id?: string
+          rank: number
+        }
+        Update: {
+          draw_id?: string
+          entry_id?: string
+          id?: string
+          rank?: number
+        }
+        Relationships: []
+      }
       ticket_types: {
         Row: {
           capacity: number
@@ -841,6 +985,22 @@ export type Database = {
       vote_results: {
         Args: { p_edition: string; p_public_only: boolean }
         Returns: { candidate_id: string; candidate_name: string; category_id: string; category_name: string; subtitle: string | null; votes: number }[]
+      }
+      confirm_tombola_payment: {
+        Args: { p_amount: number; p_edition: string; p_receipt: string; p_reference: string }
+        Returns: string
+      }
+      draw_tombola: {
+        Args: { p_draw: string; p_edition: string }
+        Returns: number
+      }
+      reserve_tombola_order: {
+        Args: { p_access_hash: string; p_contact: string; p_draw: string; p_edition: string; p_name: string; p_phone: string; p_quantity: number; p_request: string }
+        Returns: string
+      }
+      tombola_winners_public: {
+        Args: { p_edition: string }
+        Returns: { draw_name: string; entry_number: number; prize: string; rank: number; winner: string }[]
       }
       void_ticket: {
         Args: { p_code: string; p_edition: string }
