@@ -13,7 +13,7 @@ export const testTicketingEnabled = () => process.env.TICKETING_MODE === 'test' 
 export const manualTicketingEnabled = () => (process.env.TICKETING_MODE ?? 'manual') === 'manual'
 export const ticketingEnabled = () => manualTicketingEnabled() || testTicketingEnabled()
 export const accessHash = (token: string) => createHash('sha256').update(token).digest('hex')
-export const orderCookie = (reference: string) => 'cm_order_' + reference.slice(3)
+export const orderCookie = (reference: string) => 'cm_order_' + reference.replace(/^C[MVT]-/, '')
 export async function rememberOrder(reference: string, token: string) {
   (await cookies()).set(orderCookie(reference), token, { httpOnly: true, sameSite: 'lax', secure: process.env.NODE_ENV === 'production', path: '/tickets', maxAge: 60 * 60 * 24 * 30 })
 }

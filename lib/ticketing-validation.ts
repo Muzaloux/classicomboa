@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { normalizeCameroonPhone } from './validation'
 
-export const referenceSchema = z.string().regex(/^CM-[a-f0-9]{32}$/)
+export const referenceSchema = z.string().regex(/^(CM-[a-f0-9]{32}|[A-HJ-NP-Z2-9]{6})$/)
 export const accessTokenSchema = z.string().regex(/^[a-f0-9]{64}$/)
 export const checkoutSchema = z.object({
   type: z.string().uuid(), quantity: z.coerce.number().int().min(1).max(100),

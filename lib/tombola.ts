@@ -9,7 +9,7 @@ import { paymentContacts } from './manual-payment'
 import { currentEdition } from '../data/current-edition'
 
 export const tombolaEnabled = () => process.env.TOMBOLA_MODE === 'manual' || process.env.TICKETING_MODE === 'manual'
-export const tombolaCookie = (reference: string) => 'cm_tombola_' + reference.slice(3)
+export const tombolaCookie = (reference: string) => 'cm_tombola_' + reference.replace(/^C[MVT]-/, '')
 export async function rememberTombola(reference: string, token: string) {
   (await cookies()).set(tombolaCookie(reference), token, { httpOnly: true, sameSite: 'lax', secure: process.env.NODE_ENV === 'production', path: '/tombola', maxAge: 60 * 60 * 24 * 60 })
 }

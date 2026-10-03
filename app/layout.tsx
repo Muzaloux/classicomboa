@@ -17,6 +17,8 @@ export const metadata: Metadata = {
   metadataBase: process.env.NEXT_PUBLIC_SITE_URL ? new URL(process.env.NEXT_PUBLIC_SITE_URL) : undefined,
   openGraph: { ...socialOpenGraph, title: 'Classico Mboa | Le Classico Version Mboa', description },
   twitter: { ...socialTwitter, title: 'Classico Mboa', description },
+  appleWebApp: { capable: true, title: 'Classico Mboa', statusBarStyle: 'black-translucent' },
+  icons: { apple: '/icons/classico-180.png' },
 }
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return <html lang="fr-CM" className={bodyFont.variable + ' ' + displayFont.variable}><body><a className="skip-link" href="#main-content">Aller au contenu</a><Navbar /><OfflineStatus />{children}<Footer /><SiteMotion /></body></html>

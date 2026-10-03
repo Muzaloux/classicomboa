@@ -8,7 +8,7 @@ import { paymentContacts } from './manual-payment'
 import { currentEdition } from '../data/current-edition'
 
 export const votingEnabled = () => process.env.VOTING_MODE === 'manual' || process.env.TICKETING_MODE === 'manual'
-export const voteCookie = (reference: string) => 'cm_vote_' + reference.slice(3)
+export const voteCookie = (reference: string) => 'cm_vote_' + reference.replace(/^C[MVT]-/, '')
 export async function rememberVote(reference: string, token: string) {
   (await cookies()).set(voteCookie(reference), token, { httpOnly: true, sameSite: 'lax', secure: process.env.NODE_ENV === 'production', path: '/vote', maxAge: 60 * 60 * 24 * 30 })
 }

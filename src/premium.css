@@ -137,7 +137,7 @@ body { background: radial-gradient(ellipse at 90% 10%, rgba(122, 122, 122, .1), 
 
 .payment-card-details { display: grid; gap: 12px; }
 .payment-card-details > div { display: grid; gap: 2px; padding: 12px 14px; border: 1px solid rgba(255,255,255,.14); border-radius: 12px; background: rgba(255,255,255,.04); }
-.payment-card-details small { font-size: .85rem; letter-spacing: .06em; text-transform: uppercase; opacity: .75; }
+.payment-card-details small { font-size: .85rem; letter-spacing: .06em; text-transform: uppercase; opacity: 1; }
 .payment-card-details strong { font-size: 1.35rem; font-weight: 800; letter-spacing: .02em; word-break: break-all; }
 .payment-card-details .payment-number { border-color: var(--green); }
 .payment-card-details .payment-number strong { color: var(--green); font-size: 1.7rem; }
@@ -145,3 +145,5 @@ body { background: radial-gradient(ellipse at 90% 10%, rgba(122, 122, 122, .1), 
 
 .tombola-numbers { display: flex; flex-wrap: wrap; gap: 8px; }
 .tombola-numbers span { min-width: 3rem; padding: 8px 12px; border: 1px solid var(--green); border-radius: 10px; font-weight: 800; font-size: 1.15rem; text-align: center; color: var(--green); }
+
+.page-container .platform-form input::placeholder, .page-container .platform-form textarea::placeholder { color: #4a4a4a; opacity: 1; }

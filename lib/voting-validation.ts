@@ -2,7 +2,7 @@ import { z } from 'zod'
 import { normalizeCameroonPhone } from './validation'
 import { accessTokenSchema } from './ticketing-validation'
 
-export const voteReferenceSchema = z.string().regex(/^CV-[a-f0-9]{32}$/)
+export const voteReferenceSchema = z.string().regex(/^(CV-[a-f0-9]{32}|[A-HJ-NP-Z2-9]{6})$/)
 export const voteSchema = z.object({
   candidate: z.string().uuid(), quantity: z.coerce.number().int().min(1).max(100),
   name: z.string().trim().min(2).max(100),
