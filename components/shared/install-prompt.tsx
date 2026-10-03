@@ -9,9 +9,11 @@ interface BeforeInstallPromptEvent extends Event {
 }
 
 const dismissKey = 'classico-install-dismissed-until'
-const dismissForMs = 14 * 24 * 60 * 60 * 1000
+const installedKey = 'classico-installed'
+const dismissForMs = 2 * 24 * 60 * 60 * 1000
 
 function isInstalled() {
+  try { if (localStorage.getItem(installedKey)) return true } catch { /* Storage may be unavailable. */ }
   return window.matchMedia('(display-mode: standalone)').matches ||
     ('standalone' in navigator && navigator.standalone === true)
 }
@@ -42,7 +44,10 @@ export function InstallPrompt() {
       event.preventDefault()
       setDeferredPrompt(event as BeforeInstallPromptEvent)
     }
-    const onInstalled = () => setVisible(false)
+    const onInstalled = () => {
+      try { localStorage.setItem(installedKey, '1') } catch { /* Ignore unavailable storage. */ }
+      setVisible(false)
+    }
     window.addEventListener('beforeinstallprompt', onBeforeInstall)
     window.addEventListener('appinstalled', onInstalled)
     return () => {
@@ -57,6 +62,11 @@ export function InstallPrompt() {
     catch { /* Dismiss for this visit if storage is unavailable. */ }
   }
 
+  function onInstalledChoice() {
+    try { localStorage.setItem(installedKey, '1') } catch { /* Ignore unavailable storage. */ }
+    setVisible(false)
+  }
+
   async function installApp() {
     if (!deferredPrompt) {
       setInstructions(installInstructions())
@@ -66,7 +76,7 @@ export function InstallPrompt() {
       await deferredPrompt.prompt()
       const choice = await deferredPrompt.userChoice
       setDeferredPrompt(null)
-      if (choice.outcome === 'accepted') setVisible(false)
+      if (choice.outcome === 'accepted') onInstalledChoice()
     } catch {
       setDeferredPrompt(null)
       setInstructions(installInstructions())
