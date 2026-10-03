@@ -76,9 +76,13 @@ export function InstallPrompt() {
   if (!visible) return null
 
   return <aside className="install-prompt" aria-label="Installer Classico Mboa">
-    <button className="install-prompt-close" type="button" onClick={closePrompt} aria-label="Fermer le message d’installation"><X size={18} /></button>
-    <div className="install-prompt-heading"><span className="install-prompt-icon"><Download size={18} aria-hidden="true" /></span><div><span className="eyebrow">CLASSICO MBOA</span><h2>Gardez le Classico à portée de main.</h2></div></div>
-    <button className="button button-primary install-prompt-action" type="button" onClick={installApp}><Download size={16} aria-hidden="true" /> Télécharger l’application</button>
+    <div className="install-prompt-bar">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img className="install-prompt-logo" src="/icons/classico-192.png" alt="" width={44} height={44} />
+      <div className="install-prompt-text"><strong>Application Classico Mboa</strong><span>Billets, votes et tombola en un geste.</span></div>
+      <button className="install-prompt-action" type="button" onClick={installApp}><Download size={15} aria-hidden="true" /> Télécharger</button>
+      <button className="install-prompt-close" type="button" onClick={closePrompt} aria-label="Fermer le message d’installation"><X size={16} /></button>
+    </div>
     {instructions && <p className="install-prompt-instructions" role="status">{instructions}</p>}
   </aside>
 }
