@@ -465,6 +465,126 @@ export type Database = {
           },
         ]
       }
+      vote_categories: {
+        Row: {
+          edition_id: string
+          id: string
+          name: string
+          price_xaf: number
+          results_public: boolean
+          slug: string
+          sort_order: number
+          status: string
+        }
+        Insert: {
+          edition_id: string
+          id?: string
+          name: string
+          price_xaf?: number
+          results_public?: boolean
+          slug: string
+          sort_order?: number
+          status?: string
+        }
+        Update: {
+          edition_id?: string
+          id?: string
+          name?: string
+          price_xaf?: number
+          results_public?: boolean
+          slug?: string
+          sort_order?: number
+          status?: string
+        }
+        Relationships: []
+      }
+      vote_candidates: {
+        Row: {
+          category_id: string
+          id: string
+          name: string
+          sort_order: number
+          subtitle: string | null
+        }
+        Insert: {
+          category_id: string
+          id?: string
+          name: string
+          sort_order?: number
+          subtitle?: string | null
+        }
+        Update: {
+          category_id?: string
+          id?: string
+          name?: string
+          sort_order?: number
+          subtitle?: string | null
+        }
+        Relationships: []
+      }
+      vote_orders: {
+        Row: {
+          access_hash: string
+          candidate_id: string
+          category_id: string
+          confirmed_by: string | null
+          contact: string
+          created_at: string
+          edition_id: string
+          expires_at: string
+          id: string
+          paid_at: string | null
+          quantity: number
+          receipt_reference: string | null
+          reference: string
+          request_id: string
+          status: string
+          total_xaf: number
+          voter_name: string
+          voter_phone: string
+        }
+        Insert: {
+          access_hash: string
+          candidate_id: string
+          category_id: string
+          confirmed_by?: string | null
+          contact: string
+          created_at?: string
+          edition_id: string
+          expires_at: string
+          id?: string
+          paid_at?: string | null
+          quantity: number
+          receipt_reference?: string | null
+          reference?: string
+          request_id: string
+          status?: string
+          total_xaf: number
+          voter_name: string
+          voter_phone: string
+        }
+        Update: {
+          access_hash?: string
+          candidate_id?: string
+          category_id?: string
+          confirmed_by?: string | null
+          contact?: string
+          created_at?: string
+          edition_id?: string
+          expires_at?: string
+          id?: string
+          paid_at?: string | null
+          quantity?: number
+          receipt_reference?: string | null
+          reference?: string
+          request_id?: string
+          status?: string
+          total_xaf?: number
+          voter_name?: string
+          voter_phone?: string
+        }
+        Relationships: []
+      }
       ticket_types: {
         Row: {
           capacity: number
@@ -709,6 +829,18 @@ export type Database = {
           name: string
           price_xaf: number
         }[]
+      }
+      confirm_vote_payment: {
+        Args: { p_amount: number; p_edition: string; p_receipt: string; p_reference: string }
+        Returns: string
+      }
+      reserve_vote_order: {
+        Args: { p_access_hash: string; p_candidate: string; p_contact: string; p_edition: string; p_name: string; p_phone: string; p_quantity: number; p_request: string }
+        Returns: string
+      }
+      vote_results: {
+        Args: { p_edition: string; p_public_only: boolean }
+        Returns: { candidate_id: string; candidate_name: string; category_id: string; category_name: string; subtitle: string | null; votes: number }[]
       }
       void_ticket: {
         Args: { p_code: string; p_edition: string }

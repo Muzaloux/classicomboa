@@ -31,8 +31,13 @@
         "@types/qrcode": "^1.5.6",
         "@types/react": "^19.0.0",
         "@types/react-dom": "^19.0.0",
+        "supabase": "^2.119.0",
         "tailwindcss": "latest",
         "tsx": "^4.23.15",
         "typescript": "~5.7.2"
+    },
+    "allowScripts": {
+        "esbuild@0.28.2": true,
+        "fsevents@2.3.3": true
     }
 }

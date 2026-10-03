@@ -8,7 +8,9 @@ import { verifyPayment } from './payment-signature'
 import { currentEdition } from '../data/current-edition'
 
 export const testTicketingEnabled = () => process.env.TICKETING_MODE === 'test' && (process.env.TEST_PAYMENT_WEBHOOK_SECRET?.length ?? 0) >= 32
-export const manualTicketingEnabled = () => process.env.TICKETING_MODE === 'manual'
+// Manual Mobile Money checkout is the live sales path. Keep sales closed only
+// when explicitly requested, so a missing deployment variable cannot hide it.
+export const manualTicketingEnabled = () => (process.env.TICKETING_MODE ?? 'manual') === 'manual'
 export const ticketingEnabled = () => manualTicketingEnabled() || testTicketingEnabled()
 export const accessHash = (token: string) => createHash('sha256').update(token).digest('hex')
 export const orderCookie = (reference: string) => 'cm_order_' + reference.slice(3)

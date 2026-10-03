@@ -43,7 +43,7 @@ Confirmed ticket prices: Classique 1,000 XAF and VIP 2,000 XAF, sharing an editi
 
 The public website is deployed on Shirley's Vercel Pro team. Supabase project `omzfphciqhiqavpsxlxg` has five applied migrations. Organizer-only login, password management, inquiry workflows and role-protected ticketing tools are implemented.
 
-Phase 3 now has a verified guest test flow: stock reservation, private order recovery, signed test payment confirmation, QR issuance, printable tickets, category management, ticket cancellation and single-use check-in. Phase 11 has initial payment ledger/signature/idempotency foundations. Manual Mobile Money checkout now reserves a place for two hours and opens WhatsApp with Manuel or Youana. Only an authorized organizer can confirm the actual received amount and a unique receipt before tickets are issued. No payment API or automatic payment confirmation is configured.
+Phase 3 now has a verified guest test flow: stock reservation, private order recovery, signed test payment confirmation, QR issuance, printable tickets, category management, ticket cancellation and single-use check-in. Phase 11 has initial payment ledger/signature/idempotency foundations. Manual Mobile Money checkout now reserves a place for two hours and opens WhatsApp with Manoel or Youana. Only an authorized organizer can confirm the actual received amount and a unique receipt before tickets are issued. No payment API or automatic payment confirmation is configured.
 
 No full transactional phase is declared production-ready. Physical camera verification, email ticket delivery, refunds, reconciliation, broader security/load tests and the other operational modules remain outstanding. Public signup stays disabled.
 

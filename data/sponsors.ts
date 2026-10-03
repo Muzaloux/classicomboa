@@ -1,10 +1,10 @@
 export const sponsors = [
   {
-    id: 'wa-business',
-    name: 'WA Business',
-    image: '/images/sponsors/wa-business-transparent.png',
-    alt: 'Logo WA Business',
-    tier: 'Partenaire officiel',
+    id: 'pris-k',
+    name: 'PRIS-K',
+    image: '/images/sponsors/pris-k.png',
+    alt: 'Logo PRIS-K Events and Grill',
+    tier: 'Sponsor principal',
     featured: true,
   },
   {

@@ -54,7 +54,7 @@ export const publicPages: PublicPageCopy[] = [
     eyebrow: 'LES ÉQUIPES',
     title: 'Real Mboa face à Barça Mboa.',
     description:
-      'Les équipes de la 8e édition. Les effectifs seront publiés après confirmation par l’organisation.',
+      'Découvrez les effectifs annoncés pour la 8e édition du 19 décembre 2026.',
     status: 'Effectifs à venir',
     kind: 'teams',
   },
@@ -63,7 +63,7 @@ export const publicPages: PublicPageCopy[] = [
     eyebrow: 'LES JOUEURS',
     title: 'Les visages du Classico.',
     description:
-      'Les profils des joueurs seront affichés lorsque les effectifs officiels seront confirmés.',
+      'Les joueurs annoncés pour l’édition 8, avec leurs profils photo à compléter.',
     status: 'Profils à venir',
     sections: [
       {

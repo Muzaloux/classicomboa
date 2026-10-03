@@ -6,6 +6,7 @@ import { currentEdition } from '../data/current-edition'
 import { formatEventDate } from '../lib/formatting'
 import { CTASection, EmptyState, Section } from '../components/shared/page'
 import { EventPhoto } from '../components/shared/event-photo'
+import { photoRatio } from '../lib/photo-ratio'
 import { Reveal } from '../components/shared/reveal'
 import { SponsorStrip } from '../components/shared/sponsor-strip'
 import { ScrollPanImage } from '../components/shared/scroll-pan-image'
@@ -86,7 +87,7 @@ function App() {
               const Icon = experienceIcons[card.icon]
               return (
                 <article className={`experience-card ${card.className}`} key={card.id}>
-                  {card.photo ? <EventPhoto photo={card.photo} sizes="(max-width: 720px) 100vw, (max-width: 1000px) 50vw, 25vw" /> : <div className="experience-graphic" aria-hidden="true"><Icon size={100} strokeWidth={1} /><span>CLASSICO MBOA</span></div>}
+                  {card.photo ? <EventPhoto photo={card.photo} contain sizes="(max-width: 720px) 100vw, (max-width: 1000px) 50vw, 25vw" /> : <div className="experience-graphic" aria-hidden="true"><Icon size={100} strokeWidth={1} /><span>CLASSICO MBOA</span></div>}
                   <div className="card-shade" />
                   <div className="card-label"><Icon size={16} /> {card.category}</div>
                   <div className="experience-card-copy"><span>{card.eyebrow}</span><h3>{card.title.split('\n').map((line) => <span key={line}>{line}<br /></span>)}</h3><a href={card.href}>{card.action} <ArrowRight size={15} /></a></div>
@@ -98,7 +99,7 @@ function App() {
         </section></Reveal>
 
         <Reveal><section className="rivalry section-pad" id="vote">
-          <div className="rivalry-image"><EventPhoto photo={getEventPhoto("white-action")} sizes="(max-width: 720px) 100vw, 50vw" /></div>
+          <div className="rivalry-image" style={photoRatio(getEventPhoto("white-action"))}><EventPhoto photo={getEventPhoto("white-action")} sizes="(max-width: 720px) 100vw, 50vw" /></div>
           <div className="rivalry-content">
             <span className="eyebrow">LE DUEL, VERSION MBOA</span>
             <h2>REAL MBOA<br />OU BARÇA MBOA&nbsp;?</h2>
@@ -127,7 +128,7 @@ function App() {
         </section></Reveal>
 
         <Reveal><section className="legacy" id="legacy">
-          <div className="legacy-image"><EventPhoto photo={getAdditionalEventPhoto('archive-6684')} sizes="100vw" /><div className="legacy-photo-shade" /></div>
+          <div className="legacy-image"><EventPhoto photo={getAdditionalEventPhoto('archive-6684')} contain sizes="100vw" /><div className="legacy-photo-shade" /></div>
           <div className="legacy-copy"><span className="eyebrow">L’HISTOIRE CLASSICO MBOA</span><h2>{currentEdition.editionNumber}E ÉDITION.<br /><span>UN MBOA.</span></h2><p>Né autour du football, Classico Mboa rassemble le public autour d’une rivalité réinventée et d’une expérience ancrée au Cameroun.</p><a className="button button-ghost" href="/classico">Découvrir Classico Mboa <ArrowRight size={15} /></a></div>
           <div className="legacy-number">{String(currentEdition.editionNumber).padStart(2, '0')}</div>
           <span className="legacy-caption">ARCHIVES CLASSICO MBOA</span>
@@ -141,7 +142,7 @@ function App() {
         <SponsorStrip />
         <Reveal><section className="section-pad gallery-preview" aria-labelledby="gallery-preview-title">
           <div className="section-heading"><div><span className="eyebrow">LES ARCHIVES EN IMAGES</span><h2 id="gallery-preview-title">LE MBOA<br /><span>SE VIT ENSEMBLE.</span></h2></div><p>Sur le terrain, dans les tribunes et autour du trophée : découvrez d’autres moments du Classico.</p></div>
-          <div className="event-gallery">{['archive-6672', 'archive-6681', 'archive-6683'].map((id) => { const photo = getAdditionalEventPhoto(id); return <figure key={id}><Link href="/gallery" className="gallery-photo" aria-label={`Découvrir la galerie : ${photo.caption}`}><EventPhoto photo={photo} sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 33vw" /><span className="gallery-expand" aria-hidden="true">↗</span></Link><figcaption><span className="eyebrow">{photo.category}</span><h3>{photo.caption}</h3></figcaption></figure> })}</div>
+          <div className="event-gallery">{['archive-6672', 'archive-6681', 'archive-6683'].map((id) => { const photo = getAdditionalEventPhoto(id); return <figure key={id}><Link href="/gallery" className="gallery-photo" style={photoRatio(photo)} aria-label={`Découvrir la galerie : ${photo.caption}`}><EventPhoto photo={photo} sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 33vw" /><span className="gallery-expand" aria-hidden="true">↗</span></Link><figcaption><span className="eyebrow">{photo.category}</span><h3>{photo.caption}</h3></figcaption></figure> })}</div>
           <Link className="button button-primary" href="/gallery">Explorer toute la galerie <ArrowRight size={16} /></Link>
         </section></Reveal>
         <div className="page-container home-updates">
