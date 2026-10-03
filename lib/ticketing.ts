@@ -1,9 +1,9 @@
 import 'server-only'
-import { createHash } from 'node:crypto'
+import { createHash, createHmac } from 'node:crypto'
 import { cookies } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { createAdminSupabase } from './supabase/admin'
-import { referenceSchema, accessTokenSchema, paymentEventSchema } from './ticketing-validation'
+import { referenceSchema, ticketAccessSchema, paymentEventSchema } from './ticketing-validation'
 import { verifyPayment } from './payment-signature'
 import { currentEdition } from '../data/current-edition'
 
@@ -13,6 +13,13 @@ export const testTicketingEnabled = () => process.env.TICKETING_MODE === 'test' 
 export const manualTicketingEnabled = () => (process.env.TICKETING_MODE ?? 'manual') === 'manual'
 export const ticketingEnabled = () => manualTicketingEnabled() || testTicketingEnabled()
 export const accessHash = (token: string) => createHash('sha256').update(token).digest('hex')
+export const ticketAccessHash = (token: string) => {
+  if (!/^\d{6}$/.test(token)) return accessHash(token)
+  const pepper = process.env.SUPABASE_SERVICE_ROLE_KEY
+  if (!pepper) throw new Error('Ticket recovery key is unavailable')
+  return createHmac('sha256', pepper).update(token).digest('hex')
+}
+export const ticketAccessHashes = (token: string) => [...new Set([accessHash(token), ticketAccessHash(token)])]
 export const orderCookie = (reference: string) => 'cm_order_' + reference.replace(/^C[MVT]-/, '')
 export async function rememberOrder(reference: string, token: string) {
   (await cookies()).set(orderCookie(reference), token, { httpOnly: true, sameSite: 'lax', secure: process.env.NODE_ENV === 'production', path: '/tickets', maxAge: 60 * 60 * 24 * 30 })
@@ -20,8 +27,8 @@ export async function rememberOrder(reference: string, token: string) {
 export async function ownedOrder(reference: string) {
   if (!referenceSchema.safeParse(reference).success) notFound()
   const token = (await cookies()).get(orderCookie(reference))?.value
-  if (!accessTokenSchema.safeParse(token).success) notFound()
-  const { data, error } = await createAdminSupabase().from('ticket_orders').select('id,reference,edition_id,ticket_type_id,quantity,customer_name,total_xaf,currency,status,is_test,expires_at,created_at').eq('reference', reference).eq('access_hash', accessHash(token!)).eq('edition_id', currentEdition.id).maybeSingle()
+  if (!ticketAccessSchema.safeParse(token).success) notFound()
+  const { data, error } = await createAdminSupabase().from('ticket_orders').select('id,reference,edition_id,ticket_type_id,quantity,customer_name,total_xaf,currency,status,is_test,expires_at,created_at').eq('reference', reference).in('access_hash', ticketAccessHashes(token!)).eq('edition_id', currentEdition.id).maybeSingle()
   if (error) throw new Error('Commande indisponible. Réessayez.')
   if (!data) notFound()
   return { order: data, token: token! }

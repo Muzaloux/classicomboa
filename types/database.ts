@@ -887,6 +887,10 @@ export type Database = {
         }
         Returns: Json
       }
+      consume_ticket_recovery_attempt: {
+        Args: { p_reference: string }
+        Returns: number
+      }
       configure_ticket_type: {
         Args: {
           p_capacity: number

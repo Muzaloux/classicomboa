@@ -4,8 +4,8 @@ import { redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 import { createAdminSupabase } from '../../lib/supabase/admin'
-import { accessHash, ownedOrder, processTestPayment, rememberOrder, testTicketingEnabled, manualTicketingEnabled, ticketingEnabled } from '../../lib/ticketing'
-import { checkoutSchema, referenceSchema, accessTokenSchema } from '../../lib/ticketing-validation'
+import { ticketAccessHash, ticketAccessHashes, ownedOrder, processTestPayment, rememberOrder, testTicketingEnabled, manualTicketingEnabled, ticketingEnabled } from '../../lib/ticketing'
+import { checkoutSchema, referenceSchema, ticketAccessSchema } from '../../lib/ticketing-validation'
 import { signPayment } from '../../lib/payment-signature'
 import type { FormState } from '../../lib/forms'
 import { currentEdition } from '../../data/current-edition'
@@ -20,7 +20,7 @@ export async function reserveOrder(_state: FormState, form: FormData): Promise<F
     const db = createAdminSupabase()
     const type = await db.from('ticket_types').select('id').eq('id', v.type).eq('edition_id', currentEdition.id).eq('is_test', testTicketingEnabled()).maybeSingle()
     if (type.error || !type.data) return { status: 'error', message: 'Cette catégorie n’est pas disponible pour cette édition.' }
-    const common = { p_type: v.type, p_quantity: v.quantity, p_name: v.name, p_email: '', p_phone: v.phone, p_request: v.request, p_access_hash: accessHash(v.access) }
+    const common = { p_type: v.type, p_quantity: v.quantity, p_name: v.name, p_email: '', p_phone: v.phone, p_request: v.request, p_access_hash: ticketAccessHash(v.access) }
     const { data, error } = manualTicketingEnabled()
       ? await db.rpc('reserve_manual_ticket_order', { ...common, p_edition: currentEdition.id, p_contact: v.contact })
       : await db.rpc('reserve_ticket_order', { ...common, p_test: true })
@@ -50,9 +50,12 @@ export async function simulatePayment(_state: FormState, form: FormData): Promis
 }
 export async function retrieveOrder(_state: FormState, form: FormData): Promise<FormState> {
   const reference = referenceSchema.safeParse(form.get('reference'))
-  const access = accessTokenSchema.safeParse(form.get('access'))
+  const access = ticketAccessSchema.safeParse(form.get('access'))
   if (!reference.success || !access.success) return { status: 'error', message: 'Référence ou clé de récupération incorrecte.' }
-  const { data, error } = await createAdminSupabase().from('ticket_orders').select('reference').eq('reference', reference.data).eq('access_hash', accessHash(access.data)).eq('edition_id', currentEdition.id).maybeSingle()
+  const db = createAdminSupabase()
+  const { data: attempts, error: limitError } = await db.rpc('consume_ticket_recovery_attempt', { p_reference: reference.data })
+  if (limitError || attempts === null || attempts > 5) return { status: 'error', message: 'Référence ou code incorrect, ou trop de tentatives. Réessayez plus tard.' }
+  const { data, error } = await db.from('ticket_orders').select('reference').eq('reference', reference.data).in('access_hash', ticketAccessHashes(access.data)).eq('edition_id', currentEdition.id).maybeSingle()
   if (error || !data) return { status: 'error', message: 'Référence ou clé de récupération incorrecte.' }
   await rememberOrder(reference.data, access.data)
   redirect('/tickets/order/' + reference.data)

@@ -3,15 +3,15 @@ import { RetrieveOrderForm } from '../../../components/tickets/checkout-form'
 import Link from 'next/link'
 import { cookies } from 'next/headers'
 import { createAdminSupabase } from '../../../lib/supabase/admin'
-import { accessHash } from '../../../lib/ticketing'
+import { ticketAccessHashes } from '../../../lib/ticketing'
 import { orderStatusLabels } from '../../../lib/ticketing-validation'
 export const dynamic = 'force-dynamic'
 export const metadata = { title: 'Retrouver ma commande', robots: { index: false, follow: false } }
 export default async function RetrievePage() {
-  const credentials = (await cookies()).getAll().filter(c => /^cm_order_([a-f0-9]{32}|[A-HJ-NP-Z2-9]{6})$/.test(c.name) && /^[a-f0-9]{64}$/.test(c.value)).slice(-10)
+  const credentials = (await cookies()).getAll().filter(c => /^cm_order_([a-f0-9]{32}|[A-HJ-NP-Z2-9]{6})$/.test(c.name) && /^([a-f0-9]{64}|\d{6})$/.test(c.value)).slice(-10)
   const db = createAdminSupabase()
   const orders = await Promise.all(credentials.map(async c => {
-    const { data } = await db.from('ticket_orders').select('reference,status,created_at').eq('reference', (c.name.length === 15 ? c.name.slice(9) : 'CM-' + c.name.slice(9))).eq('access_hash', accessHash(c.value)).maybeSingle()
+    const { data } = await db.from('ticket_orders').select('reference,status,created_at').eq('reference', (c.name.length === 15 ? c.name.slice(9) : 'CM-' + c.name.slice(9))).in('access_hash', ticketAccessHashes(c.value)).maybeSingle()
     return data
   }))
   return <main id="main-content" className="page-container"><PageHero eyebrow="BILLETTERIE" title="Retrouvez vos billets." description="Vos commandes récentes sur cet appareil apparaissent ci-dessous. Sur un autre appareil, utilisez votre référence et votre clé privée." />
