@@ -12,6 +12,7 @@ import { CTASection, EmptyState, Section } from '../components/shared/page'
 import { EventPhoto } from '../components/shared/event-photo'
 import { photoRatio } from '../lib/photo-ratio'
 import { Reveal } from '../components/shared/reveal'
+import { ExperienceCarousel } from '../components/shared/experience-carousel'
 import { SponsorStrip } from '../components/shared/sponsor-strip'
 import { ScrollPanImage } from '../components/shared/scroll-pan-image'
 import { CameroonFlag } from '../components/shared/cameroon-flag'
@@ -86,20 +87,19 @@ function App() {
             <div><span className="eyebrow">BIEN PLUS QUE 90 MINUTES</span><h2>TOUT UN<br /><span>RENDEZ-VOUS.</span></h2></div>
             <p>Le Classico Mboa rassemble football, culture et communauté à Douala. Les activités et informations officielles seront publiées au fur et à mesure.</p>
           </div>
-          <p className="photo-archive-note">Images des archives Classico Mboa. Les activités de la prochaine édition restent à confirmer.</p><div className="experience-grid">
-            {experienceCards.map((card, index) => {
+          <p className="photo-archive-note">Images des archives Classico Mboa. Les activités de la prochaine édition restent à confirmer.</p>
+          <ExperienceCarousel slides={experienceCards.map((card, index) => {
               const Icon = experienceIcons[card.icon]
               return (
                 <article className={`experience-card ${card.className}`} key={card.id}>
-                  {card.photo ? <EventPhoto photo={card.photo} contain sizes="(max-width: 720px) 100vw, (max-width: 1000px) 50vw, 25vw" /> : <div className="experience-graphic" aria-hidden="true"><Icon size={100} strokeWidth={1} /><span>CLASSICO MBOA</span></div>}
+                  {card.photo ? <EventPhoto photo={card.photo} contain sizes="100vw" /> : <div className="experience-graphic" aria-hidden="true"><Icon size={100} strokeWidth={1} /><span>CLASSICO MBOA</span></div>}
                   <div className="card-shade" />
                   <div className="card-label"><Icon size={16} /> {card.category}</div>
-                  <div className="experience-card-copy"><span>{card.eyebrow}</span><h3>{card.title.split('\n').map((line) => <span key={line}>{line}<br /></span>)}</h3><a href={card.href}>{card.action} <ArrowRight size={15} /></a></div>
+                  <div className="experience-card-copy"><span>{card.eyebrow}</span><h3>{card.title.split('\n').map((line) => <span key={line}>{line}<br /></span>)}</h3><Link className="experience-card-button" href={card.href}>{card.action} <ArrowRight size={15} /></Link></div>
                   <span className="card-index">{String(index + 1).padStart(2, '0')} / {String(experienceCards.length).padStart(2, '0')}</span>
                 </article>
               )
-            })}
-          </div>
+            })} />
         </section></Reveal>
 
         <Reveal><section className="rivalry section-pad" id="vote">
@@ -117,7 +117,7 @@ function App() {
               <small>Les campagnes officielles seront annoncées ici.</small>
             </div>
           </div>
-          <div className="rivalry-stamp">MBOA<br /><b>237</b></div>
+          <div className="rivalry-stamp">MBOA<br /><b className="cameroon-237"><span>2</span><span className="cameroon-237-center">3<i aria-hidden="true">★</i></span><span>7</span></b></div>
         </section></Reveal>
 
         <Reveal><section className="lineup section-pad" id="lineup">
@@ -169,4 +169,3 @@ const heroSlides = [
 ]
 
 export default App
-

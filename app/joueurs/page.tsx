@@ -8,7 +8,7 @@ export default async function PlayersPage() {
   const settings = playerRegistrationEnabled() ? await registrationSettings() : null
   const open = !!settings?.is_open
   return <main id="main-content" className="page-container">
-    <PageHero eyebrow="RÉSERVÉ AUX JOUEURS" title={open ? 'Inscrivez-vous au Classico.' : 'Inscriptions closes.'} description={open ? 'Choisissez votre club, Real Mboa ou Barça Mboa, puis réglez vos frais d’inscription par Mobile Money.' : 'Les inscriptions des joueurs ne sont pas ouvertes pour le moment. Contactez l’organisation.'} status={open ? 'Inscriptions ouvertes' : 'Inscriptions closes'} />
-    {open && settings && <PlayerForm fee={settings.fee_xaf} request={randomUUID()} access={randomBytes(32).toString('hex')} />}
+    <PageHero eyebrow="INSCRIPTION JOUEURS" title={open ? 'Rejoignez Barça Mboa ou Real Mboa.' : 'Inscriptions temporairement closes.'} description={open ? 'Inscrivez-vous ici. Après examen de votre demande, l’organisation vous contactera pour le paiement. Vos accès joueur vous seront communiqués après confirmation de votre contribution.' : 'Les inscriptions ne sont pas ouvertes pour le moment. Revenez bientôt ou contactez l’organisation.'} status={open ? 'Inscriptions ouvertes' : 'Inscriptions closes'} />
+    {open && settings && <PlayerForm fee={16000} request={randomUUID()} access={randomBytes(32).toString('hex')} />}
   </main>
 }

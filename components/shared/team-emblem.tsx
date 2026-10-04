@@ -7,8 +7,8 @@ const emblems = {
   'barca-mboa': { image: barcaEmblem, name: 'Barça Mboa' },
 }
 
-export function TeamEmblem({ team }: { team: string }) {
+export function TeamEmblem({ team, decorative = false }: { team: string; decorative?: boolean }) {
   const emblem = emblems[team as keyof typeof emblems]
   if (!emblem) return null
-  return <Image className="team-emblem" src={emblem.image} alt={`Emblème ${emblem.name}`} sizes="(max-width: 720px) 64px, 96px" />
+  return <Image className="team-emblem" src={emblem.image} alt={decorative ? '' : `Emblème ${emblem.name}`} aria-hidden={decorative || undefined} sizes="(max-width: 720px) 64px, 96px" />
 }

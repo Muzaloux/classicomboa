@@ -143,10 +143,10 @@ export const publicPages: PublicPageCopy[] = [
   {
     path: '/gallery',
     eyebrow: 'GALERIE',
-    title: 'En images.',
+    title: 'En images et en vidéos.',
     description:
-      'Retrouvez le football, les équipes et l’ambiance du Classico à travers une sélection de photos de nos archives.',
-    status: 'Les archives en images',
+      'Revivez le football, les équipes et l’ambiance du Classico à travers les photos et vidéos de nos archives.',
+    status: 'Photos & vidéos Classico Mboa',
   },
   {
     path: '/contact',

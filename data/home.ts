@@ -77,8 +77,8 @@ export const experienceCards: ExperienceCardData[] = [
     category: 'VILLAGE',
     eyebrow: 'CLASSICO VILLAGE',
     title: 'DÉCOUVRIR\nLE VILLAGE.',
-    action: 'Voir le Village',
-    href: '/village',
+    action: 'Réserver un stand d’exposition',
+    href: '/stands',
     icon: 'village',
   },
   {

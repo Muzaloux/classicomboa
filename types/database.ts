@@ -529,9 +529,9 @@ export type Database = {
         Relationships: []
       }
       player_registrations: {
-        Row: { access_hash: string; amount_xaf: number; club: string; confirmed_by: string | null; contact: string; created_at: string; edition_id: string; id: string; paid_at: string | null; player_name: string; player_phone: string; receipt_reference: string | null; reference: string; request_id: string; status: string }
-        Insert: { access_hash: string; amount_xaf: number; club: string; confirmed_by?: string | null; contact: string; created_at?: string; edition_id: string; id?: string; paid_at?: string | null; player_name: string; player_phone: string; receipt_reference?: string | null; reference?: string; request_id: string; status?: string }
-        Update: { access_hash?: string; amount_xaf?: number; club?: string; confirmed_by?: string | null; contact?: string; created_at?: string; edition_id?: string; id?: string; paid_at?: string | null; player_name?: string; player_phone?: string; receipt_reference?: string | null; reference?: string; request_id?: string; status?: string }
+        Row: { access_hash: string; amount_xaf: number; club: string; confirmed_by: string | null; contact: string; created_at: string; dorsal_number: number; edition_id: string; id: string; kit_name: string; paid_at: string | null; player_name: string; player_phone: string; receipt_reference: string | null; reference: string; request_id: string; status: string }
+        Insert: { access_hash: string; amount_xaf: number; club: string; confirmed_by?: string | null; contact: string; created_at?: string; dorsal_number?: number; edition_id: string; id?: string; kit_name?: string; paid_at?: string | null; player_name: string; player_phone: string; receipt_reference?: string | null; reference?: string; request_id: string; status?: string }
+        Update: { access_hash?: string; amount_xaf?: number; club?: string; confirmed_by?: string | null; contact?: string; created_at?: string; dorsal_number?: number; edition_id?: string; id?: string; kit_name?: string; paid_at?: string | null; player_name?: string; player_phone?: string; receipt_reference?: string | null; reference?: string; request_id?: string; status?: string }
         Relationships: []
       }
       vote_orders: {
@@ -995,7 +995,11 @@ export type Database = {
         Returns: string
       }
       reserve_player_registration: {
-        Args: { p_access_hash: string; p_club: string; p_contact: string; p_edition: string; p_name: string; p_phone: string; p_request: string }
+        Args: { p_access_hash: string; p_club: string; p_contact: string; p_dorsal_number: number; p_edition: string; p_kit_name: string; p_name: string; p_phone: string; p_request: string }
+        Returns: string
+      }
+      review_player_registration: {
+        Args: { p_decision: string; p_edition: string; p_reference: string }
         Returns: string
       }
       confirm_vote_payment: {

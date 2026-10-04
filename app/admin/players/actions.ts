@@ -16,13 +16,23 @@ export async function confirmPlayerPayment(_state: FormState, form: FormData): P
   revalidatePath('/admin/players'); revalidatePath('/joueurs', 'layout')
   return { status: 'success', message: 'Paiement confirmé. Le joueur est inscrit.' }
 }
+export async function approvePlayer(_state: FormState, form: FormData): Promise<FormState> {
+  const identity = await getRoleAccess(currentEdition.id, ['admin', 'manager'])
+  if (!identity) return { status: 'error', message: 'Accès refusé.' }
+  const parsed = z.object({ reference: playerReferenceSchema, decision: z.enum(['approved', 'rejected']) }).safeParse(Object.fromEntries(form))
+  if (!parsed.success) return { status: 'error', message: 'Demande invalide.' }
+  const { data, error } = await identity.supabase.rpc('review_player_registration', { p_edition: currentEdition.id, p_reference: parsed.data.reference, p_decision: parsed.data.decision })
+  if (error || data !== parsed.data.decision) return { status: 'error', message: 'Cette demande ne peut plus être modifiée.' }
+  revalidatePath('/admin/players'); revalidatePath('/joueurs/order/' + parsed.data.reference)
+  return { status: 'success', message: parsed.data.decision === 'approved' ? 'Demande approuvée. Le joueur peut maintenant effectuer sa contribution.' : 'Demande refusée.' }
+}
 export async function savePlayerSettings(_state: FormState, form: FormData): Promise<FormState> {
   const identity = await getRoleAccess(currentEdition.id, ['admin', 'manager'])
   if (!identity) return { status: 'error', message: 'Accès refusé.' }
-  const parsed = z.object({ fee: z.coerce.number().int().min(0).max(1_000_000), is_open: z.string().optional() }).safeParse(Object.fromEntries(form))
-  if (!parsed.success) return { status: 'error', message: 'Frais invalides.' }
-  const { error } = await identity.supabase.from('player_registration_settings').update({ fee_xaf: parsed.data.fee, is_open: parsed.data.is_open === 'on' }).eq('edition_id', currentEdition.id)
+  const parsed = z.object({ is_open: z.string().optional() }).safeParse(Object.fromEntries(form))
+  if (!parsed.success) return { status: 'error', message: 'Réglage invalide.' }
+  const { error } = await identity.supabase.from('player_registration_settings').update({ fee_xaf: 16000, is_open: parsed.data.is_open === 'on' }).eq('edition_id', currentEdition.id)
   if (error) return { status: 'error', message: 'Modification impossible.' }
   revalidatePath('/admin/players'); revalidatePath('/joueurs', 'layout')
-  return { status: 'success', message: 'Réglages enregistrés. Les frais ne s’appliquent qu’aux nouvelles inscriptions.' }
+  return { status: 'success', message: 'Ouverture des inscriptions mise à jour. Contribution fixe : 16 000 XAF.' }
 }
