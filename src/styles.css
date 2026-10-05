@@ -201,8 +201,8 @@ h1, h2, h3, p { margin-top: 0; }
 .poll-fill { display: block; height: 100%; width: 56%; background: var(--green); transition: width .3s; }
 .poll-fill.barca-fill { width: 42%; margin-left: auto; background: #e64b45; }
 .poll > small { color: #f2f0e8; font-size: 9px; }
-.rivalry-stamp { position: absolute; top: 76px; right: 7vw; color: rgba(181,227,72,.09); font: 700 74px/.72 var(--font-display), sans-serif; text-align: center; transform: rotate(9deg); }
-.rivalry-stamp b.cameroon-237 { display: inline-flex; align-items: center; position: relative; isolation: isolate; font-size: 54px; letter-spacing: .015em; opacity: .09; }
+.rivalry-stamp { position: absolute; top: 76px; right: 7vw; color: rgba(181,227,72,.4); font: 700 74px/.72 var(--font-display), sans-serif; text-align: center; transform: rotate(9deg); }
+.rivalry-stamp b.cameroon-237 { display: inline-flex; align-items: center; position: relative; isolation: isolate; font-size: 54px; letter-spacing: .015em; }
 .cameroon-237 > span { position: relative; }
 .cameroon-237 > span:first-child { color: #00a86b; }
 .cameroon-237 > span:last-child { color: #ffd43b; }

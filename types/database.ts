@@ -980,6 +980,17 @@ export type Database = {
         }
         Returns: string
       }
+      submit_stand_reservation: {
+        Args: {
+          p_edition: string
+          p_email: string
+          p_message: string
+          p_name: string
+          p_organization: string
+          p_phone: string
+        }
+        Returns: string
+      }
       ticket_catalog: {
         Args: { p_edition: string; p_test: boolean }
         Returns: {

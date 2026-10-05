@@ -24,6 +24,7 @@ import {
   MapPin,
   Music2,
   Play,
+  Store,
   Ticket,
   Trophy,
   Users,
@@ -36,7 +37,7 @@ const experienceIcons = {
   community: Users,
   chance: Ticket,
   vote: Users,
-  village: MapPin,
+  stands: Store,
   partners: Users,
 }
 

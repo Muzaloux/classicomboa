@@ -32,5 +32,14 @@ if (!rpcError?.message.includes('INQUIRIES_CLOSED')) {
   console.error('Server RPC check failed. Check the server key and migration permissions.')
   process.exit(1)
 }
-console.log('PASS: edition readable, anonymous inquiry access denied, privileged RPC configured. No records created.')
+const { error: standError } = await serverClient.rpc('submit_stand_reservation', {
+  p_edition: '__connection_check__', p_name: 'Connection check',
+  p_email: 'connection-check@example.invalid', p_phone: '', p_organization: 'Connection check',
+  p_message: 'Read-only setup check. This stand reservation must never be stored.',
+})
+if (!standError?.message.includes('INQUIRIES_CLOSED')) {
+  console.error('Stand reservation RPC check failed. Apply the latest linked migration and check server credentials.')
+  process.exit(1)
+}
+console.log('PASS: edition readable, anonymous inquiry access denied, inquiry and stand reservation RPCs configured. No records created.')
 console.log('Next: test email signup, confirmation, profile saving and the organizer inbox in your browser.')

@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
 const origin = process.env.VERIFY_ORIGIN || 'http://localhost:3100'
-const paths = ['/', '/classico', '/edition/8', '/teams', '/players', '/programme', '/tickets', '/vote', '/tombola', '/village', '/sponsors', '/news', '/gallery', '/contact', '/partner', '/stands', '/legal', '/privacy', '/auth/sign-in']
+const paths = ['/', '/classico', '/edition/8', '/teams', '/players', '/programme', '/tickets', '/vote', '/tombola', '/sponsors', '/news', '/gallery', '/contact', '/partner', '/stands', '/legal', '/privacy', '/auth/sign-in']
 for (const path of paths) {
   const response = await fetch(origin + path)
   assert.equal(response.status, 200, path)
@@ -12,6 +12,9 @@ for (const path of paths) {
   assert.match(html, /<title>[^<]+<\/title>/, path + ': title')
   assert.equal((html.match(/<main[ >]/g) || []).length, 1, path + ': single main')
 }
+const oldStandsPath = await fetch(origin + '/village', { redirect: 'manual' })
+assert.equal(oldStandsPath.status, 308, 'old stands path permanently redirects')
+assert.equal(oldStandsPath.headers.get('location'), '/stands')
 for (const path of ['/edition/999', '/unknown-page', '/account', '/fifa-cup', '/fifa-cup/rules', '/fifa-cup/bracket', '/fifa-cup/live', '/fifa-cup/players', '/fifa-cup/display']) {
   const response = await fetch(origin + path)
   assert.equal(response.status, 404, path)

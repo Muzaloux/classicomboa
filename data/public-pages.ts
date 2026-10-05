@@ -115,15 +115,6 @@ export const publicPages: PublicPageCopy[] = [
     status: 'Participation non ouverte',
   },
   {
-    path: '/village',
-    eyebrow: 'CLASSICO VILLAGE',
-    title: 'Le village de l’événement.',
-    description:
-      'Découvrez les exposants et activités du Village lorsque les candidatures et sélections seront finalisées.',
-    status: 'Ouverture à annoncer',
-    links: [{ label: 'Informations exposants', href: '/stands' }],
-  },
-  {
     path: '/sponsors',
     eyebrow: 'PARTENAIRES',
     title: 'Ils accompagnent le Classico.',
@@ -157,7 +148,7 @@ export const publicPages: PublicPageCopy[] = [
     status: 'E-mail & WhatsApp',
     links: [
       { label: 'Partenariats', href: '/partner' },
-      { label: 'Exposer au Village', href: '/stands' },
+      { label: 'Réserver un stand de vente', href: '/stands' },
     ],
   },
   {
@@ -170,11 +161,12 @@ export const publicPages: PublicPageCopy[] = [
   },
   {
     path: '/stands',
-    eyebrow: 'EXPOSANTS',
-    title: 'Devenez exposant au Village.',
+    eyebrow: 'STANDS DE VENTE',
+    title: 'Réservez votre stand de vente.',
     description:
-      'Les candidatures, catégories et offres de stands seront annoncées lorsque les modalités seront définies.',
-    status: 'Candidatures non ouvertes',
+      'Réservez votre stand au tarif de 10 000 XAF. L’organisation propose 10 places et confirme chaque demande avant paiement.',
+    status: 'Réservation sur demande',
+    facts: ['10 000 XAF par stand', '10 stands disponibles'],
     sections: [
       {
         title: 'Candidatures à venir',

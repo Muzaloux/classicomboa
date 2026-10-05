@@ -11,7 +11,7 @@ export interface ExperienceCardData {
   title: string
   action: string
   href: string
-  icon: 'football' | 'culture' | 'community' | 'chance' | 'vote' | 'village' | 'partners'
+  icon: 'football' | 'culture' | 'community' | 'chance' | 'vote' | 'stands' | 'partners'
 }
 
 export const experienceCards: ExperienceCardData[] = [
@@ -71,15 +71,15 @@ export const experienceCards: ExperienceCardData[] = [
     icon: 'vote',
   },
   {
-    id: 'village',
-    className: 'experience-village',
+    id: 'stands',
+    className: 'experience-stands',
 
-    category: 'VILLAGE',
-    eyebrow: 'CLASSICO VILLAGE',
-    title: 'DÉCOUVRIR\nLE VILLAGE.',
-    action: 'Réserver un stand d’exposition',
+    category: 'RÉSERVATION DES STANDS',
+    eyebrow: '10 STANDS · 10 000 XAF / STAND',
+    title: 'RÉSERVER\nUN STAND.',
+    action: 'Réserver un stand · 10 000 XAF',
     href: '/stands',
-    icon: 'village',
+    icon: 'stands',
   },
   {
     id: 'community',

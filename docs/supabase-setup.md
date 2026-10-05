@@ -1,6 +1,6 @@
 # Connect the foundation to Supabase
 
-Login is reserved for provisioned organizers. Public signup and `/account` are removed; attendees will use guest transaction flows. Contact/partner/exhibitor inquiries and the edition-scoped organizer inbox are connected. Ticket sales and payments remain closed.
+Login is reserved for provisioned organizers. Public signup and `/account` are removed; attendees will use guest transaction flows. Contact/partner inquiries and the edition-scoped organizer inbox are connected. Stand reservation requests use the same inbox and are capped at 10 open requests per edition. Each stand costs 10,000 XAF; requests require organizer confirmation and payment is not collected by the form. Ticket sales and payments remain closed.
 
 ## Current connected project
 
@@ -41,6 +41,8 @@ Run it once on a fresh project. It creates tables, indexes, row-level security, 
 
 The alternative for a team using the Supabase CLI is to initialize/link the project and apply the versioned migration with `supabase db push`; check the target project before pushing.
 
+For existing projects, apply new migrations with `supabase db push --linked --skip-vault`. Migration `202610050001_stand_reservations.sql` adds an atomic reservation request that checks the 10 open stand limit under a database lock. Migration `202610050002_enforce_stand_capacity.sql` enforces that limit for every database insertion path. Requests in `new` or `in_review` status hold a place. Close a declined request in `/admin` to release that place. The inbox keeps the request details and the displayed price.
+
 ## 4. Configure email authentication
 
 In Supabase Auth:
@@ -74,7 +76,7 @@ node scripts/provision-organizer.mjs omzfphciqhiqavpsxlxg AUTHORIZED_EMAIL
 
 The provisioner creates an unconfirmed account if needed and grants the Edition 8 admin role. It does not send mail, assign a password, verify email ownership or override a suspended/disabled profile. Only a trusted operator should grant staff roles. Users cannot assign roles through the website or edit their own account status. `admin`, `manager`, and `support` can access this increment's inbox. `checkin` and `editor` do not receive inquiry access. Roles apply to a specific edition.
 
-Visit `/admin` to view and filter inquiries. Submit a real test inquiry from `/contact`, `/partner`, or `/stands`; check its exact contents in the inbox, change its status, and inspect `audit_events`. The confirmation means the request was saved, not that an email was sent. No notification email integration exists yet.
+Visit `/admin` to view and filter inquiries. Submit a real test inquiry from `/contact`, `/partner`, or `/stands`; check its exact contents in the inbox, change its status, and inspect `audit_events`. For stand requests, `new` and `in_review` statuses each hold one of the 10 places; close declined requests to make the place available again. The confirmation means the request was saved, not that an email was sent. No notification email integration exists yet.
 
 ## Verification and limitations
 
@@ -86,7 +88,7 @@ The Supabase security advisor's two authenticated SECURITY DEFINER notices are e
 
 The inquiry quota allows three accepted submissions per email address per hour. The honeypot and quota are basic protections, not a complete public-launch abuse defense; rotating email addresses can bypass that quota. Add a verified CAPTCHA and deployment-level request limits before a broad launch. Establish retention/deletion rules and confirm official privacy/contact details before collecting public inquiries at scale.
 
-Edition 8 currently exists in both the migration and the public site's TypeScript data. Keep them aligned until the edition-management phase moves the public site to database-backed publishing. No payment, ticket, or reservation is created by these forms.
+Edition 8 currently exists in both the migration and the public site's TypeScript data. Keep them aligned until the edition-management phase moves the public site to database-backed publishing. Stand requests are not confirmed reservations and the form does not collect payment.
 
 References: [Supabase server-side client setup](https://supabase.com/docs/guides/auth/server-side/creating-a-client), [email code authentication](https://supabase.com/docs/guides/auth/auth-email-passwordless).
 

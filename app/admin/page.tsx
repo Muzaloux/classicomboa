@@ -11,7 +11,7 @@ import { signOut } from '../auth/actions'
 export const metadata: Metadata = { title: 'Organisation — demandes', robots: { index: false, follow: false } }
 export const dynamic = 'force-dynamic'
 const statusLabels: Record<string, string> = { new: 'Nouveau', in_review: 'En cours', closed: 'Clôturé' }
-const kindLabels: Record<string, string> = { contact: 'Contact', partner: 'Partenariat', exhibitor: 'Exposant' }
+const kindLabels: Record<string, string> = { contact: 'Contact', partner: 'Partenariat', exhibitor: 'Réservation de stand' }
 export default async function AdminPage({ searchParams }: { searchParams: Promise<{ page?: string; status?: string }> }) {
   const identity = await getStaffAccess(currentEdition.id)
   if (!identity && await getRoleAccess(currentEdition.id, ['checkin'])) redirect('/admin/check-in')
@@ -23,7 +23,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
   if (status) query = query.eq('status', status)
   const { data, error, count } = await query.order('created_at', { ascending: false }).order('id').range((page - 1) * 20, page * 20 - 1)
   return <main id="main-content" className="page-container">
-    <PageHero eyebrow={'ORGANISATION · ÉDITION ' + currentEdition.editionNumber} title="Les demandes." description="Contacts, propositions de partenariat et demandes d’exposition. Les changements de statut sont enregistrés dans le journal d’activité." />
+    <PageHero eyebrow={'ORGANISATION · ÉDITION ' + currentEdition.editionNumber} title="Les demandes." description="Contacts, propositions de partenariat et réservations de stands. Les demandes de stand ouvertes occupent une place sur les 10 disponibles ; clôturez les demandes refusées pour la libérer. Les changements de statut sont enregistrés dans le journal d’activité." />
     <AdminNav /><div className="account-actions"><span>{count ?? 0} demande(s)</span><Link className="button button-outline" href="/admin/security">Mon mot de passe</Link><form action={signOut}><button className="button button-outline">Me déconnecter</button></form></div>
     <nav className="form-tabs" aria-label="Filtrer les demandes">{[['', 'Toutes'], ...Object.entries(statusLabels)].map(([value, label]) => <Link key={value} aria-current={status === value ? 'page' : undefined} href={'/admin?status=' + value}>{label}</Link>)}</nav>
     {error ? <p className="form-feedback error" role="alert">Impossible de charger les demandes. Réessayez plus tard.</p> : !data?.length ? <EmptyState title="Aucune demande" description="Les demandes correspondant à ce filtre apparaîtront ici." /> : <div className="inquiry-list">{data.map((item) => <article className="inquiry-card" key={item.id}>

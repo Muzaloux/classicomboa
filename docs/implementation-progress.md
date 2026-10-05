@@ -34,7 +34,7 @@ Supabase clients, account flows, protected inquiry storage and versioned Postgre
 | 4 — Voting | Done | Paid votes (100 XAF) via manual Mobile Money with organizer confirmation, `/vote`, `/vote/results`, `/admin/votes`; migration `202609300009_voting.sql` must be applied. Fan-award categories without candidates (supporter, look, etc.) and duplicate-fraud review remain. |
 | 5 — Tombola | Done | Paid entries (500 XAF) via manual Mobile Money, numbered entries on confirmation, server-side final draw (one win per buyer), masked public winners, `/tombola`, `/admin/tombola`; migration `202609300010_tombola.sql`. Physical on-stage draw display and prize fulfilment tracking remain. |
 | 6 — FIFA Cup | Removed from scope | Removed at the organizer’s request: public pages, navigation, homepage card, programme, category and proposed price. |
-| 7 — Village | Not started | Applications, review, reservation, payment, allocation and vendor directory. Public information page exists. |
+| 7 — Stands de vente | Reservation requests implemented | 10 stands at 10,000 XAF each, organizer inbox, atomic capacity limit; payment and confirmed allocation remain manual. |
 | 8 — Sponsorship | Not started | Proposals, agreements, deliverables and commercial tracking. Public information page exists. |
 | 9 — Organizer admin | Started | Edition-scoped inquiry inbox, filters, pagination and audited status changes verified on hosted Supabase. Permanent organizer assignment and other operational modules remain. |
 | 10 — Authentication | Started | Password signup/sign-in, email code access, profiles, session refresh and edition staff authorization implemented. Hosted password/code login verified. Real email delivery, account security controls and the complete role matrix remain. |
@@ -50,7 +50,7 @@ Supabase clients, account flows, protected inquiry storage and versioned Postgre
 - Server-rendered homepage preserving the existing design; dedicated hydration-safe countdown to the event calendar day in Douala, with a nonnegative elapsed-date state.
 - Reusable page hero, section, empty-state, information-card and call-to-action components.
 - Data-backed programme with category filtering and player directory with team filtering.
-- Dedicated public content for tickets, voting, tombola, FIFA Cup, Village, sponsors, partnerships, stands, news, gallery and contact.
+- Dedicated public content for tickets, voting, tombola, FIFA Cup, sponsors, partnerships, stands, news, gallery and contact.
 - Proposed roadmap prices explicitly labeled unconfirmed; no checkout, fake success or invented participants.
 - Edition registry and dynamic /edition/[slug] route; unknown/private editions return 404.
 - Page metadata, Event JSON-LD with date-only startDate, share/copy fallback and user-triggered WhatsApp sharing.
@@ -81,7 +81,7 @@ Official community URL, contact details, rosters, artists, sponsors, prizes, pro
 
 Reviewed 32 source files under `Event Images/`; selected 14 distinct photos (excluding the duplicate IMG_6667 copy). Original photos remain untouched. Optimized WebP copies total 1,976,432 bytes versus 3,785,455 bytes for the selected JPEG originals, a 48% reduction before responsive delivery.
 
-Photo assignments: match action for the hero, portrait action for the rivalry, both teams for the history section, audience/animation photos for relevant cards and public pages. Gaming, tombola and Village experience cards use branded graphics because the supplied set does not document those activities. No sponsor logos, prizes or player names were inferred.
+Photo assignments: match action for the hero, portrait action for the rivalry, both teams for the history section, audience/animation photos for relevant cards and public pages. Gaming and tombola experience cards use branded graphics because the supplied set does not document those activities. No sponsor logos, prizes or player names were inferred.
 
 The gallery supports Football, Équipes and Ambiance filters plus a native-dialog lightbox with previous/next, arrow keys and Escape. Archive photos are not assigned to an unconfirmed edition or date. `data/event-photos.ts` records original source filenames and captions; `scripts/prepare-event-images.mjs` regenerates the optimized catalog using Sharp already present in the installed dependency tree.
 

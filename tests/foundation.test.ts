@@ -86,20 +86,48 @@ test('Submission persists data and enforces the hourly quota atomically', async 
   assert.equal((await db.query('select * from public.inquiries')).rows.length, 3)
 })
 
+test('Stand reservation requests hold at most 10 places until an organizer closes one', async () => {
+  await db.exec('set role service_role')
+  try {
+    for (let slot = 1; slot <= 10; slot++) {
+      await db.query(
+        "select public.submit_stand_reservation('edition-8',$1,$2,'','Vendor','Interested in renting a stand at the event.')",
+        [`Vendor ${slot}`, `vendor${slot}@example.com`],
+      )
+    }
+    await assert.rejects(db.query(
+      "select public.submit_stand_reservation('edition-8','Vendor 11','vendor11@example.com','','Vendor','Interested in renting a stand at the event.')",
+    ), /STANDS_FULL/)
+    await assert.rejects(db.query(
+      "select public.submit_inquiry('edition-8','exhibitor','Vendor 11','vendor11@example.com','','Vendor','Interested in renting a stand at the event.')",
+    ), /STANDS_FULL/)
+  } finally { await db.exec('reset role') }
+
+  const held = await db.query<{ id: string }>("select id from public.inquiries where kind = 'exhibitor' and status = 'new' order by created_at, id limit 1")
+  await asUser(staff, async () => {
+    await db.query("select public.set_inquiry_status($1,'edition-8','closed')", [held.rows[0].id])
+  })
+
+  await db.exec('set role service_role')
+  try {
+    await db.query("select public.submit_stand_reservation('edition-8','Vendor 11','vendor11@example.com','','Vendor','Interested in renting a stand at the event.')")
+  } finally { await db.exec('reset role') }
+})
+
 test('Attendees and staff from another edition cannot see or modify inquiries', async () => {
   for (const id of [attendee, otherStaff]) await asUser(id, async () => {
-    assert.equal((await db.query('select * from public.inquiries')).rows.length, 0)
+    assert.equal((await db.query("select * from public.inquiries where kind = 'contact'")).rows.length, 0)
     await assert.rejects(db.query("select public.set_inquiry_status($1,'edition-8','closed')", [inquiryId]), /FORBIDDEN/)
   })
 })
 
 test('Authorized status changes are audited and retries do not duplicate audit entries', async () => {
   await asUser(staff, async () => {
-    assert.equal((await db.query('select * from public.inquiries')).rows.length, 3)
+    assert.equal((await db.query("select * from public.inquiries where kind = 'contact'")).rows.length, 3)
     await assert.rejects(db.query("update public.inquiries set status = 'closed'"), /permission denied/)
     await db.query("select public.set_inquiry_status($1,'edition-8','in_review')", [inquiryId])
     await db.query("select public.set_inquiry_status($1,'edition-8','in_review')", [inquiryId])
-    const audit = await db.query('select actor_id,old_status,new_status from public.audit_events')
+    const audit = await db.query('select actor_id,old_status,new_status from public.audit_events where entity_id = $1', [inquiryId])
     assert.deepEqual(audit.rows, [{ actor_id: staff, old_status: 'new', new_status: 'in_review' }])
     await assert.rejects(db.query("select public.set_inquiry_status($1,'edition-8','invalid')", [inquiryId]), /INVALID_STATUS/)
   })
