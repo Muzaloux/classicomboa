@@ -25,7 +25,7 @@ const pages: Record<string, { title: string; subtitle: string; photo: string }> 
   news: { title: 'LES NOUVELLES DU CLASSICO.', subtitle: 'Annonces et contenus officiels.', photo: 'images/social/team-6687.jpg' },
   gallery: { title: 'EN IMAGES ET EN VIDÉOS.', subtitle: 'Revivez l’ambiance du Classico Mboa.', photo: 'images/branding/og/crowd.jpg' },
   'nos-pages': { title: 'NOS PAGES', subtitle: 'Suivez le Classico Mboa et ses partenaires.', photo: 'images/branding/og/supporters.jpg' },
-  quiz: { title: 'LE QUIZ DU CLASSICO.', subtitle: '5 questions. 100 points. À toi de jouer.', photo: 'images/branding/og/match-action.jpg' },
+  quiz: { title: 'LE QUIZ DU CLASSICO.', subtitle: '5 questions chaque soir à partir de 20H. À toi de jouer.', photo: 'images/branding/og/match-action.jpg' },
   contact: { title: 'RESTONS EN CONTACT.', subtitle: 'Écrivez à l’organisation du Classico Mboa.', photo: 'images/branding/og/crowd.jpg' },
   legal: { title: 'INFORMATIONS LÉGALES.', subtitle: 'Les informations officielles du Classico Mboa.', photo: 'images/branding/og/hero.jpg' },
   privacy: { title: 'VOTRE VIE PRIVÉE.', subtitle: 'Les informations de confidentialité du site.', photo: 'images/branding/og/hero.jpg' },

@@ -5,7 +5,7 @@ import { socialOpenGraphFor, socialTwitterFor } from '../../lib/social-metadata'
 
 export const dynamic = 'force-dynamic'
 
-const description = 'Cinq questions chaque soir à 20H00. Teste tes connaissances du Clásico et partage ton score.'
+const description = '5 questions chaque soir à partir de 20H. Teste tes connaissances du Clásico et partage ton score.'
 export const metadata: Metadata = {
   title: 'Quiz quotidien',
   description,

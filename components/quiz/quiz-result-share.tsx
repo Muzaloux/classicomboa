@@ -5,7 +5,7 @@ import { Check, Copy, Facebook, MessageCircle, Share2 } from 'lucide-react'
 
 export function QuizResultShare({ name, score }: { name: string; score: number }) {
   const [copied, setCopied] = useState(false)
-  const message = `${name} a fait ${score}/100 au Quiz Classico Mboa. Tu peux faire mieux ?`
+  const message = `${name} a fait ${score}/100 au Quiz Classico Mboa. 5 questions chaque soir à partir de 20H : tu peux faire mieux ?`
   const quizUrl = 'https://classicomboa.com/quiz'
   const encoded = encodeURIComponent(`${message} ${quizUrl}`)
   async function share() {
