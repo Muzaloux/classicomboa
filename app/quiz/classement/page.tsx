@@ -48,8 +48,9 @@ export default async function QuizLeaderboardPage() {
     .sort((a, b) => a.started_at.localeCompare(b.started_at))
   const participantCount = attempts.length
 
+  let eligibleRank = 0
   return <main id="main-content" className="page-container quiz-leaderboard">
-    <PageHero eyebrow={`QUIZ CLASSICO MBOA · ${state.localDate}`} title="Le classement." description="Tous les participants sont affichés. Le rang suit les points, puis le temps de réponse. Les deux premiers éligibles remportent un cadeau : seules les parties terminées en moins de 4 minutes sont admissibles." />
+    <PageHero eyebrow={`QUIZ CLASSICO MBOA · ${state.localDate}`} title="Le classement." description="Tous les participants et leurs résultats sont affichés. Les rangs officiels comptent uniquement les parties terminées en moins de 4 minutes : points d’abord, puis temps de réponse. Les résultats hors délai restent visibles, sans rang admissible aux cadeaux." />
     <p className="quiz-participant-count"><strong>{participantCount}</strong> participant{participantCount === 1 ? '' : 's'} aujourd’hui</p>
     {!participantCount ? <p className="quiz-leaderboard-empty">Aucun participant pour le classement du jour.</p> : <>
       <ol aria-label="Classement de tous les participants ayant un score">
@@ -57,7 +58,7 @@ export default async function QuizLeaderboardPage() {
           const eligible = entry.status === 'completed' && entry.completion_seconds !== null && entry.completion_seconds < QUIZ_DURATION_SECONDS
           const stateLabel = eligible ? 'Éligible aux cadeaux' : entry.status === 'disqualified' ? 'Éliminé · délai dépassé' : entry.status === 'expired' ? 'Partie interrompue' : 'Non admissible'
           return <li key={`${entry.started_at}-${index}`} className={eligible ? 'quiz-result-eligible' : 'quiz-result-ineligible'}>
-            <span className="quiz-rank">{String(index + 1).padStart(2, '0')}</span>
+            <span className="quiz-rank">{eligible ? String(++eligibleRank).padStart(2, '0') : '—'}</span>
             <strong>{firstName(entry.participant_name)}</strong>
             <span className="quiz-result-score">{entry.score} pts</span>
             <small>{entry.completion_seconds === null ? '—' : `${entry.completion_seconds} sec`}</small>
