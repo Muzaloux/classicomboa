@@ -140,6 +140,14 @@ export const publicPages: PublicPageCopy[] = [
     status: 'Photos & vidéos Classico Mboa',
   },
   {
+    path: '/nos-pages',
+    eyebrow: 'SUIVEZ LE CLASSICO',
+    title: 'Nos Pages.',
+    description:
+      'Retrouvez les réseaux officiels du Classico Mboa et rejoignez notre communauté.',
+    status: 'Instagram · TikTok · WhatsApp',
+  },
+  {
     path: '/contact',
     eyebrow: 'CONTACT',
     title: 'Restons en contact.',

@@ -148,7 +148,7 @@ function App() {
         <Reveal><section className="section-pad gallery-preview" aria-labelledby="gallery-preview-title">
           <div className="section-heading"><div><span className="eyebrow">LES ARCHIVES EN IMAGES</span><h2 id="gallery-preview-title">LE MBOA<br /><span>SE VIT ENSEMBLE.</span></h2></div><p>Sur le terrain, dans les tribunes et autour du trophée : découvrez d’autres moments du Classico.</p></div>
           <div className="event-gallery">{['archive-6672', 'archive-6681', 'archive-6683'].map((id) => { const photo = getAdditionalEventPhoto(id); return <figure key={id}><Link href="/gallery" className="gallery-photo" style={photoRatio(photo)} aria-label={`Découvrir la galerie : ${photo.caption}`}><EventPhoto photo={photo} sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 33vw" /><span className="gallery-expand" aria-hidden="true">↗</span></Link><figcaption><span className="eyebrow">{photo.category}</span><h3>{photo.caption}</h3></figcaption></figure> })}</div>
-          <Link className="button button-primary" href="/gallery">Explorer toute la galerie <ArrowRight size={16} /></Link>
+          <Link className="button button-primary" href="/nos-pages">Suivre nos pages <ArrowRight size={16} /></Link>
         </section></Reveal>
         <div className="page-container home-updates">
           <Section title="Les nouvelles du Classico"><EmptyState title="Les annonces officielles arrivent" description="Suivez les prochaines publications sur les équipes, le programme et les expériences." /><Link className="text-link" href="/news">Toutes les actualités →</Link></Section>

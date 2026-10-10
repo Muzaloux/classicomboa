@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
 const origin = process.env.VERIFY_ORIGIN || 'http://localhost:3100'
-const paths = ['/', '/classico', '/edition/8', '/teams', '/players', '/programme', '/tickets', '/vote', '/tombola', '/sponsors', '/news', '/gallery', '/contact', '/partner', '/stands', '/legal', '/privacy', '/auth/sign-in']
+const paths = ['/', '/classico', '/edition/8', '/teams', '/players', '/programme', '/tickets', '/vote', '/tombola', '/sponsors', '/news', '/gallery', '/nos-pages', '/contact', '/partner', '/stands', '/legal', '/privacy', '/auth/sign-in']
 for (const path of paths) {
   const response = await fetch(origin + path)
   assert.equal(response.status, 200, path)

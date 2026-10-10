@@ -4,15 +4,15 @@ import Link from 'next/link'
 import { BrandLogo } from '../shared/brand-logo'
 import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
-import { CalendarDays, Handshake, House, Images, Menu, Ticket, Trophy, Users, Vote, X } from 'lucide-react'
+import { CalendarDays, Handshake, House, Menu, Share2, Ticket, Trophy, Users, Vote, X } from 'lucide-react'
 
-const links = [['/classico', 'Le Classico'], ['/teams', 'Équipes'], ['/joueurs', 'Jouer'], ['/programme', 'Programme'], ['/gallery', 'Galerie'], ['/vote', 'Vote'], ['/sponsors', 'Partenaires']] as const
-const linkIcons = [Trophy, Users, Users, CalendarDays, Images, Vote, Handshake]
+const links = [['/classico', 'Le Classico'], ['/teams', 'Équipes'], ['/joueurs', 'Jouer'], ['/programme', 'Programme'], ['/nos-pages', 'Nos Pages'], ['/vote', 'Vote'], ['/sponsors', 'Partenaires']] as const
+const linkIcons = [Trophy, Users, Users, CalendarDays, Share2, Vote, Handshake]
 const mobileLinks = [
   { href: '/', title: 'Accueil', icon: House },
   { href: '/tickets', title: 'Billets', icon: Ticket },
   { href: '/programme', title: 'Programme', icon: CalendarDays },
-  { href: '/gallery', title: 'Galerie', icon: Images },
+  { href: '/nos-pages', title: 'Nos Pages', icon: Share2 },
   { href: '/vote', title: 'Vote', icon: Vote },
 ] as const
 
