@@ -8,12 +8,28 @@ import type { QuizAvailability, QuizChannel } from '../../lib/quiz'
 type Option = { id: string; label: string }
 type Question = { id: string; position: number; question: string; category: string; difficulty: string; selectedOptionId: string | null; options: Option[] }
 type Props = { initialAvailability: QuizAvailability; initialChannels: QuizChannel[] }
-type Stage = 'locked' | 'intro' | 'follow' | 'details' | 'quiz' | 'confirm' | 'expired'
+type Stage = 'restoring' | 'locked' | 'intro' | 'follow' | 'details' | 'quiz' | 'confirm' | 'expired'
+const attemptStorageKey = 'classico-quiz-attempt'
+const positionStorageKey = 'classico-quiz-position'
+
+function readSavedAttempt() {
+  const reference = window.localStorage.getItem(attemptStorageKey) ?? window.sessionStorage.getItem(attemptStorageKey)
+  if (reference) window.localStorage.setItem(attemptStorageKey, reference)
+  window.sessionStorage.removeItem(attemptStorageKey)
+  return reference
+}
+
+function clearSavedAttempt() {
+  window.localStorage.removeItem(attemptStorageKey)
+  window.localStorage.removeItem(positionStorageKey)
+  window.sessionStorage.removeItem(attemptStorageKey)
+  window.sessionStorage.removeItem(positionStorageKey)
+}
 
 export function QuizClient({ initialAvailability, initialChannels }: Props) {
   const [availability, setAvailability] = useState(initialAvailability)
   const [channels, setChannels] = useState(initialChannels)
-  const [stage, setStage] = useState<Stage>(initialAvailability.status === 'open' ? 'intro' : 'locked')
+  const [stage, setStage] = useState<Stage>(initialAvailability.status === 'open' ? 'restoring' : 'locked')
   const [checkedChannels, setCheckedChannels] = useState<string[]>([])
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
@@ -43,7 +59,7 @@ export function QuizClient({ initialAvailability, initialChannels }: Props) {
   const expireAttempt = useCallback(() => {
     if (expiryHandled.current || !reference) return
     expiryHandled.current = true
-    sessionStorage.removeItem('classico-quiz-attempt')
+    clearSavedAttempt()
     setStage('expired')
     window.location.assign(`/quiz/result/${reference}`)
   }, [reference])
@@ -59,7 +75,7 @@ export function QuizClient({ initialAvailability, initialChannels }: Props) {
       if (data.availability.status === 'locked') {
         setStage('locked')
         setReference('')
-        sessionStorage.removeItem('classico-quiz-attempt')
+        clearSavedAttempt()
       } else {
         setStage((current) => current === 'locked' ? 'intro' : current)
       }
@@ -83,25 +99,56 @@ export function QuizClient({ initialAvailability, initialChannels }: Props) {
   }, [attemptSeconds, stage, expiresAt, expireAttempt])
 
   useEffect(() => {
+    if (reference && (stage === 'quiz' || stage === 'confirm')) {
+      window.localStorage.setItem(positionStorageKey, String(position))
+    }
+  }, [position, reference, stage])
+
+  useEffect(() => {
     if (remaining === 0) void refreshState()
   }, [remaining, refreshState])
 
   useEffect(() => {
-    const savedReference = sessionStorage.getItem('classico-quiz-attempt')
-    if (!savedReference || availability.status !== 'open') return
+    const savedReference = readSavedAttempt()
+    if (!savedReference) {
+      setStage(initialAvailability.status === 'open' ? 'intro' : 'locked')
+      return
+    }
+    setStage('restoring')
     let active = true
     void fetch(`/api/quiz/attempt/${savedReference}`, { cache: 'no-store' }).then(async (response) => {
-      if (!response.ok) return
+      if (!response.ok) {
+        if (response.status === 404) {
+          clearSavedAttempt()
+          if (active) setStage(initialAvailability.status === 'open' ? 'intro' : 'locked')
+          return
+        }
+        throw new Error('Impossible de retrouver ta partie pour le moment.')
+      }
       const data = await response.json() as { status?: string; name?: string; questions?: Question[]; expiresAt?: string }
-      if (!active || (data.status !== 'started' && data.status !== 'resumed') || !data.questions?.length) return
+      if (!active) return
+      if (data.status === 'completed' || data.status === 'expired') {
+        clearSavedAttempt()
+        window.location.assign(`/quiz/result/${savedReference}`)
+        return
+      }
+      if ((data.status !== 'started' && data.status !== 'resumed') || !data.questions?.length) {
+        clearSavedAttempt()
+        setStage(initialAvailability.status === 'open' ? 'intro' : 'locked')
+        return
+      }
       setReference(savedReference)
       setExpiresAt(data.expiresAt ?? null)
       setName(data.name ?? '')
       setQuestions(data.questions)
+      const savedPosition = Number.parseInt(window.localStorage.getItem(positionStorageKey) ?? '1', 10)
+      setPosition(Number.isInteger(savedPosition) ? Math.min(5, Math.max(1, savedPosition)) : 1)
       setStage('quiz')
-    }).catch(() => undefined)
+    }).catch((cause: unknown) => {
+      if (active) setError(cause instanceof Error ? cause.message : 'Impossible de retrouver ta partie pour le moment.')
+    })
     return () => { active = false }
-  }, [availability.status])
+  }, [])
 
   async function beginAttempt(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -115,7 +162,7 @@ export function QuizClient({ initialAvailability, initialChannels }: Props) {
       const data = await response.json() as { error?: string; status?: string; reference?: string; participantName?: string; questions?: Question[]; expiresAt?: string }
       if (!response.ok) { setError(data.error ?? 'Impossible de démarrer le quiz.'); await refreshState(); return }
       if (data.status === 'completed' && data.reference) {
-        sessionStorage.removeItem('classico-quiz-attempt')
+        clearSavedAttempt()
         window.location.assign(`/quiz/result/${data.reference}`)
         return
       }
@@ -123,10 +170,11 @@ export function QuizClient({ initialAvailability, initialChannels }: Props) {
       setReference(data.reference)
       setExpiresAt(data.expiresAt ?? null)
       expiryHandled.current = false
-      sessionStorage.setItem('classico-quiz-attempt', data.reference)
+      window.localStorage.setItem(attemptStorageKey, data.reference)
       setName(data.participantName ?? name)
       setQuestions(data.questions)
       setPosition(1)
+      window.localStorage.setItem(positionStorageKey, '1')
       setStage('quiz')
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : 'Le service du quiz est momentanément indisponible.')
@@ -158,7 +206,7 @@ export function QuizClient({ initialAvailability, initialChannels }: Props) {
       const data = await response.json() as { error?: string; status?: string; reference?: string }
       if (data.status === 'expired') { expireAttempt(); return }
       if (!response.ok) { setError(data.error ?? 'Impossible d’envoyer tes réponses.'); return }
-      sessionStorage.removeItem('classico-quiz-attempt')
+      clearSavedAttempt()
       window.location.assign(`/quiz/result/${data.reference ?? reference}`)
     } catch { setError('Envoi impossible. Vérifiez votre connexion puis réessayez.') }
     finally { setLoading(false) }
@@ -168,6 +216,8 @@ export function QuizClient({ initialAvailability, initialChannels }: Props) {
     try { await navigator.clipboard.writeText('https://classicomboa.com/quiz'); setCopied(true); window.setTimeout(() => setCopied(false), 2200) }
     catch { setError('La copie du lien n’est pas disponible sur cet appareil.') }
   }
+
+  if (stage === 'restoring') return <main id="main-content" className="quiz-page"><section className="quiz-form-shell"><span className="quiz-kicker">QUIZ CLASSICO MBOA</span><h1>Reprise<br /><em>de ta partie.</em></h1><p className="quiz-lead">Tes réponses sont sauvegardées. On recharge tes questions…</p>{error && <p className="quiz-error" role="alert">{error}</p>}<button className="quiz-button" onClick={() => window.location.reload()}>RÉESSAYER <ArrowRight size={17} /></button></section></main>
 
   if (stage === 'locked') return <main id="main-content" className="quiz-page">
     <section className="quiz-shell quiz-locked">
