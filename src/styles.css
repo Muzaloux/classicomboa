@@ -300,6 +300,8 @@ h1, h2, h3, p { margin-top: 0; }
 .tiktok-mark { font-size: 20px; font-weight: 700; }
 .footer-bottom { min-height: 44px; display: flex; align-items: center; justify-content: space-between; gap: 15px; border-top: 1px solid var(--line); color: #f2f0e8; font: 500 9px var(--font-display), sans-serif; letter-spacing: .08em; }
 .footer-bottom a { display: inline-flex; align-items: center; gap: 7px; color: var(--paper); }
+.footer-credit { color: var(--muted); letter-spacing: .03em; }
+.footer-credit strong { color: var(--paper); font-weight: 600; }
 
 .public-page { min-height: 100svh; display: flex; flex-direction: column; padding: 0 7vw; background: radial-gradient(ellipse at 78% 33%, rgba(181,227,72,.1), transparent 31%), var(--ink); }
 .public-page-header { min-height: 76px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); }
