@@ -887,6 +887,24 @@ h1, h2, h3 { text-wrap: balance; }
 .quiz-form-shell h1 { margin-top: 25px; font-size: clamp(47px,8vw,68px); }
 .quiz-back { display: flex; align-items: center; gap: 7px; margin: 0 0 27px; padding: 0; border: 0; color: #d4d4ce; background: transparent; font-size: 12px; cursor: pointer; }
 .quiz-lead { max-width: 55ch; margin: 0 0 24px; color: #d4d4ce; font-size: 13px; line-height: 1.65; }
+.quiz-prize-poster { position: relative; isolation: isolate; overflow: hidden; margin: 0 0 23px; padding: clamp(20px,4vw,30px); border: 1px solid rgba(239,190,92,.66); color: #fff8e9; background: radial-gradient(ellipse at 94% 0%,rgba(200,238,106,.2),transparent 38%), radial-gradient(ellipse at 0% 100%,rgba(231,170,59,.16),transparent 45%), linear-gradient(132deg,#18251e 0%,#101713 58%,#2c2113 100%); box-shadow: 0 14px 36px rgba(0,0,0,.25), inset 0 0 0 4px rgba(255,255,255,.025); }
+.quiz-prize-poster:before, .quiz-prize-poster:after { position: absolute; z-index: -1; width: 160px; height: 160px; border: 1px solid rgba(239,190,92,.17); border-radius: 50%; content: ''; }
+.quiz-prize-poster:before { top: -100px; right: -50px; box-shadow: 0 0 0 15px rgba(239,190,92,.025),0 0 0 31px rgba(239,190,92,.02); }
+.quiz-prize-poster:after { bottom: -135px; left: 36%; width: 220px; height: 220px; }
+.quiz-prize-kicker { display: inline-flex; align-items: center; gap: 7px; color: #d7ee8d; font: 700 9px var(--font-display),sans-serif; letter-spacing: .14em; }
+.quiz-prize-top { display: inline-flex; float: right; align-items: center; gap: 6px; padding: 6px 9px; border: 1px solid rgba(239,190,92,.55); color: #ffe3a4; background: rgba(239,190,92,.1); font: 700 9px var(--font-display),sans-serif; letter-spacing: .1em; }
+.quiz-prize-poster h2 { margin: 20px 0 4px; color: #fff8e9; font: 800 clamp(30px,6vw,43px)/.98 var(--font-display),sans-serif; letter-spacing: -.045em; }
+.quiz-prize-poster h2 em { color: #d7ee8d; font-style: normal; }
+.quiz-prize-poster > p { margin: 9px 0 18px; color: #d3d2c6; font-size: 11px; }
+.quiz-prize-items { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+.quiz-prize-items > div { display: grid; grid-template-columns: 38px minmax(0,1fr); align-items: center; column-gap: 10px; row-gap: 3px; min-height: 65px; padding: 10px; border: 1px solid rgba(255,255,255,.13); background: rgba(255,255,255,.055); }
+.quiz-prize-icon { display: grid; grid-row: span 2; width: 36px; height: 36px; place-items: center; }
+.quiz-prize-cash { color: #c9ed8a; background: rgba(111,169,68,.18); }
+.quiz-prize-premium { color: #ffdb8a; background: rgba(222,165,63,.16); }
+.quiz-prize-items strong { color: #fff8e9; font-size: 11px; }
+.quiz-prize-items small { color: #c7c5b9; font-size: 9px; }
+.quiz-prize-footer { display: flex; align-items: center; gap: 9px; margin-top: 16px; padding-top: 12px; border-top: 1px solid rgba(239,190,92,.4); color: #d7d4c5; font: 600 8px var(--font-display),sans-serif; letter-spacing: .1em; }
+.quiz-prize-footer i { width: 3px; height: 3px; border-radius: 50%; background: #e9bf69; }
 .quiz-channel-list { display: grid; gap: 8px; }
 .quiz-channel { display: grid; grid-template-columns: 42px minmax(0,1fr) 104px 72px; align-items: center; gap: 11px; padding: 11px; border: 1px solid rgba(246,243,236,.12); background: #242722; }
 .quiz-channel-copy { display: grid; gap: 4px; min-width: 0; }
@@ -1053,6 +1071,14 @@ h1, h2, h3 { text-wrap: balance; }
   .quiz-stats strong { font-size: 24px; }
   .quiz-stats span { font-size: 7px; }
   .quiz-form-shell, .quiz-play-shell { padding: 21px 17px; }
+  .quiz-prize-poster { padding: 18px 14px; }
+  .quiz-prize-items { gap: 6px; }
+  .quiz-prize-items > div { grid-template-columns: 30px minmax(0,1fr); gap: 5px; padding: 8px 6px; }
+  .quiz-prize-icon { width: 29px; height: 32px; }
+  .quiz-prize-icon svg { width: 19px; height: 19px; }
+  .quiz-prize-items strong { font-size: 10px; }
+  .quiz-prize-items small { font-size: 8px; }
+  .quiz-prize-footer { gap: 7px; font-size: 7px; letter-spacing: .06em; }
   .quiz-channel { grid-template-columns: 38px minmax(0,1fr) 76px 57px; gap: 6px; padding: 8px; }
   .quiz-channel .quiz-platform { width: 36px; height: 36px; flex-basis: 36px; }
   .quiz-channel-copy > strong { font-size: 11px; }

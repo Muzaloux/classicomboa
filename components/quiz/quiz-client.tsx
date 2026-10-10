@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from 'react'
-import { ArrowLeft, ArrowRight, Check, Clock3, Copy, LockKeyhole, Trophy } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Banknote, Check, Clock3, Copy, Crown, LockKeyhole, Sparkles, Trophy } from 'lucide-react'
 import { PlatformLogo, type SocialPlatform } from '../public/social-pages'
 import type { QuizAvailability, QuizChannel } from '../../lib/quiz'
 
@@ -247,6 +247,17 @@ export function QuizClient({ initialAvailability, initialChannels }: Props) {
   if (stage === 'follow') return <main id="main-content" className="quiz-page"><section className="quiz-form-shell">
     <button className="quiz-back" onClick={() => setStage('intro')}><ArrowLeft size={16} /> Retour</button>
     <span className="quiz-kicker">ÉTAPE 1 SUR 2</span><h1>Avant de jouer,<br /><em>suis nos pages.</em></h1>
+    <section className="quiz-prize-poster" aria-labelledby="quiz-prize-title">
+      <span className="quiz-prize-kicker"><Sparkles size={14} /> LES RÉCOMPENSES DU QUIZ</span>
+      <span className="quiz-prize-top"><Trophy size={15} /> TOP 2</span>
+      <h2 id="quiz-prize-title">À GAGNER <em>CE SOIR</em></h2>
+      <p>Les deux meilleurs scores repartent avec des récompenses.</p>
+      <div className="quiz-prize-items">
+        <div><span className="quiz-prize-icon quiz-prize-cash"><Banknote size={22} /></span><strong>Prix en cash</strong><small>Pour les meilleurs scores</small></div>
+        <div><span className="quiz-prize-icon quiz-prize-premium"><Crown size={22} /></span><strong>Comptes premium</strong><small>Réseaux sociaux & streaming</small></div>
+      </div>
+      <div className="quiz-prize-footer"><span>5 QUESTIONS</span><i /><span>100 POINTS</span><i /><span>CHAQUE SOIR</span></div>
+    </section>
     <p className="quiz-lead">Ouvre chaque lien, suis ou rejoins la page, puis confirme pour continuer.</p>
     <div className="quiz-channel-list">{channels.map((channel) => <article className="quiz-channel" key={channel.id}>
       <span className={`quiz-platform quiz-platform-${channel.icon}`}><PlatformLogo platform={channel.icon as SocialPlatform} /></span>
