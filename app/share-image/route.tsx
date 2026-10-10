@@ -1,4 +1,5 @@
 import { ImageResponse } from 'next/og'
+import sharp from 'sharp'
 import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { currentEdition } from '../../data/current-edition'
@@ -39,7 +40,7 @@ export async function GET(request: Request) {
   ])
   const eventLine = `${formatEventDate(currentEdition.eventDate).toUpperCase()}  ·  ${currentEdition.venue.toUpperCase()}  ·  ${currentEdition.city.toUpperCase()}`
 
-  return new ImageResponse(
+  const image = new ImageResponse(
     <div style={{ display: 'flex', width: '100%', height: '100%', position: 'relative', overflow: 'hidden', background: '#071126', color: '#f6f3ec', fontFamily: 'Arial, sans-serif' }}>
       <img src={`data:image/jpeg;base64,${photo.toString('base64')}`} width={1200} height={630} alt="" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
       <div style={{ display: 'flex', position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(5,12,28,0.68)' }} />
@@ -59,6 +60,16 @@ export async function GET(request: Request) {
         </div>
       </div>
     </div>,
-    { width: 1200, height: 630, headers: { 'Cache-Control': 'public, max-age=31536000, s-maxage=31536000, stale-while-revalidate=86400' } },
+    { width: 1200, height: 630 },
   )
+  const jpeg = await sharp(Buffer.from(await image.arrayBuffer()))
+    .jpeg({ quality: 84, mozjpeg: true, progressive: true })
+    .toBuffer()
+
+  return new Response(new Uint8Array(jpeg), {
+    headers: {
+      'Content-Type': 'image/jpeg',
+      'Cache-Control': 'public, max-age=31536000, s-maxage=31536000, stale-while-revalidate=86400',
+    },
+  })
 }

@@ -21,12 +21,12 @@ export function socialPageKey(path: string) {
 
 export function socialImageFor(path = '/', title?: string) {
   const key = socialPageKey(path)
-  const params = new URLSearchParams({ page: key, v: '3' })
+  const params = new URLSearchParams({ page: key, v: '4' })
   return {
     url: `https://classicomboa.com/share-image?${params.toString()}`,
     width: 1200,
     height: 630,
-    type: 'image/png',
+    type: 'image/jpeg',
     alt: `Aperçu Classico Mboa — ${title || 'football, culture et communauté à Douala'}.`,
   }
 }
