@@ -8,9 +8,10 @@ const contacts = [
   { name: 'TikTok', detail: 'Classico Mboa', href: 'https://vm.tiktok.com/ZSqJo89mk/', icon: Music2 },
 ] as const
 
-export function ContactLinks() {
-  return <div className="contact-links">
-    {contacts.map(({ name, detail, href, icon: Icon }) => <a className="contact-link" key={href} href={href}>
+export function ContactLinks({ includeSocials = true, compact = false }: { includeSocials?: boolean; compact?: boolean }) {
+  const visibleContacts = includeSocials ? contacts : contacts.filter(({ name }) => name === 'E-mail' || name.endsWith('WhatsApp'))
+  return <div className={`contact-links${compact ? ' contact-links-compact' : ''}`}>
+    {visibleContacts.map(({ name, detail, href, icon: Icon }) => <a className="contact-link" key={href} href={href}>
       <Icon size={22} aria-hidden="true" />
       <span><strong>{name}</strong><span>{detail}</span></span>
       <ArrowUpRight size={17} aria-hidden="true" />
