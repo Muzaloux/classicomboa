@@ -31,6 +31,7 @@ export function QuizClient({ initialAvailability, initialChannels }: Props) {
   const [channels, setChannels] = useState(initialChannels)
   const [stage, setStage] = useState<Stage>(initialAvailability.status === 'open' ? 'restoring' : 'locked')
   const [checkedChannels, setCheckedChannels] = useState<string[]>([])
+  const [openedChannels, setOpenedChannels] = useState<string[]>([])
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
@@ -246,14 +247,14 @@ export function QuizClient({ initialAvailability, initialChannels }: Props) {
   if (stage === 'follow') return <main id="main-content" className="quiz-page"><section className="quiz-form-shell">
     <button className="quiz-back" onClick={() => setStage('intro')}><ArrowLeft size={16} /> Retour</button>
     <span className="quiz-kicker">ÉTAPE 1 SUR 2</span><h1>Avant de jouer,<br /><em>suis nos pages.</em></h1>
-    <p className="quiz-lead">Suis les pages officielles du Classico Mboa et de son sponsor, puis confirme chaque page pour continuer.</p>
+    <p className="quiz-lead">Ouvre chaque lien, suis ou rejoins la page, puis confirme pour continuer.</p>
     <div className="quiz-channel-list">{channels.map((channel) => <article className="quiz-channel" key={channel.id}>
       <span className={`quiz-platform quiz-platform-${channel.icon}`}><PlatformLogo platform={channel.icon as SocialPlatform} /></span>
       <div className="quiz-channel-copy"><strong>{channel.name}</strong><span>{channel.username || channel.platform}{channel.is_required ? <small>REQUIS</small> : <small>RECOMMANDÉ</small>}</span></div>
-      <a className="quiz-follow-link" href={channel.url} target="_blank" rel="noreferrer">Suivre <ArrowRight size={15} /></a>
-      <label className="quiz-confirm"><input type="checkbox" checked={checkedChannels.includes(channel.id)} onChange={(event) => setCheckedChannels((current) => event.target.checked ? [...current, channel.id] : current.filter((id) => id !== channel.id))} /><span><Check size={14} /></span><span className="sr-only">J’ai suivi {channel.name}</span></label>
+      <a className={`quiz-follow-link quiz-follow-${channel.icon}`} href={channel.url} target="_blank" rel="noreferrer" onClick={() => setOpenedChannels((current) => current.includes(channel.id) ? current : [...current, channel.id])}>{channel.platform === 'whatsapp' ? 'Joindre' : 'Suivre'} <ArrowRight size={15} /></a>
+      {openedChannels.includes(channel.id) ? <label className="quiz-confirm"><input type="checkbox" checked={checkedChannels.includes(channel.id)} onChange={(event) => setCheckedChannels((current) => event.target.checked ? [...current, channel.id] : current.filter((id) => id !== channel.id))} /><span><Check size={14} /></span><span className="sr-only">J’ai suivi {channel.name}</span></label> : <span className="quiz-confirm-prompt">Ouvre le lien</span>}
     </article>)}</div>
-    <p className="quiz-honesty">La confirmation repose sur ta déclaration. Nous ne vérifions pas les abonnements auprès des plateformes.</p>
+    <p className="quiz-honesty">Après avoir suivi ou rejoint la page, coche la case. Les plateformes ne nous permettent pas de vérifier les abonnements.</p>
     {error && <p className="quiz-error" role="alert">{error}</p>}
     <button className="quiz-button" disabled={!allRequiredConfirmed} onClick={() => { setError(''); setStage('details') }}>J’AI TOUT SUIVI — CONTINUER <ArrowRight size={18} /></button>
   </section></main>
