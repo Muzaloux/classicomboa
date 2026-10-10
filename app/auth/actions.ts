@@ -9,20 +9,15 @@ import { currentEdition } from '../../data/current-edition'
 
 const authSchema = z.object({
   mode: z.enum(['password', 'send-code', 'verify-code']),
-  identifier: z.string().trim().min(5).max(254),
+  email: emailSchema,
   password: z.string().max(128).optional(),
   token: z.string().trim().optional(),
 }).superRefine((value, ctx) => {
-  const isEmail = emailSchema.safeParse(value.identifier).success
-  const isPhone = /^\+[1-9]\d{7,14}$/.test(value.identifier)
-  if (!isEmail && !isPhone) {
-    ctx.addIssue({ code: 'custom', path: ['identifier'], message: 'Indiquez un e-mail valide ou un téléphone au format international (+237…).' })
-  }
   if (value.mode === 'password' && (!value.password || value.password.length < 1)) {
     ctx.addIssue({ code: 'custom', path: ['password'], message: 'Indiquez votre mot de passe.' })
   }
   if (value.mode === 'verify-code' && !/^\d{6,8}$/.test(value.token ?? '')) {
-    ctx.addIssue({ code: 'custom', path: ['token'], message: 'Indiquez le code reçu.' })
+    ctx.addIssue({ code: 'custom', path: ['token'], message: 'Indiquez le code reçu par e-mail.' })
   }
 })
 
@@ -31,29 +26,19 @@ export async function authenticate(_previous: FormState, form: FormData): Promis
   if (!parsed.success) return { status: 'error', message: 'Vérifiez vos informations.', errors: z.flattenError(parsed.error).fieldErrors }
   if (!supabaseConfig()) return { status: 'error', message: 'La connexion aux comptes n’est pas encore disponible.' }
   const value = parsed.data
-  const email = emailSchema.safeParse(value.identifier)
-  const identifier = email.success ? email.data.toLowerCase() : value.identifier
-  const phone = email.success ? null : identifier
   let signedIn = false
   try {
     const supabase = await createServerSupabase()
     if (value.mode === 'send-code') {
-      const { error } = email.success
-        ? await supabase.auth.signInWithOtp({ email: identifier, options: { shouldCreateUser: false } })
-        : await supabase.auth.signInWithOtp({ phone: phone!, options: { shouldCreateUser: false } })
+      const { error } = await supabase.auth.signInWithOtp({ email: value.email, options: { shouldCreateUser: false } })
       // Identical response for unknown accounts and accepted requests prevents enumeration.
       if (error?.status === 429) return { status: 'error', message: 'Veuillez patienter avant de demander un autre code.' }
-      if (error) return { status: 'error', message: email.success ? 'Impossible d’envoyer le code. Vérifiez l’adresse e-mail et réessayez.' : 'Impossible d’envoyer le SMS. Vérifiez que la connexion SMS est activée pour ce projet et que le numéro est confirmé.' }
-      return { status: 'success', message: email.success ? 'Si un compte existe pour cette adresse, un code de connexion sera envoyé. Consultez aussi les courriers indésirables.' : 'Si un compte organisateur confirmé existe pour ce numéro, un code de connexion sera envoyé par SMS.' }
+      return { status: 'success', message: 'Si un compte existe pour cette adresse, un code de connexion sera envoyé. Consultez aussi les courriers indésirables.' }
     }
     const { error } = value.mode === 'verify-code'
-      ? email.success
-        ? await supabase.auth.verifyOtp({ email: identifier, token: value.token!, type: 'email' })
-        : await supabase.auth.verifyOtp({ phone: phone!, token: value.token!, type: 'sms' })
-      : email.success
-        ? await supabase.auth.signInWithPassword({ email: identifier, password: value.password! })
-        : await supabase.auth.signInWithPassword({ phone: phone!, password: value.password! })
-    if (error) return { status: 'error', message: 'Connexion refusée. Vérifiez votre identifiant, votre mot de passe ou le code reçu.' }
+      ? await supabase.auth.verifyOtp({ email: value.email, token: value.token!, type: 'email' })
+      : await supabase.auth.signInWithPassword({ email: value.email, password: value.password! })
+    if (error) return { status: 'error', message: 'Connexion refusée. Vérifiez vos identifiants, la confirmation de votre e-mail ou la validité du code.' }
     const access = await supabase.rpc('has_edition_role', { p_edition: currentEdition.id, p_roles: ['admin', 'manager', 'support', 'checkin', 'editor'] })
     if (access.error || access.data !== true) {
       await supabase.auth.signOut({ scope: 'local' })
