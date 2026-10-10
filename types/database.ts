@@ -886,6 +886,20 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_admin_dashboard_metrics: {
+        Args: { p_edition: string }
+        Returns: {
+          tickets_sold: number
+          ticket_revenue_xaf: number
+          paid_vote_orders: number
+          vote_revenue_xaf: number
+          tombola_entries: number
+          tombola_revenue_xaf: number
+          accepted_checkins: number
+          new_inquiries: number
+          paid_player_registrations: number
+        }[]
+      }
       can_manage_inquiries: {
         Args: { target_edition: string }
         Returns: boolean
