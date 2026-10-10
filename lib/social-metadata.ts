@@ -21,7 +21,7 @@ export function socialPageKey(path: string) {
 
 export function socialImageFor(path = '/', title?: string) {
   const key = socialPageKey(path)
-  const params = new URLSearchParams({ page: key, v: '4' })
+  const params = new URLSearchParams({ page: key, v: '5' })
   return {
     url: `https://classicomboa.com/share-image?${params.toString()}`,
     width: 1200,

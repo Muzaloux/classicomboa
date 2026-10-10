@@ -24,7 +24,7 @@ const pages: Record<string, { title: string; subtitle: string; photo: string }> 
   stands: { title: 'VOS STANDS AU CLASSICO.', subtitle: 'Présentez votre activité au public de l’événement.', photo: 'images/branding/og/stands.jpg' },
   news: { title: 'LES NOUVELLES DU CLASSICO.', subtitle: 'Annonces et contenus officiels.', photo: 'images/social/team-6687.jpg' },
   gallery: { title: 'EN IMAGES ET EN VIDÉOS.', subtitle: 'Revivez l’ambiance du Classico Mboa.', photo: 'images/branding/og/crowd.jpg' },
-  'nos-pages': { title: 'SUIVEZ NOS PAGES.', subtitle: 'Rejoignez la communauté et nos partenaires en ligne.', photo: 'images/branding/og/supporters.jpg' },
+  'nos-pages': { title: 'NOS PAGES', subtitle: 'Suivez le Classico Mboa et ses partenaires.', photo: 'images/branding/og/supporters.jpg' },
   contact: { title: 'RESTONS EN CONTACT.', subtitle: 'Écrivez à l’organisation du Classico Mboa.', photo: 'images/branding/og/crowd.jpg' },
   legal: { title: 'INFORMATIONS LÉGALES.', subtitle: 'Les informations officielles du Classico Mboa.', photo: 'images/branding/og/hero.jpg' },
   privacy: { title: 'VOTRE VIE PRIVÉE.', subtitle: 'Les informations de confidentialité du site.', photo: 'images/branding/og/hero.jpg' },
