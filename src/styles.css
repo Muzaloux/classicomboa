@@ -913,6 +913,8 @@ h1, h2, h3 { text-wrap: balance; }
 .quiz-progress-head { display: flex; justify-content: space-between; margin-top: 38px; color: #f4f4ee; font: 600 10px var(--font-display),sans-serif; letter-spacing: .09em; }
 .quiz-progress-head i { color: #b9bcb2; font-style: normal; }
 .quiz-progress-head > span:last-child { color: #c8ee6a; font-size: 8px; }
+.quiz-progress-head > span.quiz-attempt-timer { display: inline-flex; align-items: center; gap: 5px; color: #f6f3ec; font-size: 12px; font-variant-numeric: tabular-nums; letter-spacing: .04em; }
+.quiz-progress-head > span.quiz-attempt-timer.is-urgent { color: #ff9c84; }
 .quiz-progress-track { height: 3px; margin-top: 10px; background: #44473f; }
 .quiz-progress-track span { display: block; height: 100%; background: #b5e348; transition: width .25s; }
 .quiz-question-label { margin-top: 36px; color: #b5e348; font: 600 9px var(--font-display),sans-serif; letter-spacing: .13em; }

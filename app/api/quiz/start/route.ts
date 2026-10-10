@@ -44,6 +44,12 @@ export async function POST(request: Request) {
                 : 'Impossible de démarrer le quiz. Vérifiez vos informations.'
       return Response.json({ error: errorText }, { status, headers: { 'Cache-Control': 'no-store' } })
     }
+    if (data?.reference && (data.status === 'started' || data.status === 'resumed')) {
+      const { data: attempt, error: attemptError } = await getQuizDb()
+        .from('quiz_attempts').select('expires_at').eq('public_reference', data.reference).single()
+      if (attemptError || !attempt) return Response.json({ error: 'Impossible de démarrer le chronomètre.' }, { status: 503, headers: { 'Cache-Control': 'no-store' } })
+      return Response.json({ ...data, expiresAt: attempt.expires_at }, { headers: { 'Cache-Control': 'no-store' } })
+    }
     return Response.json(data, { headers: { 'Cache-Control': 'no-store' } })
   } catch {
     return Response.json({ error: 'Le service du quiz est momentanément indisponible.' }, { status: 503, headers: { 'Cache-Control': 'no-store' } })
