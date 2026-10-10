@@ -1,9 +1,12 @@
 import { ArrowUpRight, Handshake } from 'lucide-react'
 import Link from 'next/link'
 
-function PlatformLogo({ platform }: { platform: 'instagram' | 'tiktok' | 'whatsapp' }) {
+export type SocialPlatform = 'instagram' | 'tiktok' | 'facebook' | 'whatsapp'
+
+export function PlatformLogo({ platform }: { platform: SocialPlatform }) {
   if (platform === 'instagram') return <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle className="platform-logo-dot" cx="17.5" cy="6.8" r="1" /></svg>
   if (platform === 'tiktok') return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.6 3c.3 2.3 1.6 3.8 4.4 4v3.4a8.7 8.7 0 0 1-4.4-1.3v6.6a6.2 6.2 0 1 1-6.2-6.2c.4 0 .8 0 1.2.1V13a2.8 2.8 0 1 0 1.7 2.6V3h3.3Z" /></svg>
+  if (platform === 'facebook') return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.4 21v-8h2.7l.4-3.1h-3.1v-2c0-.9.3-1.5 1.6-1.5h1.7V3.6c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.1H7.2V13H10v8h3.4Z" /></svg>
   return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a9.8 9.8 0 0 0-8.4 14.9L2.3 22l5.3-1.4A10 10 0 1 0 12 2Zm0 17.9a8 8 0 0 1-4.1-1.1l-.3-.2-3.1.8.8-3-.2-.3A8 8 0 1 1 12 19.9Zm4.4-6c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1-.2.2-.6.8-.8.9-.1.2-.3.2-.5.1-.2-.1-1-.4-1.9-1.2-.7-.6-1.2-1.4-1.3-1.6-.1-.2 0-.4.1-.5l.4-.4.2-.4v-.4c0-.1-.5-1.3-.7-1.8-.2-.5-.4-.4-.5-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3.9 2.4c.1.2 1.6 2.4 3.8 3.4.5.2.9.4 1.2.5.5.2 1 .2 1.3.1.4-.1 1.4-.6 1.6-1.1.2-.6.2-1 .1-1.1 0-.1-.2-.2-.4-.3Z" /></svg>
 }
 
