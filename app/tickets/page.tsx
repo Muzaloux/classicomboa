@@ -2,8 +2,10 @@ import Link from 'next/link'
 import { PageHero, EmptyState } from '../../components/shared/page'
 import { ticketCatalog, testTicketingEnabled, ticketingEnabled, manualTicketingEnabled } from '../../lib/ticketing'
 import { formatXaf } from '../../lib/formatting'
+import { socialOpenGraphFor, socialTwitterFor } from '../../lib/social-metadata'
 export const dynamic = 'force-dynamic'
-export const metadata = { title: 'Billetterie' }
+const shareDescription = 'Choisissez votre catégorie de billet et préparez votre venue au Classico Mboa.'
+export const metadata = { title: 'Billetterie', description: shareDescription, openGraph: socialOpenGraphFor('/tickets', 'Billetterie Classico Mboa', shareDescription), twitter: socialTwitterFor('/tickets', 'Billetterie Classico Mboa', shareDescription) }
 export default async function TicketsPage() {
   const types = await ticketCatalog()
   return <main id="main-content" className="page-container ticket-page"><PageHero eyebrow="BILLETTERIE" title="Votre place au Classico." description="Choisissez votre catégorie et préparez votre venue." />

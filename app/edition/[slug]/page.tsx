@@ -9,6 +9,7 @@ import { EventSchema } from '../../../components/shared/event-schema'
 import { CTASection, InfoCards, PageHero, Section } from '../../../components/shared/page'
 import { ProgrammeList } from '../../../components/public/programme-list'
 import { ShareButton } from '../../../components/shared/share-button'
+import { socialOpenGraphFor, socialTwitterFor } from '../../../lib/social-metadata'
 
 // Data-backed prototype routes are published at build time.
 export const dynamicParams = false
@@ -17,7 +18,9 @@ type Props = { params: Promise<{ slug: string }> }
 export function generateStaticParams() { return editions.filter((edition) => getPublicEdition(edition.slug)).map(({ slug }) => ({ slug })) }
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const edition = getPublicEdition((await params).slug)
-  return edition ? { title: edition.name, description: formatEventDate(edition.eventDate) + ' · ' + edition.venue + ', ' + edition.city, alternates: process.env.NEXT_PUBLIC_SITE_URL ? { canonical: '/edition/' + edition.slug } : undefined } : {}
+  if (!edition) return {}
+  const description = formatEventDate(edition.eventDate) + ' · ' + edition.venue + ', ' + edition.city
+  return { title: edition.name, description, alternates: process.env.NEXT_PUBLIC_SITE_URL ? { canonical: '/edition/' + edition.slug } : undefined, openGraph: socialOpenGraphFor('/edition/' + edition.slug, edition.name, description), twitter: socialTwitterFor('/edition/' + edition.slug, edition.name, description) }
 }
 export default async function EditionPage({ params }: Props) {
   const edition = getPublicEdition((await params).slug)

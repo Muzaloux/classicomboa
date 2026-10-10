@@ -4,8 +4,10 @@ import { PageHero, Section } from '../../components/shared/page'
 import { VoteForm } from '../../components/vote/vote-form'
 import { openCategories, votingEnabled } from '../../lib/voting'
 import { voteCategories } from '../../data/catalog'
+import { socialOpenGraphFor, socialTwitterFor } from '../../lib/social-metadata'
 export const dynamic = 'force-dynamic'
-export const metadata = { title: 'Votes & distinctions' }
+const shareDescription = 'Votes, distinctions et résultats de la communauté Classico Mboa.'
+export const metadata = { title: 'Votes & distinctions', description: shareDescription, openGraph: socialOpenGraphFor('/vote', 'Votes & distinctions | Classico Mboa', shareDescription), twitter: socialTwitterFor('/vote', 'Votes & distinctions | Classico Mboa', shareDescription) }
 export default async function VotePage() {
   const categories = await openCategories()
   const open = categories.length > 0

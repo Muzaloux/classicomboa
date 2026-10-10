@@ -2,8 +2,10 @@ import { PageHero, EmptyState } from '../../../components/shared/page'
 import { createAdminSupabase } from '../../../lib/supabase/admin'
 import { currentEdition } from '../../../data/current-edition'
 import { tombolaEnabled } from '../../../lib/tombola'
+import { socialOpenGraphFor, socialTwitterFor } from '../../../lib/social-metadata'
 export const dynamic = 'force-dynamic'
-export const metadata = { title: 'Gagnants de la tombola' }
+const shareDescription = 'Consultez les gagnants des tirages de la tombola Classico Mboa.'
+export const metadata = { title: 'Gagnants de la tombola', description: shareDescription, openGraph: socialOpenGraphFor('/tombola/results', 'Gagnants de la tombola | Classico Mboa', shareDescription), twitter: socialTwitterFor('/tombola/results', 'Gagnants de la tombola | Classico Mboa', shareDescription) }
 export default async function TombolaResults() {
   let rows: { draw_name: string; prize: string; rank: number; entry_number: number; winner: string }[] = []
   if (tombolaEnabled()) {

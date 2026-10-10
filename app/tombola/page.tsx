@@ -4,8 +4,10 @@ import { PageHero } from '../../components/shared/page'
 import { PublicPageContent } from '../../components/public/page-content'
 import { TombolaForm } from '../../components/tombola/tombola-form'
 import { openDraws, tombolaEnabled } from '../../lib/tombola'
+import { socialOpenGraphFor, socialTwitterFor } from '../../lib/social-metadata'
 export const dynamic = 'force-dynamic'
-export const metadata = { title: 'Tombola' }
+const shareDescription = 'Participez à la tombola du Classico Mboa et retrouvez les informations du tirage.'
+export const metadata = { title: 'Tombola', description: shareDescription, openGraph: socialOpenGraphFor('/tombola', 'Tombola | Classico Mboa', shareDescription), twitter: socialTwitterFor('/tombola', 'Tombola | Classico Mboa', shareDescription) }
 export default async function TombolaPage() {
   const draws = await openDraws()
   const open = draws.length > 0

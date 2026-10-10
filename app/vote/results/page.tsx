@@ -2,8 +2,10 @@ import { PageHero, EmptyState } from '../../../components/shared/page'
 import { createAdminSupabase } from '../../../lib/supabase/admin'
 import { currentEdition } from '../../../data/current-edition'
 import { votingEnabled } from '../../../lib/voting'
+import { socialOpenGraphFor, socialTwitterFor } from '../../../lib/social-metadata'
 export const dynamic = 'force-dynamic'
-export const metadata = { title: 'Résultats des votes' }
+const shareDescription = 'Découvrez les résultats des votes et distinctions Classico Mboa.'
+export const metadata = { title: 'Résultats des votes', description: shareDescription, openGraph: socialOpenGraphFor('/vote/results', 'Résultats des votes | Classico Mboa', shareDescription), twitter: socialTwitterFor('/vote/results', 'Résultats des votes | Classico Mboa', shareDescription) }
 export default async function VoteResults() {
   let rows: { category_id: string; category_name: string; candidate_id: string; candidate_name: string; votes: number }[] = []
   if (votingEnabled()) {

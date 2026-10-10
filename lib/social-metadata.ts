@@ -1,18 +1,55 @@
 import type { Metadata } from 'next'
-import { currentEdition } from '../data/current-edition'
-import { formatEventDate } from './formatting'
 
-// Keep the preview asset reachable while the custom domain's DNS is configured.
-export const socialImage = {
-  url: 'https://classicomboa.com/share-image?v=2',
-  width: 1200,
-  height: 630,
-  type: 'image/png',
-  alt: `Classico Mboa : les joueurs réunis, le logo officiel et le rendez-vous du ${formatEventDate(currentEdition.eventDate)} à ${currentEdition.city}.`,
+const pageKeys: Record<string, string> = {
+  '/': 'home',
+  '/edition/8': 'edition',
+  '/tickets/checkout': 'tickets',
+  '/vote/results': 'vote-results',
+  '/tombola/results': 'tombola',
+  '/joueurs': 'players',
 }
-export const socialOpenGraph: Metadata['openGraph'] = {
-  siteName: 'Classico Mboa', locale: 'fr_CM', type: 'website', images: [socialImage],
+
+export function socialPageKey(path: string) {
+  if (pageKeys[path]) return pageKeys[path]
+  if (path.startsWith('/edition/')) return 'edition'
+  if (path.startsWith('/tickets')) return 'tickets'
+  if (path.startsWith('/vote')) return 'vote'
+  if (path.startsWith('/tombola')) return 'tombola'
+  if (path === '/players') return 'players'
+  return path.replace(/^\/+|\/+$/g, '').replace(/\//g, '-') || 'home'
 }
-export const socialTwitter: Metadata['twitter'] = {
-  card: 'summary_large_image', images: [socialImage],
+
+export function socialImageFor(path = '/', title?: string) {
+  const key = socialPageKey(path)
+  const params = new URLSearchParams({ page: key, v: '3' })
+  return {
+    url: `https://classicomboa.com/share-image?${params.toString()}`,
+    width: 1200,
+    height: 630,
+    type: 'image/png',
+    alt: `Aperçu Classico Mboa — ${title || 'football, culture et communauté à Douala'}.`,
+  }
 }
+
+export function socialOpenGraphFor(path: string, title: string, description: string): Metadata['openGraph'] {
+  return {
+    siteName: 'Classico Mboa',
+    locale: 'fr_CM',
+    type: 'website',
+    title,
+    description,
+    images: [socialImageFor(path, title)],
+  }
+}
+
+export function socialTwitterFor(path: string, title: string, description: string): Metadata['twitter'] {
+  return {
+    card: 'summary_large_image',
+    title,
+    description,
+    images: [socialImageFor(path, title)],
+  }
+}
+
+export const socialOpenGraph = socialOpenGraphFor('/', 'Classico Mboa | Le Classico Version Mboa', 'Classico Mboa rassemble football, culture, musique et divertissement autour du Classico version Mboa au Cameroun.')
+export const socialTwitter = socialTwitterFor('/', 'Classico Mboa', 'Le Classico Version Mboa — football, culture et communauté à Douala.')
