@@ -21,5 +21,5 @@ export const metadata: Metadata = {
   icons: { apple: '/icons/classico-180.png' },
 }
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="fr-CM" className={bodyFont.variable + ' ' + displayFont.variable}><body><a className="skip-link" href="#main-content">Aller au contenu</a><Navbar /><OfflineStatus />{children}<Footer /><SiteMotion /></body></html>
+  return <html lang="fr" translate="yes" className={bodyFont.variable + ' ' + displayFont.variable}><body><a className="skip-link" href="#main-content">Aller au contenu</a><Navbar /><OfflineStatus />{children}<Footer /><SiteMotion /></body></html>
 }
