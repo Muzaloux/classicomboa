@@ -4,6 +4,7 @@ import { AdminNav } from '../../../../components/shared/admin-nav'
 import { getRoleAccess } from '../../../../lib/auth'
 import { currentEdition } from '../../../../data/current-edition'
 import { getQuizAvailability, getQuizDb } from '../../../../lib/quiz'
+import { QUIZ_DURATION_SECONDS } from '../../../../lib/quiz-constants'
 import { savePrizeStatus } from './actions'
 
 export const dynamic = 'force-dynamic'
@@ -39,13 +40,14 @@ export default async function QuizWinnersPage({ searchParams }: { searchParams: 
     .select('public_reference,participant_name,participant_phone,score,completion_seconds,prize_awarded_at,prize_note')
     .eq('quiz_date', date)
     .eq('status', 'completed')
+    .lt('completion_seconds', QUIZ_DURATION_SECONDS)
     .order('score', { ascending: false })
     .order('completion_seconds', { ascending: true })
     .order('completed_at', { ascending: true })
     .limit(2)
   if (error) throw new Error('Classement indisponible. Réessayez.')
   const leaders = (data ?? []) as Leader[]
-  const message = params.error === 'notwinner' ? 'Seuls les deux premiers du classement final peuvent recevoir un cadeau.'
+  const message = params.error === 'notwinner' ? 'Seuls les deux premiers ayant terminé en moins de 4 minutes peuvent recevoir un cadeau.'
     : params.error === 'notfinal' ? 'Le classement du jour sera final après minuit, heure de Douala.'
       : params.error ? 'Impossible d’enregistrer le statut du cadeau.'
         : params.saved ? 'Statut du cadeau enregistré.' : ''
@@ -59,8 +61,8 @@ export default async function QuizWinnersPage({ searchParams }: { searchParams: 
       <input id="winner-date" type="date" name="date" max={latestFinalDate} defaultValue={date} />
       <button className="button button-outline">Afficher</button>
     </form>
-    <p className="quiz-winner-rule">Classement définitif · points, rapidité, puis heure de validation.</p>
-    {!leaders.length ? <p className="quiz-leaderboard-empty">Aucune partie terminée pour cette date.</p> : <section className="quiz-winner-list" aria-label="Les deux premiers du classement">
+    <p className="quiz-winner-rule">Classement définitif · moins de 4 minutes, puis points, rapidité et heure de validation.</p>
+    {!leaders.length ? <p className="quiz-leaderboard-empty">Aucune partie admissible terminée en moins de 4 minutes pour cette date.</p> : <section className="quiz-winner-list" aria-label="Les deux premiers du classement">
       {leaders.map((leader, index) => <article className="quiz-winner-card" key={leader.public_reference}>
         <div className="quiz-winner-rank">0{index + 1}</div>
         <div className="quiz-winner-info"><span className="eyebrow">{index === 0 ? '1er PRIX' : '2e PRIX'}</span><h2>{leader.participant_name}</h2><a href={`tel:${leader.participant_phone}`}>{leader.participant_phone}</a></div>

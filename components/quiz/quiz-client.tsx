@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from 'react'
 import { ArrowLeft, ArrowRight, Banknote, Check, Clock3, Copy, Crown, LockKeyhole, Sparkles, Trophy } from 'lucide-react'
 import { PlatformLogo, type SocialPlatform } from '../public/social-pages'
+import { QUIZ_DURATION_SECONDS } from '../../lib/quiz-constants'
 import type { QuizAvailability, QuizChannel } from '../../lib/quiz'
 
 type Option = { id: string; label: string }
@@ -54,7 +55,7 @@ export function QuizClient({ initialAvailability, initialChannels }: Props) {
   const remaining = Math.max(0, Math.floor((timeTarget - now) / 1000))
   const timeParts = [Math.floor(remaining / 3600), Math.floor((remaining % 3600) / 60), remaining % 60]
   const clockLabel = timeParts.map((value) => String(value).padStart(2, '0')).join(' : ')
-  const attemptSeconds = expiresAt ? Math.max(0, Math.ceil((Date.parse(expiresAt) - now) / 1000)) : 7 * 60
+  const attemptSeconds = expiresAt ? Math.max(0, Math.ceil((Date.parse(expiresAt) - now) / 1000)) : QUIZ_DURATION_SECONDS
   const attemptClock = `${String(Math.floor(attemptSeconds / 60)).padStart(2, '0')}:${String(attemptSeconds % 60).padStart(2, '0')}`
 
   const expireAttempt = useCallback(() => {
@@ -236,7 +237,7 @@ export function QuizClient({ initialAvailability, initialChannels }: Props) {
 
   if (stage === 'intro') return <main id="main-content" className="quiz-page"><section className="quiz-shell quiz-open">
     <div className="quiz-brandline"><span className="quiz-mark">CM</span><span>CLASSICO MBOA <b>QUIZ</b></span><span className="quiz-live"><i /> OUVERT</span></div>
-    <div className="quiz-open-content"><span className="quiz-kicker"><Trophy size={16} /> LE DÉFI DU SOIR</span><h1>Le quiz est<br /><em>ouvert.</em></h1><p>Le coup d’envoi est donné. Prouve que tu connais le Clásico sur le bout des doigts.</p>
+    <div className="quiz-open-content"><span className="quiz-kicker"><Trophy size={16} /> LE DÉFI DU SOIR</span><h1>Le quiz est<br /><em>ouvert.</em></h1><p>5 questions en 4 minutes maximum. Dépasse le temps et ta partie est éliminée du classement.</p>
       <div className="quiz-stats"><div><strong>05</strong><span>QUESTIONS</span></div><div><strong>20</strong><span>PTS / QUESTION</span></div><div><strong>100</strong><span>POINTS MAX.</span></div></div>
       <button className="quiz-button" onClick={() => setStage('follow')}>COMMENCER LE QUIZ <ArrowRight size={18} /></button>
       <div className="quiz-closes"><Clock3 size={15} /> Fermeture dans {clockLabel}</div>
@@ -251,12 +252,12 @@ export function QuizClient({ initialAvailability, initialChannels }: Props) {
       <span className="quiz-prize-kicker"><Sparkles size={14} /> LES RÉCOMPENSES DU QUIZ</span>
       <span className="quiz-prize-top"><Trophy size={15} /> TOP 2</span>
       <h2 id="quiz-prize-title">À GAGNER <em>CE SOIR</em></h2>
-      <p>Les deux meilleurs scores repartent avec des récompenses.</p>
+      <p>Les deux meilleurs scores terminant en moins de 4 minutes repartent avec des récompenses.</p>
       <div className="quiz-prize-items">
         <div><span className="quiz-prize-icon quiz-prize-cash"><Banknote size={22} /></span><strong>Prix en cash</strong><small>Pour les meilleurs scores</small></div>
         <div><span className="quiz-prize-icon quiz-prize-premium"><Crown size={22} /></span><strong>Comptes premium</strong><small>Réseaux sociaux & streaming</small></div>
       </div>
-      <div className="quiz-prize-footer"><span>5 QUESTIONS</span><i /><span>100 POINTS</span><i /><span>CHAQUE SOIR</span></div>
+      <div className="quiz-prize-footer"><span>5 QUESTIONS</span><i /><span>100 POINTS</span><i /><span>4 MIN MAX</span></div>
     </section>
     <p className="quiz-lead">Ouvre chaque lien, suis ou rejoins la page, puis confirme pour continuer.</p>
     <div className="quiz-channel-list">{channels.map((channel) => <article className="quiz-channel" key={channel.id}>
@@ -294,5 +295,5 @@ export function QuizClient({ initialAvailability, initialChannels }: Props) {
     {(error || saving) && <p className={error ? 'quiz-error' : 'quiz-saving'} role={error ? 'alert' : 'status'}>{error || 'Réponse enregistrée…'}</p>}
   </section>{stage === 'confirm' && <div className="quiz-confirm-backdrop"><section className="quiz-confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="quiz-confirm-title"><span className="quiz-kicker">DERNIÈRE ÉTAPE</span><h2 id="quiz-confirm-title">Envoyer tes réponses ?</h2><p>Elles ne pourront plus être modifiées une fois le quiz terminé.</p>{error && <p className="quiz-error" role="alert">{error}</p>}<div><button className="quiz-secondary" disabled={loading} onClick={() => setStage('quiz')}>CONTINUER</button><button className="quiz-button" disabled={loading} onClick={() => void submitAttempt()}>{loading ? 'ENVOI…' : 'ENVOYER MES RÉPONSES'}</button></div></section></div>}</main>
 
-  return <main id="main-content" className="quiz-page"><section className="quiz-form-shell"><span className="quiz-kicker">QUIZ CLASSICO MBOA</span><h1>{stage === 'expired' ? <>Temps<br /><em>écoulé.</em></> : <>Partie<br /><em>terminée.</em></>}</h1><p>{stage === 'expired' ? 'Les sept minutes sont écoulées. Cette partie est terminée.' : 'Ton résultat est prêt.'}</p><a className="quiz-button" href={`/quiz/result/${reference}`}>VOIR MON RÉSULTAT <ArrowRight size={17} /></a></section></main>
+  return <main id="main-content" className="quiz-page"><section className="quiz-form-shell"><span className="quiz-kicker">QUIZ CLASSICO MBOA</span><h1>{stage === 'expired' ? <>Temps<br /><em>écoulé.</em></> : <>Partie<br /><em>terminée.</em></>}</h1><p>{stage === 'expired' ? 'Les 4 minutes sont écoulées. Cette partie est éliminée et ne compte pas au classement.' : 'Ton résultat est prêt.'}</p><a className="quiz-button" href={`/quiz/result/${reference}`}>VOIR MON RÉSULTAT <ArrowRight size={17} /></a></section></main>
 }

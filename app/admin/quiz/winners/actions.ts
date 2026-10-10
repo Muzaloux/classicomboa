@@ -6,6 +6,7 @@ import { z } from 'zod'
 import { getRoleAccess } from '../../../../lib/auth'
 import { currentEdition } from '../../../../data/current-edition'
 import { getQuizAvailability, getQuizDb } from '../../../../lib/quiz'
+import { QUIZ_DURATION_SECONDS } from '../../../../lib/quiz-constants'
 
 const dateSchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/).refine((date) => {
   const parsed = new Date(`${date}T00:00:00Z`)
@@ -30,6 +31,7 @@ export async function savePrizeStatus(form: FormData) {
     .select('public_reference')
     .eq('quiz_date', date.data)
     .eq('status', 'completed')
+    .lt('completion_seconds', QUIZ_DURATION_SECONDS)
     .order('score', { ascending: false })
     .order('completion_seconds', { ascending: true })
     .order('completed_at', { ascending: true })
