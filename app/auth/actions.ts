@@ -8,7 +8,7 @@ import type { FormState } from '../../lib/forms'
 import { currentEdition } from '../../data/current-edition'
 
 const authSchema = z.object({
-  mode: z.enum(['password', 'send-code', 'verify-code']),
+  mode: z.enum(['password', 'send-code', 'verify-code', 'reset-password']),
   email: emailSchema,
   password: z.string().max(128).optional(),
   token: z.string().trim().optional(),
@@ -29,6 +29,24 @@ export async function authenticate(_previous: FormState, form: FormData): Promis
   let signedIn = false
   try {
     const supabase = await createServerSupabase()
+    if (value.mode === 'reset-password') {
+      const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL
+      let redirectTo: string
+      try {
+        if (!configuredSiteUrl) throw new Error('Missing site URL')
+        const siteUrl = new URL(configuredSiteUrl)
+        if (siteUrl.protocol !== 'https:' && process.env.NODE_ENV === 'production') throw new Error('Invalid site URL')
+        const callback = new URL('/auth/callback', siteUrl.origin)
+        callback.searchParams.set('next', 'password-reset')
+        redirectTo = callback.toString()
+      } catch {
+        return { status: 'error', message: 'Le lien de réinitialisation n’est pas configuré. Contactez l’équipe technique.' }
+      }
+      const { error } = await supabase.auth.resetPasswordForEmail(value.email, { redirectTo })
+      if (error?.status === 429) return { status: 'error', message: 'Veuillez patienter avant de demander un autre lien.' }
+      if (error) return { status: 'error', message: 'Le lien n’a pas pu être envoyé pour le moment. Réessayez plus tard.' }
+      return { status: 'success', message: 'Si un compte organisateur existe pour cette adresse, un lien de réinitialisation a été envoyé. Consultez aussi les courriers indésirables.' }
+    }
     if (value.mode === 'send-code') {
       const { error } = await supabase.auth.signInWithOtp({ email: value.email, options: { shouldCreateUser: false } })
       // Identical response for unknown accounts and accepted requests prevents enumeration.
