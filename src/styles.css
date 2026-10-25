@@ -830,6 +830,99 @@ h1, h2, h3 { text-wrap: balance; }
   .rivalry h2, .legacy h2, .ticket-cta h2 { line-height: 1.08; }
 }
 
+.classico-prediction-page { min-height: 78vh; padding: clamp(80px, 10vw, 120px) 20px 64px; color: #f6f3ec; background: radial-gradient(ellipse at 50% 0%, rgba(181,227,72,.11), transparent 38%), #111310; }
+.classico-prediction-shell { width: min(100%, 1120px); margin-inline: auto; overflow: hidden; border: 1px solid rgba(246,243,236,.16); background: #1b1e1a; box-shadow: 0 28px 90px rgba(0,0,0,.36); }
+.classico-prediction-hero { position: relative; display: flex; min-height: 590px; flex-direction: column; justify-content: space-between; overflow: hidden; padding: clamp(20px,4vw,42px); isolation: isolate; }
+.classico-prediction-art { z-index: -2; object-fit: cover; object-position: center 42%; }
+.classico-prediction-hero-shade { position: absolute; z-index: -1; inset: 0; background: linear-gradient(180deg,rgba(10,12,10,.62),rgba(10,12,10,.1) 36%,rgba(10,12,10,.35) 58%,#111310 100%), linear-gradient(90deg,rgba(14,16,13,.35),transparent 60%); }
+.classico-prediction-topline { display: flex; align-items: center; justify-content: space-between; gap: 12px; font: 600 9px var(--font-display),sans-serif; letter-spacing: .15em; }
+.classico-prediction-topline > span:last-child, .classico-prediction-open > span:first-child { display: flex; align-items: center; gap: 8px; }
+.classico-prediction-topline i, .classico-prediction-open i { width: 7px; height: 7px; border-radius: 50%; background: #b5e348; box-shadow: 0 0 0 4px rgba(181,227,72,.13); }
+.classico-prediction-match { position: absolute; inset: 30% 12% auto; display: flex; align-items: center; justify-content: center; gap: clamp(24px,7vw,92px); text-align: center; }
+.classico-prediction-team { display: grid; justify-items: center; gap: 11px; }
+.classico-prediction-team img { width: clamp(50px,8vw,78px); height: clamp(50px,8vw,78px); object-fit: contain; filter: drop-shadow(0 8px 18px rgba(0,0,0,.4)); }
+.classico-prediction-team strong { font: 700 10px var(--font-display),sans-serif; letter-spacing: .13em; text-shadow: 0 2px 8px #000; }
+.classico-prediction-vs { color: #c8ee6a; font: 600 clamp(25px,5vw,44px)/1 var(--font-display),sans-serif; font-style: italic; }
+.classico-prediction-headline { position: relative; max-width: 610px; margin-top: auto; padding-top: 300px; }
+.classico-prediction-kicker, .classico-prediction-step { color: #c8ee6a; font: 600 9px var(--font-display),sans-serif; letter-spacing: .14em; }
+.classico-prediction-headline h1 { margin: 12px 0 8px; font: 700 clamp(52px,10vw,108px)/.84 var(--font-display),sans-serif; letter-spacing: -.055em; }
+.classico-prediction-headline h1 em, .classico-prediction-content h2 em { color: #c8ee6a; font-style: normal; }
+.classico-prediction-headline p { margin: 14px 0 0; color: #ebece5; font-size: 13px; }
+.classico-prediction-content { width: min(100%, 740px); margin: 0 auto; padding: clamp(26px,6vw,64px) 24px; }
+.classico-prediction-open { display: flex; justify-content: space-between; gap: 12px; color: #d2d6c8; font: 600 9px var(--font-display),sans-serif; letter-spacing: .11em; }
+.classico-prediction-open > span { display: flex; align-items: center; gap: 8px; }
+.classico-prediction-content h2 { margin: 24px 0; font: 600 clamp(36px,7vw,62px)/.99 var(--font-display),sans-serif; letter-spacing: -.04em; }
+.classico-prediction-cards { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 10px; }
+.classico-prediction-cards article { display: grid; min-height: 126px; align-content: start; gap: 9px; padding: 16px; border: 1px solid rgba(246,243,236,.13); background: rgba(255,255,255,.025); }
+.classico-prediction-cards b { color: #b5e348; font: 600 10px var(--font-display),sans-serif; letter-spacing: .12em; }
+.classico-prediction-cards strong { font: 600 15px var(--font-display),sans-serif; }
+.classico-prediction-cards span, .classico-prediction-footnote { color: #c1c5b9; font-size: 11px; line-height: 1.6; }
+.classico-prediction-roster-note { display: flex; align-items: center; gap: 9px; margin: 19px 0 24px; color: #d0d5c6; font-size: 11px; }
+.classico-prediction-roster-note svg { flex-shrink: 0; color: #c8ee6a; }
+.classico-prediction-button { display: inline-flex; min-height: 52px; align-items: center; justify-content: center; gap: 11px; padding: 0 20px; border: 1px solid #c8ee6a; color: #14170f; background: #c8ee6a; font: 700 10px var(--font-display),sans-serif; letter-spacing: .09em; cursor: pointer; transition: background .18s, transform .18s; }
+.classico-prediction-button:hover:not(:disabled) { transform: translateY(-1px); background: #d9fa83; }
+.classico-prediction-button:disabled { border-color: #53584b; color: #a4a99a; background: #34382f; cursor: not-allowed; }
+.classico-prediction-button:focus-visible, .classico-prediction-back:focus-visible, .classico-prediction-channels a:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+.classico-prediction-footnote { margin: 13px 0 0; }
+.classico-prediction-back { display: flex; align-items: center; gap: 7px; margin: 0 0 24px; padding: 0; border: 0; color: #d0d4c8; background: transparent; font-size: 11px; cursor: pointer; }
+.classico-prediction-copy { max-width: 56ch; margin: -9px 0 22px; color: #cbd0c3; font-size: 12px; line-height: 1.6; }
+.classico-prediction-channels { display: grid; gap: 8px; }
+.classico-prediction-channels article { display: grid; grid-template-columns: 40px minmax(0,1fr) auto 36px; align-items: center; gap: 12px; min-height: 68px; padding: 10px 12px; border: 1px solid rgba(246,243,236,.13); background: rgba(255,255,255,.025); }
+.classico-prediction-channels article > div { display: grid; gap: 4px; min-width: 0; }
+.classico-prediction-channels article > div strong { font-size: 12px; }
+.classico-prediction-channels article > div small, .classico-prediction-open-link { overflow: hidden; color: #b7bdaf; font-size: 9px; text-overflow: ellipsis; white-space: nowrap; }
+.classico-prediction-channels a { display: flex; min-height: 38px; align-items: center; gap: 5px; padding: 0 9px; color: #c8ee6a; font: 600 9px var(--font-display),sans-serif; letter-spacing: .06em; }
+.classico-prediction-check { display: grid; width: 32px; height: 32px; place-items: center; cursor: pointer; }
+.classico-prediction-check input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.classico-prediction-check > span:nth-child(2) { display: grid; width: 24px; height: 24px; place-items: center; border: 1px solid rgba(246,243,236,.35); color: #14170f; }
+.classico-prediction-check input:checked + span { border-color: #c8ee6a; background: #c8ee6a; }
+.classico-prediction-check input:focus-visible + span { outline: 3px solid #fff; outline-offset: 3px; }
+.classico-prediction-disclaimer { margin: 15px 0 20px; color: #b8beb0; font-size: 10px; line-height: 1.55; }
+.classico-prediction-form { display: grid; gap: 16px; }
+.classico-prediction-form select, .classico-prediction-form input { width: 100%; min-height: 48px; padding: 0 13px; border: 1px solid rgba(246,243,236,.2); border-radius: 0; color: #f6f3ec; background: #121411; font-size: 12px; }
+.classico-prediction-form select:focus-visible, .classico-prediction-form input:focus-visible { outline: 2px solid #c8ee6a; outline-offset: 2px; }
+.classico-prediction-score { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 0; padding: 16px; border: 1px solid rgba(246,243,236,.15); }
+.classico-prediction-score legend, .classico-prediction-field > span { color: #c8ee6a; font: 600 9px var(--font-display),sans-serif; letter-spacing: .1em; }
+.classico-prediction-score label { display: grid; flex: 1; justify-items: center; gap: 7px; text-align: center; }
+.classico-prediction-score label img { width: 40px; height: 40px; object-fit: contain; }
+.classico-prediction-score label strong { font: 600 9px var(--font-display),sans-serif; letter-spacing: .07em; }
+.classico-prediction-score label select { width: min(100%, 100px); min-height: 50px; font: 600 22px var(--font-display),sans-serif; text-align: center; }
+.classico-prediction-score-dash { padding-top: 16px; color: #c8ee6a; font: 600 24px var(--font-display),sans-serif; }
+.classico-prediction-field { display: grid; gap: 9px; }
+.classico-prediction-identity { display: grid; gap: 12px; padding-top: 5px; }
+.classico-prediction-identity label { display: grid; gap: 7px; color: #e5e7df; font-size: 11px; }
+.classico-prediction-identity label > span { color: #aeb4a5; }
+.classico-prediction-closed { padding-block: clamp(40px,7vw,76px); }
+.classico-prediction-closed h2 { margin-bottom: 12px; }
+.classico-prediction-closed > p { max-width: 54ch; color: #d0d4c8; font-size: 13px; line-height: 1.65; }
+.classico-prediction-final-clock { display: flex; align-items: center; gap: 9px; margin-top: 24px; color: #c8ee6a; font: 600 9px var(--font-display),sans-serif; letter-spacing: .09em; }
+@media (max-width: 650px) {
+  .classico-prediction-page { padding: 78px 10px 32px; }
+  .classico-prediction-hero { min-height: 500px; padding: 18px; }
+  .classico-prediction-art { object-position: 50% 38%; }
+  .classico-prediction-topline { align-items: flex-start; font-size: 7px; letter-spacing: .1em; }
+  .classico-prediction-match { inset: 30% 2% auto; gap: 18px; }
+  .classico-prediction-team { gap: 8px; }
+  .classico-prediction-team strong { font-size: 8px; }
+  .classico-prediction-headline { padding-top: 245px; }
+  .classico-prediction-headline h1 { font-size: clamp(50px,15vw,76px); }
+  .classico-prediction-content { padding: 28px 16px 34px; }
+  .classico-prediction-open { align-items: flex-start; flex-direction: column; font-size: 8px; }
+  .classico-prediction-cards { grid-template-columns: 1fr; gap: 7px; }
+  .classico-prediction-cards article { min-height: 0; grid-template-columns: 28px 1fr; gap: 5px 10px; padding: 12px; }
+  .classico-prediction-cards article b { grid-row: span 2; padding-top: 2px; }
+  .classico-prediction-cards strong { font-size: 13px; }
+  .classico-prediction-cards span { font-size: 10px; }
+  .classico-prediction-button { width: 100%; padding-inline: 12px; font-size: 9px; }
+  .classico-prediction-channels article { grid-template-columns: 36px minmax(0,1fr) auto 30px; gap: 7px; padding: 8px; }
+  .classico-prediction-channels article > div strong { font-size: 10px; }
+  .classico-prediction-channels a { gap: 3px; padding: 0 4px; font-size: 8px; }
+  .classico-prediction-open-link { max-width: 50px; font-size: 7px; }
+  .classico-prediction-score { gap: 5px; padding: 12px 8px; }
+  .classico-prediction-score label img { width: 32px; height: 32px; }
+  .classico-prediction-score label strong { font-size: 7px; }
+}
+
 /* Official team artwork retains its alpha channel and natural proportions. */
 .team-emblem { display: block; width: 52px; height: 60px; object-fit: contain; background: transparent; flex-shrink: 0; }
 .poll-option .team-emblem { width: 32px; height: 36px; }
