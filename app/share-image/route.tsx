@@ -3,6 +3,7 @@ import sharp from 'sharp'
 import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { currentEdition } from '../../data/current-edition'
+import { getClassicoPredictionAvailability } from '../../lib/classico-prediction'
 import { formatEventDate } from '../../lib/formatting'
 
 export const runtime = 'nodejs'
@@ -34,7 +35,13 @@ const pages: Record<string, { title: string; subtitle: string; photo: string }> 
 export async function GET(request: Request) {
   const url = new URL(request.url)
   const key = url.searchParams.get('page') || 'home'
-  const page = pages[key] || pages.home
+  const page = key === 'quiz' && getClassicoPredictionAvailability().isEventDay
+    ? {
+        title: 'LE GRAND CLÁSICO.',
+        subtitle: 'Pronostique le score, le buteur et le passeur décisif.',
+        photo: 'images/events/classico-quiz-preview.jpg',
+      }
+    : pages[key] || pages.home
   const [photo, logo] = await Promise.all([
     readFile(join(process.cwd(), 'public', ...page.photo.split('/'))),
     readFile(join(process.cwd(), 'public/images/branding/classico-mboa-share-logo.jpeg')),

@@ -13,11 +13,24 @@ export function generateMetadata(): Metadata {
   const description = isClassicoEventDay
     ? 'Pronostique le score, le buteur et le passeur décisif du Clásico.'
     : '5 questions chaque soir à partir de 20H. Teste tes connaissances du Clásico et partage ton score.'
+  const eventPreview = {
+    url: 'https://classicomboa.com/share-image?page=quiz&v=6',
+    width: 1200,
+    height: 630,
+    type: 'image/jpeg',
+    alt: 'Aperçu des pronostics du Clásico avec le visuel FC Barcelona contre Real Madrid.',
+  }
   return {
     title,
     description,
-    openGraph: socialOpenGraphFor('/quiz', 'Quiz Classico Mboa', description),
-    twitter: socialTwitterFor('/quiz', 'Quiz Classico Mboa', description),
+    openGraph: {
+      ...socialOpenGraphFor('/quiz', 'Quiz Classico Mboa', description),
+      ...(isClassicoEventDay ? { images: [eventPreview] } : {}),
+    },
+    twitter: {
+      ...socialTwitterFor('/quiz', 'Quiz Classico Mboa', description),
+      ...(isClassicoEventDay ? { images: [eventPreview] } : {}),
+    },
   }
 }
 
