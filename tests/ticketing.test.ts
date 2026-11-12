@@ -173,3 +173,39 @@ test('email-free checkout stores null, keeps retries safe and limits reservation
   const testReference = (await db.query<{ reference: string }>("select reserve_ticket_order($1,1,'Test Phone Buyer',null,'+237677654323',$2,$3,true,'{}'::text[]) reference", [type, randomUUID(), hash])).rows[0].reference
   assert.equal((await db.query<{ customer_email: string | null }>('select customer_email from ticket_orders where reference=$1', [testReference])).rows[0].customer_email, null)
 })
+
+test('referral stats count unique buyers and paid tickets, excluding unpaid and test orders', async () => {
+  const before = await asUser(admin, () => db.query<{ referral_source: string; customer_count: number; ticket_count: number }>("select * from ticket_referral_stats('edition-8')"))
+  const paidReferralOrder = async (phone: string, referralSources: string[]) => {
+    const request = randomUUID()
+    const reference = (await db.query<{ reference: string }>(
+      "select reserve_manual_ticket_order('edition-8',$1,1,'Referral Buyer',null::text,$2,$3,$4,'manuel',$5::text[]) reference",
+      [classic, phone, request, hash, referralSources],
+    )).rows[0].reference
+    await asUser(admin, () => db.query(
+      "select confirm_manual_payment('edition-8',$1,1000,$2)",
+      [reference, 'REFERRAL-' + randomUUID()],
+    ))
+  }
+  const sameBuyerPhone = '+237600000001'
+  await paidReferralOrder(sameBuyerPhone, ['influencer_tik_dengue'])
+  await paidReferralOrder(sameBuyerPhone, ['influencer_tik_dengue', 'influencer_willy_namaso'])
+  await paidReferralOrder('+237600000002', ['influencer_willy_namaso'])
+  const unpaid = await manual(classic, randomUUID(), 'manuel', ['influencer_tik_dengue'])
+  const testOrder = await reserve(1, randomUUID(), hash, ['influencer_tik_dengue'])
+  await settle(testOrder.reference, 1000)
+  await assert.rejects(asUser(outsider, () => db.query("select * from ticket_referral_stats('edition-8')")), /FORBIDDEN/)
+  assert.ok(unpaid)
+
+  const after = await asUser(admin, () => db.query<{ referral_source: string; customer_count: number; ticket_count: number }>("select * from ticket_referral_stats('edition-8')"))
+  const beforeStats = new Map(before.rows.map(row => [row.referral_source, row]))
+  const afterStats = new Map(after.rows.map(row => [row.referral_source, row]))
+  const tikBefore = beforeStats.get('influencer_tik_dengue')!
+  const tikAfter = afterStats.get('influencer_tik_dengue')!
+  assert.equal(tikAfter.customer_count - tikBefore.customer_count, 1)
+  assert.equal(tikAfter.ticket_count - tikBefore.ticket_count, 2)
+  const willyBefore = beforeStats.get('influencer_willy_namaso')!
+  const willyAfter = afterStats.get('influencer_willy_namaso')!
+  assert.equal(willyAfter.customer_count - willyBefore.customer_count, 2)
+  assert.equal(willyAfter.ticket_count - willyBefore.ticket_count, 2)
+})

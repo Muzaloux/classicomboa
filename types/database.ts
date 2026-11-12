@@ -903,6 +903,14 @@ export type Database = {
           paid_player_registrations: number
         }[]
       }
+      ticket_referral_stats: {
+        Args: { p_edition: string }
+        Returns: {
+          referral_source: string
+          customer_count: number
+          ticket_count: number
+        }[]
+      }
       can_manage_inquiries: {
         Args: { target_edition: string }
         Returns: boolean
