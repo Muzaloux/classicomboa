@@ -401,6 +401,7 @@ export type Database = {
           customer_email: string | null
           customer_name: string
           customer_phone: string
+          referral_sources: string[]
           edition_id: string
           expires_at: string
           id: string
@@ -419,6 +420,7 @@ export type Database = {
           customer_email?: string | null
           customer_name: string
           customer_phone: string
+          referral_sources?: string[]
           edition_id: string
           expires_at?: string
           id?: string
@@ -437,6 +439,7 @@ export type Database = {
           customer_email?: string | null
           customer_name?: string
           customer_phone?: string
+          referral_sources?: string[]
           edition_id?: string
           expires_at?: string
           id?: string

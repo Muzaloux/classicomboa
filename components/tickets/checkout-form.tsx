@@ -5,6 +5,7 @@ import { initialFormState } from '../../lib/forms'
 import { FormFeedback } from '../forms/form-feedback'
 import { formatXaf } from '../../lib/formatting'
 import { paymentContacts } from '../../lib/manual-payment'
+import { referralSourceLabels, referralSourceKeys } from '../../lib/ticketing-validation'
 
 export function CheckoutForm({ type, request, access, test = true }: { type: { id: string; name: string; price_xaf: number; available: number }; request: string; access: string; test?: boolean }) {
   const [state, action, pending] = useActionState(reserveOrder, initialFormState)
@@ -21,6 +22,12 @@ export function CheckoutForm({ type, request, access, test = true }: { type: { i
       <p className="ticket-total" aria-live="polite">Total à payer : <strong>{formatXaf(safeQty * type.price_xaf)}</strong></p>
       <label>Nom complet<input name="name" autoComplete="name" required minLength={2} maxLength={100} /></label>
       <label>Téléphone camerounais<input name="phone" type="tel" autoComplete="tel" placeholder="+237 6XX XXX XXX" required maxLength={30} /></label>
+      <fieldset className="referral-options">
+        <legend>How did you hear about this event? (Select all that apply)</legend>
+        <div className="referral-choice-grid">{referralSourceKeys.slice(0, 4).map(source => <label className="referral-option" key={source}><input type="checkbox" name="referralSources" value={source} />{referralSourceLabels[source]}</label>)}</div>
+        <p className="referral-category">Influencer</p>
+        <div className="referral-choice-grid">{referralSourceKeys.slice(4).map(source => <label className="referral-option" key={source}><input type="checkbox" name="referralSources" value={source} />{referralSourceLabels[source]}</label>)}</div>
+      </fieldset>
       {!test && <fieldset className="payment-options"><legend>Choisissez votre moyen de paiement</legend>{Object.entries(paymentContacts).map(([key, contact], index) => <label className="payment-option" key={key}><input type="radio" name="contact" value={key} defaultChecked={index === 0} /><span className="payment-option-card"><span className={`payment-provider-badge provider-${key}`} aria-hidden="true">{key === 'manuel' ? 'MTN' : 'OM'}</span><span><strong>{contact.provider}</strong></span></span></label>)}</fieldset>}
       <div className="form-honeypot" aria-hidden="true"><label>Site web<input name="website" tabIndex={-1} autoComplete="off" /></label></div>
       <label className="checkbox-label"><input name="consent" type="checkbox" required />J’accepte l’utilisation de mes coordonnées pour cette commande{test ? ' de test' : ' et la transmission de ma référence et de mon montant au moyen de paiement choisi'}.</label>

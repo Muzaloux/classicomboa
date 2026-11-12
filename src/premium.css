@@ -86,6 +86,13 @@ body { background: radial-gradient(ellipse at 90% 10%, rgba(122, 122, 122, .1), 
 .platform-form .checkbox-label input { flex: 0 0 18px; width: 18px; height: 18px; margin: 3px 0 0; accent-color: var(--green); }
 .platform-form .payment-option { position: relative; }
 .platform-form .payment-option > input { width: 1px; height: 1px; min-height: 0; padding: 0; margin: 0; border: 0; clip-path: inset(50%); }
+.referral-options { display: grid; gap: 10px; padding: 0; margin: 4px 0 22px; border: 0; }
+.referral-options legend { margin-bottom: 4px; font-size: 14px; font-weight: 600; }
+.referral-choice-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; }
+.platform-form .referral-option { display: flex; align-items: center; gap: 9px; margin: 0; padding: 12px; border: 1px solid var(--line); border-radius: 10px; cursor: pointer; font-size: 14px; font-weight: 400; }
+.platform-form .referral-option input { width: 18px; height: 18px; margin: 0; accent-color: var(--green); }
+.platform-form .referral-option:focus-within { outline: 2px solid var(--green); outline-offset: 3px; }
+.referral-category { margin: 8px 0 0; font-size: 14px; font-weight: 600; }
 
 /* Show every photograph in full: frames follow each image's own proportions, or contain it over a blurred backdrop. */
 .event-photo-backdrop { filter: blur(22px) brightness(.5); transform: scale(1.2); pointer-events: none; }

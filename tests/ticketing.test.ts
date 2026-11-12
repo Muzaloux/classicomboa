@@ -21,28 +21,31 @@ before(async () => {
 })
 after(() => db.close())
 const classic = '10000000-0000-4000-8000-000000000011', vip = '10000000-0000-4000-8000-000000000012'
-async function manual(typeId = classic, request = randomUUID(), contact = 'manuel') {
-  return (await db.query<{ reference: string }>("select reserve_manual_ticket_order('edition-8',$1,1,'Manual Visitor',$2,'+237688123456',$3,$4,$5) reference", [typeId, request + '@example.com', request, hash, contact])).rows[0].reference
+async function manual(typeId = classic, request = randomUUID(), contact = 'manuel', referralSources: string[] = []) {
+  return (await db.query<{ reference: string }>("select reserve_manual_ticket_order('edition-8',$1,1,'Manual Visitor',$2,'+237688123456',$3,$4,$5,$6) reference", [typeId, request + '@example.com', request, hash, contact, referralSources])).rows[0].reference
 }
 async function asUser<T>(id: string, fn: () => Promise<T>) {
   await db.exec('set role authenticated')
   await db.query("select set_config('request.jwt.claim.sub',$1,false)", [id])
   try { return await fn() } finally { await db.exec('reset role') }
 }
-async function reserve(qty = 1, request = randomUUID(), access = hash) {
-  const result = await db.query<{ reference: string }>("select reserve_ticket_order($1,$2,'Ticket Tester',$3,'+237699123456',$4,$5,true) reference", [type, qty, request + '@example.com', request, access])
+async function reserve(qty = 1, request = randomUUID(), access = hash, referralSources: string[] = []) {
+  const result = await db.query<{ reference: string }>("select reserve_ticket_order($1,$2,'Ticket Tester',$3,'+237699123456',$4,$5,true,$6) reference", [type, qty, request + '@example.com', request, access, referralSources])
   return { reference: result.rows[0].reference, request }
 }
 async function settle(reference: string, amount: number, event = randomUUID(), outcome = 'successful') {
   return (await db.query<{ status: string }>("select settle_test_payment($1,$2,$3,'XAF',$4) status", [reference, event, amount, outcome])).rows[0].status
 }
 test('reservation uses authoritative prices and retries reuse one order', async () => {
-  const order = await reserve(2)
-  assert.equal((await reserve(2, order.request)).reference, order.reference)
+  const referralSources = ['facebook', 'influencer_tik_dengue']
+  const order = await reserve(2, randomUUID(), hash, referralSources)
+  assert.equal((await reserve(2, order.request, hash, referralSources)).reference, order.reference)
   await assert.rejects(reserve(3, order.request), /REQUEST_CONFLICT/)
   await assert.rejects(reserve(2, order.request, 'b'.repeat(64)), /REQUEST_CONFLICT/)
-  const rows = await db.query<{ total_xaf: number }>('select total_xaf from ticket_orders where reference=$1', [order.reference])
-  assert.equal(rows.rows[0].total_xaf, 2000)
+  await assert.rejects(reserve(2, order.request, hash, ['friends']), /REQUEST_CONFLICT/)
+  await assert.rejects(reserve(1, randomUUID(), hash, ['unknown']), /INVALID_REFERRAL_SOURCES/)
+  const rows = await db.query<{ total_xaf: number; referral_sources: string[] }>('select total_xaf,referral_sources from ticket_orders where reference=$1', [order.reference])
+  assert.deepEqual(rows.rows[0], { total_xaf: 2000, referral_sources: referralSources })
   await assert.rejects(settle(order.reference, 1), /AMOUNT_MISMATCH/)
   const event = randomUUID()
   assert.equal(await settle(order.reference, 2000, event), 'paid')
@@ -114,11 +117,14 @@ test('failed payments never issue tickets and void tickets cannot enter', async 
 
 test('manual WhatsApp orders stay unpaid; only staff with a verified receipt can issue tickets', async () => {
   const request = randomUUID()
-  const reference = await manual(classic, request)
-  assert.equal(await manual(classic, request), reference)
+  const referralSources = ['instagram', 'influencer_willy_namaso']
+  const reference = await manual(classic, request, 'manuel', referralSources)
+  assert.equal(await manual(classic, request, 'manuel', referralSources), reference)
   await assert.rejects(manual(classic, request, 'youana'), /REQUEST_CONFLICT/)
-  const order = (await db.query<{ id: string; status: string; total_xaf: number }>('select id,status,total_xaf from ticket_orders where reference=$1', [reference])).rows[0]
+  await assert.rejects(manual(classic, request, 'manuel', ['friends']), /REQUEST_CONFLICT/)
+  const order = (await db.query<{ id: string; status: string; total_xaf: number; referral_sources: string[] }>('select id,status,total_xaf,referral_sources from ticket_orders where reference=$1', [reference])).rows[0]
   assert.equal(order.status, 'pending'); assert.equal(order.total_xaf, 1000)
+  assert.deepEqual(order.referral_sources, referralSources)
   assert.equal((await db.query('select id from tickets where order_id=$1', [order.id])).rows.length, 0)
   await asUser(outsider, () => assert.rejects(db.query("select confirm_manual_payment('edition-8',$1,1000,'RECEIPT-001')", [reference]), /FORBIDDEN/))
   await asUser(checker, () => assert.rejects(db.query("select confirm_manual_payment('edition-8',$1,1000,'RECEIPT-001')", [reference]), /FORBIDDEN/))
@@ -154,7 +160,7 @@ test('real categories share an edition capacity and expired receipts cannot over
 test('email-free checkout stores null, keeps retries safe and limits reservations by phone', async () => {
   await db.exec("update event_editions set ticket_capacity=5000 where id='edition-8'; update ticket_types set capacity=5000 where not is_test")
   const phone = '+237677654321', request = randomUUID()
-  const reserveWithoutEmail = async (id = randomUUID(), number = phone, email: string | null = '') => (await db.query<{ reference: string }>("select reserve_manual_ticket_order('edition-8',$1,1,'Phone Buyer',$2,$3,$4,$5,'manuel') reference", [classic, email, number, id, hash])).rows[0].reference
+  const reserveWithoutEmail = async (id = randomUUID(), number = phone, email: string | null = '') => (await db.query<{ reference: string }>("select reserve_manual_ticket_order('edition-8',$1,1,'Phone Buyer',$2,$3,$4,$5,'manuel','{}'::text[]) reference", [classic, email, number, id, hash])).rows[0].reference
   const reference = await reserveWithoutEmail(request)
   assert.equal(await reserveWithoutEmail(request, phone, null), reference)
   const order = (await db.query<{ customer_email: string | null; customer_phone: string; status: string }>('select customer_email,customer_phone,status from ticket_orders where reference=$1', [reference])).rows[0]
@@ -164,6 +170,6 @@ test('email-free checkout stores null, keeps retries safe and limits reservation
   for (let i = 0; i < 4; i++) await reserveWithoutEmail()
   await assert.rejects(reserveWithoutEmail(randomUUID(), phone, 'different@example.com'), /RATE_LIMITED/)
   assert.ok(await reserveWithoutEmail(randomUUID(), '+237677654322'))
-  const testReference = (await db.query<{ reference: string }>("select reserve_ticket_order($1,1,'Test Phone Buyer',null,'+237677654323',$2,$3,true) reference", [type, randomUUID(), hash])).rows[0].reference
+  const testReference = (await db.query<{ reference: string }>("select reserve_ticket_order($1,1,'Test Phone Buyer',null,'+237677654323',$2,$3,true,'{}'::text[]) reference", [type, randomUUID(), hash])).rows[0].reference
   assert.equal((await db.query<{ customer_email: string | null }>('select customer_email from ticket_orders where reference=$1', [testReference])).rows[0].customer_email, null)
 })

@@ -12,7 +12,7 @@ import { currentEdition } from '../../data/current-edition'
 
 export async function reserveOrder(_state: FormState, form: FormData): Promise<FormState> {
   if (!ticketingEnabled()) return { status: 'error', message: 'Les ventes ne sont pas ouvertes.' }
-  const parsed = checkoutSchema.safeParse(Object.fromEntries(form))
+  const parsed = checkoutSchema.safeParse({ ...Object.fromEntries(form), referralSources: form.getAll('referralSources') })
   if (!parsed.success) return { status: 'error', message: 'Vérifiez vos coordonnées, la quantité et votre accord.', errors: z.flattenError(parsed.error).fieldErrors }
   const v = parsed.data
   let reference: string
@@ -20,7 +20,7 @@ export async function reserveOrder(_state: FormState, form: FormData): Promise<F
     const db = createAdminSupabase()
     const type = await db.from('ticket_types').select('id').eq('id', v.type).eq('edition_id', currentEdition.id).eq('is_test', testTicketingEnabled()).maybeSingle()
     if (type.error || !type.data) return { status: 'error', message: 'Cette catégorie n’est pas disponible pour cette édition.' }
-    const common = { p_type: v.type, p_quantity: v.quantity, p_name: v.name, p_email: '', p_phone: v.phone, p_request: v.request, p_access_hash: ticketAccessHash(v.access) }
+    const common = { p_type: v.type, p_quantity: v.quantity, p_name: v.name, p_email: '', p_phone: v.phone, p_request: v.request, p_access_hash: ticketAccessHash(v.access), p_referral_sources: v.referralSources }
     const { data, error } = manualTicketingEnabled()
       ? await db.rpc('reserve_manual_ticket_order', { ...common, p_edition: currentEdition.id, p_contact: v.contact })
       : await db.rpc('reserve_ticket_order', { ...common, p_test: true })
